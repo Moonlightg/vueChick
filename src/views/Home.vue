@@ -1,6 +1,9 @@
 <template>
-  <div id="app">
-    <router-view/>
+  <div id="home">
+    <div id="nav">
+      <router-link to="/login">登录</router-link> |
+      <router-link to="/register">注册</router-link>
+    </div>
   </div>
 </template>
 
@@ -24,8 +27,5 @@
 
 #nav a.router-link-exact-active {
   color: #42b983;
-}
-.el-message {
-  min-width: 300px;
 }
 </style>
