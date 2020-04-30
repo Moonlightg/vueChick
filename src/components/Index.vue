@@ -1,6 +1,8 @@
 <template>
   <div class="hello">
-    <h1>您好,{{ username }}</h1>
+    <h1>您好,{{ userinfo.username }}</h1>
+    <p>你现在有{{userinfo.money}}金币</p>
+    <el-button type="danger" @click="loginOut">退出登录</el-button>
   </div>
 </template>
 
@@ -13,7 +15,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["username"])
+    ...mapGetters(["userinfo"])
   },
   components: {
 
@@ -34,8 +36,17 @@ export default {
       // this.$ajax.get('/api/users/info').then((res) => {
       //   console.log(res);
       // });
-      var aaa = this.username;
+      var aaa = this.userinfo;
       console.log(aaa);
+    },
+    // 退出登录
+    loginOut() {
+      // 清除用户数据
+      this.$store.commit("loginOut");
+      // 退出登录跳转到登录界面
+      this.$router.push({
+        path: '/login'
+      });
     }
   }
 }

@@ -1,5 +1,9 @@
 <template>
-  <div class="home">
+  <div class="home"
+    v-loading="loading"
+    element-loading-text="登录中..."
+    element-loading-spinner="el-icon-loading"
+    element-loading-background="rgba(0, 0, 0, 0.8)">
     <img alt="Vue logo" src="../assets/logo.png">
     
     <div style="margin: 20px 0;"></div>
@@ -8,7 +12,6 @@
     <el-input v-model="user.pass" placeholder="Pass" show-password></el-input>
     <div style="margin: 20px 0;"></div>
     <el-button type="primary" @click="submitForm">登录</el-button>
-
   </div>
 </template>
 
@@ -21,7 +24,8 @@ export default {
       user: {
         username: '',
         pass: ''
-      }
+      },
+      loading: false
     }
   },
   components: {
@@ -51,17 +55,13 @@ export default {
         console.log(res);
         if (res.data.code === 0) {
           // 登录成功
-          console.log(res.data.message);
-          this.$message({
-            message: res.data.message,
-            type: 'success'
-          });
           // 保存token
           this.$store.commit("set_token", res.data.token);
           // 保存用户
-          this.$store.commit("set_userName", res.data.data.username);
+          this.$store.commit("set_userInfo", res.data.data);
           // 保存登录状态
           this.$store.commit("isLogin", true);
+          this.loading = true;
           // 跳转路由
           setTimeout(() => {
             this.$router.push({

@@ -11,13 +11,13 @@ export default new Vuex.Store({
     // 存储token
     // token: storage.get('token') ? storage.get('token') : '',
     token:'',       // token
-    username: '',   // 用户名
+    userinfo: {},   // 用户信息
     isLogin: false  // 登录状态
   },
   // getters 只会依赖 state 中的成员去更新
   getters: {
     token: (state) => state.token,
-    username: (state) => state.username,
+    userinfo: (state) => state.userinfo,
     isLogin :(state) => state.isLogin
   },
   mutations: {
@@ -27,10 +27,10 @@ export default new Vuex.Store({
       storage.set('token', token);
       console.log('store、localstorage保存token成功！');
     },
-    set_userName(state, username) {
-      state.username = username;
-      storage.set('username',username);
-      console.log('store、localstorage保存username成功！');
+    set_userInfo(state, userinfo) {
+      state.userinfo = userinfo;
+      storage.set('userinfo',userinfo);
+      console.log('store、localstorage保存userinfo成功！');
     },
     isLogin(state,status){
       state.isLogin = status;
@@ -39,7 +39,8 @@ export default new Vuex.Store({
     },
     loginOut(state) {
       storage.removeAll(); // 清除缓存
-      state.username = '';
+      state.token = '',
+      state.userinfo = {};
       state.isLogin = false;
     },
     // 在缓存中存储state
