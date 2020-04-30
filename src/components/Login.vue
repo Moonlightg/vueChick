@@ -49,8 +49,6 @@ export default {
       this.$ajax.post('/api/login', obj).then((res) => {
         console.log('---------res-------');
         console.log(res);
-        console.log('---------obj-------');
-        console.log(obj);
         if (res.data.code === 0) {
           // 登录成功
           console.log(res.data.message);
@@ -60,6 +58,10 @@ export default {
           });
           // 保存token
           this.$store.commit("set_token", res.data.token);
+          // 保存用户
+          this.$store.commit("set_userName", res.data.data.username);
+          // 保存登录状态
+          this.$store.commit("isLogin", true);
           // 跳转路由
           setTimeout(() => {
             this.$router.push({

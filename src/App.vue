@@ -4,6 +4,23 @@
   </div>
 </template>
 
+<script>
+import storage from './plugins/storage'
+export default {
+  name: 'app',
+  created () {
+    //在页面加载时读取缓存里的状态信息
+    if (storage.get('store')) {
+      this.$store.replaceState(Object.assign({}, this.$store.state,storage.get('store')));
+    }
+    //在页面刷新时将vuex里的信息保存到缓存里
+    window.addEventListener("beforeunload",()=>{
+      this.$store.commit("set_store");
+    })
+  }
+}
+</script>
+
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
