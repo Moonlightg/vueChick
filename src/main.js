@@ -2,6 +2,7 @@ import Vue from 'vue'
 //import axios from './plugins/axios'
 import App from './App.vue'
 import './plugins/axios'
+import './styles/main.scss'
 import router from './router'
 import store from './store'
 import { Button, Select, Input, Loading, MessageBox, Message} from 'element-ui';

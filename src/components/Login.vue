@@ -12,6 +12,7 @@
     <el-input v-model="user.pass" placeholder="Pass" show-password></el-input>
     <div style="margin: 20px 0;"></div>
     <el-button type="primary" @click="submitForm">登录</el-button>
+    <el-button type="primary" @click="goRegister">注册</el-button>
   </div>
 </template>
 
@@ -76,6 +77,11 @@ export default {
           });
           console.log(res.data.message)
         }
+      });
+    },
+    goRegister () {
+      this.$router.push({
+        path: '/register'
       });
     }
   }

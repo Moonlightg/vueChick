@@ -8,6 +8,7 @@
     <el-input v-model="user.pass" placeholder="Pass" show-password></el-input>
     <div style="margin: 20px 0;"></div>
     <el-button type="primary" @click="submitForm">注册</el-button>
+    <el-button type="primary" @click="goLogin">登录</el-button>
 
   </div>
 </template>
@@ -79,6 +80,11 @@ export default {
         } else {
           console.log(res.body.errorMsg);
         }
+      });
+    },
+    goLogin() {
+      this.$router.push({
+        path: '/login'
       });
     }
   }

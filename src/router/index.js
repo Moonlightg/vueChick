@@ -62,7 +62,7 @@ router.beforeEach((to, from, next) => {
     next(); //如果无需token,那么随它去吧
   }
   //如果本地 存在 token 则 不允许直接跳转到 登录页面
-  if(to.fullPath === "/" || to.fullPath === "/login" || to.fullPath === "/register"){
+  if(to.fullPath === "/" || to.fullPath === "/login"){
     if(store.state.token != ''){
       console.log("已经登录过了,不能再次进去登录界面");
       next({
