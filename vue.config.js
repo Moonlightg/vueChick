@@ -16,6 +16,8 @@ module.exports = {
     }
   },
   css: {
+    extract: true,
+    sourceMap: false,
     loaderOptions: {
       // 给 sass-loader 传递选项
       sass: {
@@ -23,7 +25,7 @@ module.exports = {
         // 所以这里假设你有 `src/main.sass` 这个文件
         // 注意：在 sass-loader v7 中，这个选项名是 "data"
         //prependData: `@import "~@/main.sass"`
-        data: `@import "@/styles/main.scss";`
+        //data: `@import "./src/styles/main.scss";`
       },
       // 默认情况下 `sass` 选项会同时对 `sass` 和 `scss` 语法同时生效
       // 因为 `scss` 语法在内部也是由 sass-loader 处理的

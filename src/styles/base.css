@@ -1,0 +1,24 @@
+html{
+  min-width: 320px;
+  overflow-x: hidden;
+}
+
+html, body {
+  height: 100%;
+  line-height: 1;
+}
+
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, textarea, p, span, blockquote, th, td, hr, button, article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  box-sizing: border-box;
+  word-wrap: break-word;
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .8s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
