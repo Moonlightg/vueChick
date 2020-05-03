@@ -1,23 +1,27 @@
 <template>
-  <div class="home"
+  <div class="main login-box"
     v-loading="loading"
     element-loading-text="登录中..."
     element-loading-spinner="el-icon-loading"
     element-loading-background="rgba(0, 0, 0, 0.8)">
-    <img alt="Vue logo" src="../assets/logo.png">
-    
-    <div style="margin: 20px 0;"></div>
-    <el-input v-model="user.username" placeholder="userName"></el-input>
-    <div style="margin: 20px 0;"></div>
-    <el-input v-model="user.pass" placeholder="Pass" show-password></el-input>
-    <div style="margin: 20px 0;"></div>
-    <el-button type="primary" @click="submitForm">登录</el-button>
-    <el-button type="primary" @click="goRegister">注册</el-button>
+    <div class="login-head">
+      <Cbee></Cbee>
+      <p>VueChick</p>
+    </div>
+    <div class="login-form">
+      <div style="margin: 20px 0;"></div>
+      <el-input v-model="user.username" placeholder="userName"></el-input>
+      <div style="margin: 20px 0;"></div>
+      <el-input v-model="user.pass" placeholder="Pass" show-password></el-input>
+      <div style="margin: 20px 0;"></div>
+      <el-button type="primary" @click="submitForm">登录</el-button>
+      <el-button type="primary" @click="goRegister">注册</el-button>
+    </div>
   </div>
 </template>
 
 <script>
-
+import Cbee from '../components/Cbee.vue'           // 蜜蜂鲜花
 export default {
   name: 'Login',
   data() {
@@ -30,6 +34,7 @@ export default {
     }
   },
   components: {
+    Cbee
   },
   methods: {
     submitForm () {

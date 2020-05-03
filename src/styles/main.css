@@ -4,11 +4,65 @@
  * https://github.com/Moonlightg
  * Copyright (c) 2017.12.06 Moonlight, Inc.
  */
+ html{
+  min-width: 320px;
+  overflow-x: hidden;
+}
+
+html, body {
+  height: 100%;
+  line-height: 1;
+}
+
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, textarea, p, span, blockquote, th, td, hr, button, article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  box-sizing: border-box;
+  word-wrap: break-word;
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .8s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
  #app {
   width: 100%;
   height: 100%;
   overflow: hidden;
  }
+ .main {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+ }
+ /*
+ *  登录
+ */
+.login-box {
+  background-image: -webkit-linear-gradient(to bottom, #a0de7e,#fffb88);
+  background-image: linear-gradient(to bottom,#a0de7e,#fffb88);
+}
+.login-head {
+  padding: 10rem 0 2rem;
+}
+.login-head .bee-box {
+  top: 4rem;
+  left: 50%;
+  margin-left: -3.5rem;
+}
+.login-head p {
+  font-size: 28px;
+  font-weight: bold;
+  color: #ab5e2b;
+  text-shadow: 0 0 1px #fff;
+}
+.login-form {
+  width: 80%;
+  margin: 0 auto;
+}
 .egg-wrapper span:before,
 .egg:before,
 .chick-head:before,
@@ -925,6 +979,7 @@ top: 10px;
 .trough span{ position: absolute; }
 .trough span:nth-child(1){
   bottom: 0;
+  left: 0;
   width: 5rem;
   height: 1.5rem;
   border-top: .15rem solid #663018;
@@ -935,6 +990,7 @@ top: 10px;
 .trough span:nth-child(1):before,
 .trough span:nth-child(1):after{
   top: .45rem;
+  right: 0;
   width: 5rem;
   height: .1rem;
   background-color: #cc8547;
@@ -2565,6 +2621,7 @@ top: 10px;
   background: rgba(255, 255, 255, 0.75);
   border-radius: 3rem;
   padding-left: 50px;
+  text-align: left;
 }
 .user-logo {
   margin-right: .25rem;
@@ -2614,7 +2671,6 @@ top: 10px;
   color: #F90;
   display: inline-block;
   vertical-align: middle;
-  margin-top: -1px;
 }
 .user-form {
   width: 80%;
@@ -2677,7 +2733,7 @@ top: 10px;
   overflow: hidden;
   border: 4px solid #f7e1cb;
   box-shadow: 0 0 3px #7d4f3e;
-  background: url(../images/portrait0.jpg) no-repeat;
+  background: url(../assets/images/portrait0.jpg) no-repeat;
   background-size: 100% 100%;
 }
 .portrait-item.sm {
@@ -2689,15 +2745,15 @@ top: 10px;
   height: 100px;
 }
 .portrait0 {
-  background: url(../images/portrait0.jpg) no-repeat;
+  background: url(../assets/images/portrait0.jpg) no-repeat;
   background-size: 100% 100%;
 }
 .portrait1 {
-  background: url(../images/portrait1.jpg) no-repeat;
+  background: url(../assets/images/portrait1.jpg) no-repeat;
   background-size: 100% 100%;
 }
 .portrait2 {
-  background: url(../images/portrait2.jpg) no-repeat;
+  background: url(../assets/images/portrait2.jpg) no-repeat;
   background-size: 100% 100%;
 }
 

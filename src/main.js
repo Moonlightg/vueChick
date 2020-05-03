@@ -2,17 +2,17 @@ import Vue from 'vue'
 //import axios from './plugins/axios'
 import App from './App.vue'
 import './plugins/axios'
-import './styles/base.css'
-//import './styles/index.css'
+import './styles/main.css'
 import router from './router'
 import store from './store'
-import { Button, Select, Input, Loading, MessageBox, Message} from 'element-ui';
+import { Icon, Button, Select, Input, Loading, MessageBox, Message} from 'element-ui';
 
 Vue.config.productionTip = false
 //Vue.prototype.$axios = axios;
 Vue.prototype.$ELEMENT = { size: 'small', zIndex: 3000 };
-Vue.use(Button)
-Vue.use(Select)
+Vue.use(Icon);
+Vue.use(Button);
+Vue.use(Select);
 Vue.use(Input);
 Vue.use(Loading.directive);
 

@@ -11,22 +11,22 @@ const routes = [
   {
     path: '/',
     redirect: '/login',
-    component: () => import('../components/Login.vue')
+    component: () => import('../views/Login.vue')
   },
   {
     path: '/login',
     name: 'Login',
-    component: () => import('../components/Login.vue')
+    component: () => import('../views/Login.vue')
   },
   {
     path: '/register',
     name: 'Register',
-    component: () => import('../components/Register.vue')
+    component: () => import('../views/Register.vue')
   },
   {
     path: '/index',
     name: 'Index',
-    component: () => import('../components/Index.vue'),
+    component: () => import('../views/Index.vue'),
     // 某些页面规定必须登录后才能查看 ，可以在router中配置meta，将需要登录的requireAuth设为true，
     meta: {
       requireAuth: true,
