@@ -16,12 +16,18 @@ const routes = [
   {
     path: '/login',
     name: 'Login',
-    component: () => import('../views/Login.vue')
+    component: () => import('../views/Login.vue'),
+    meta: {
+      requireAuth: false
+    }
   },
   {
     path: '/register',
     name: 'Register',
-    component: () => import('../views/Register.vue')
+    component: () => import('../views/Register.vue'),
+    meta: {
+      requireAuth: false
+    }
   },
   {
     path: '/index',
@@ -29,7 +35,7 @@ const routes = [
     component: () => import('../views/Index.vue'),
     // 某些页面规定必须登录后才能查看 ，可以在router中配置meta，将需要登录的requireAuth设为true，
     meta: {
-      requireAuth: true,
+      requireAuth: true
     }
   }
 ]
@@ -63,11 +69,22 @@ router.beforeEach((to, from, next) => {
   }
   //如果本地 存在 token 则 不允许直接跳转到 登录页面
   if(to.fullPath === "/" || to.fullPath === "/login"){
-    if(store.state.token != ''){
+    if(store.state.token != '' && store.state.isLogin){
       console.log("已经登录过了,不能再次进去登录界面");
       next({
         path:from.fullPath
       });
+    }else {
+      next();
+    }
+  }
+  //如果本地 存在 token 则 不允许直接跳转到 注册页面
+  if(to.fullPath === "/register"){
+    if(store.state.token){
+      console.log('请先退出登录');
+      next({
+        path: '/index'
+      })
     }else {
       next();
     }

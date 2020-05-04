@@ -21,6 +21,7 @@ body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fiel
   box-sizing: border-box;
   word-wrap: break-word;
 }
+ul,li{ padding: 0;margin: 0; }
 
 .fade-enter-active, .fade-leave-active {
   transition: opacity .8s;
@@ -39,11 +40,15 @@ body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fiel
   overflow: auto;
  }
  /*
- *  登录
+ *  登录/注册
  */
 .login-box {
   background-image: -webkit-linear-gradient(to bottom, #a0de7e,#fffb88);
   background-image: linear-gradient(to bottom,#a0de7e,#fffb88);
+}
+.register-box {
+  background-image: -webkit-linear-gradient(to bottom,#03A9F4,#3F51B5);
+  background-image: linear-gradient(to bottom,#03A9F4,#3F51B5);
 }
 .login-head {
   padding: 10rem 0 2rem;
@@ -59,9 +64,20 @@ body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fiel
   color: #ab5e2b;
   text-shadow: 0 0 1px #fff;
 }
+.register-box .login-head p {
+  color: #FFEB3B;
+}
+.register-box .el-button--text {
+  color: #ffd828;
+}
 .login-form {
   width: 80%;
   margin: 0 auto;
+}
+.login-form .el-button {
+  display: block;
+  width: 100%;
+  margin: 1rem 0;
 }
 .egg-wrapper span:before,
 .egg:before,
@@ -1447,7 +1463,8 @@ top: 10px;
   background-color: #fff7e0;
 }
 .windmill-5-1:before,.windmill-5-2:before{
-  top: .1rem;
+  top: .2rem;
+  left: 0;
 }
 .windmill-5-1:after,.windmill-5-2:after{
   bottom: 0.2rem;
@@ -2205,7 +2222,8 @@ top: 10px;
   position: relative;
   width: 50px;
   height: 50px;
-  margin-bottom: 15px;
+  display: block;
+  margin: 0 0 15px;
   border-radius: 50%;
   background: #ffb300;
   border: 2px solid #8c3530;

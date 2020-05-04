@@ -1,20 +1,23 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    
-    <div style="margin: 20px 0;"></div>
-    <el-input v-model="user.username" placeholder="userName"></el-input>
-    <div style="margin: 20px 0;"></div>
-    <el-input v-model="user.pass" placeholder="Pass" show-password></el-input>
-    <div style="margin: 20px 0;"></div>
-    <el-button type="primary" @click="submitForm">注册</el-button>
-    <el-button type="primary" @click="goLogin">登录</el-button>
-
+  <div class="main register-box">
+    <div class="login-head">
+      <Cbee></Cbee>
+      <p>VueChick</p>
+    </div>
+    <div class="login-form">
+      <div style="margin: 20px 0;"></div>
+      <el-input v-model="user.username" placeholder="userName"></el-input>
+      <div style="margin: 20px 0;"></div>
+      <el-input v-model="user.pass" placeholder="Pass" show-password></el-input>
+      <div style="margin: 20px 0;"></div>
+      <el-button type="primary" @click="submitForm">注册</el-button>
+      <el-button type="text" @click="goLogin">已有账号,前往登录</el-button>
+    </div>
   </div>
 </template>
 
 <script>
-
+import Cbee from '../components/Cbee.vue'
 export default {
   name: 'Register',
   data() {
@@ -26,6 +29,7 @@ export default {
     }
   },
   components: {
+    Cbee
   },
   methods: {
     submitForm () {
