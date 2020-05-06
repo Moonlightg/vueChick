@@ -190,10 +190,17 @@ export default {
   //这个钩子函数完成了对cratView函数的调用
   //应该注意的是，使用mounted 并不能保证钩子函数中的 this.$el 在 document 中。为此还应该引入Vue.nextTick/vm.$nextTick
     this.$nextTick(function () {
+      this.getChick();
       this.getUser();
     })
   },
   methods: {
+    // 获取chick进食情况
+    getChick() {
+      var _id = this.userinfo._id;
+      console.log("_id:"+_id);
+      // this.$ajax.get()
+    },
     // 获取用户信息
     getUser() {
       //this.user.username = "test";
@@ -219,6 +226,8 @@ export default {
         this.isSkin = true;
       } else if (val == 'shop') {
         this.isShop = true;
+        // 获取商品列表
+        this.getGoods();
       } else if (val == 'study') {
         this.isStudy = true;
       } else {
@@ -247,6 +256,13 @@ export default {
     },
     closeHandle () {
       this.dialogStatus = false  // 控制取消和X按钮，关闭弹窗
+    },
+    getGoods() {
+      console.log("-=-=-=-=");
+      this.$ajax.get('/api/getGoods').then((res) => {
+        console.log('---------商品列表res-------');
+        console.log(res);
+      });
     } 
   }
 }
