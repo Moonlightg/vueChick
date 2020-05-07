@@ -109,7 +109,25 @@
           <i class="el-icon-error" @click="hidePopup"></i>
         </div>
         <div class="popup-content">
-          商店
+          <div class="food-box">
+            <ul class="food-list">
+              <li v-for="food in goodsList" :key="food.id" :class="{ isMask: food.num == 0 || food.unlock == 0}">
+                <div class="food-item">
+                  <div class="food-img">
+                    <img :src="getImgUrl(food.img)">
+                  </div>
+                  <p class="food-name">{{food.name}}</p>
+                  <span class="food-num" v-if="food.num !== 0">{{food.num}}</span>
+                  <div class="mask-bg shortage-tips" v-if="food.num == 0 && food.unlock == 1">
+                    <el-button type="success" size="mini">购买</el-button>
+                  </div>
+                  <div class="mask-bg shortage-tips" v-if="food.unlock == 0">
+                    <el-button type="success" size="mini">解锁</el-button>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
       <!-- 背包 -->
@@ -166,7 +184,9 @@ export default {
       isSkin: false,
       isShop: false,
       isBag: false,
-      isStudy: false
+      isStudy: false,
+      goodsList: [],
+      userGoodsList: []
     }
   },
   computed: {
@@ -258,11 +278,17 @@ export default {
       this.dialogStatus = false  // 控制取消和X按钮，关闭弹窗
     },
     getGoods() {
-      console.log("-=-=-=-=");
-      this.$ajax.get('/api/getGoods').then((res) => {
-        console.log('---------商品列表res-------');
-        console.log(res);
+      let _this = this;
+      _this.$ajax.get('/api/getGoods').then((res) => {
+        _this.goodsList = res.data.data;
       });
+      _this.$ajax.get('/api/getUserGoods').then((res) => {
+        //_this.userGoodsList = res.data.data;
+      });
+    },
+    getImgUrl(val){
+      console.log(val);
+      return require("@/assets/images/"+val);
     } 
   }
 }
