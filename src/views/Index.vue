@@ -281,9 +281,19 @@ export default {
       let _this = this;
       _this.$ajax.get('/api/getGoods').then((res) => {
         _this.goodsList = res.data.data;
-      });
-      _this.$ajax.get('/api/getUserGoods').then((res) => {
-        //_this.userGoodsList = res.data.data;
+        if (res.data.code === 1) {
+          _this.$ajax.get('/api/getUserGoods',{
+            params: {
+                id: _this.userinfo._id
+            }
+          }).then((res) => {
+            _this.userGoodsList = res.data.data;
+            console.log("----------");
+            console.log(res);
+            console.log(_this.userGoodsList);
+          });
+        }
+        
       });
     },
     getImgUrl(val){
