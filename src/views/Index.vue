@@ -116,7 +116,7 @@
                   <div class="food-img">
                     <img :src="getImgUrl(food.img)">
                   </div>
-                  <p class="food-name">{{food.name}}</p>
+                  <p class="food-name">{{food.name}}{{food.num}}</p>
                   <span class="food-num" v-if="food.num !== 0">{{food.num}}</span>
                   <div class="mask-bg shortage-tips" v-if="food.num == 0 && food.unlock == 1">
                     <el-button type="success" size="mini">购买</el-button>
@@ -291,6 +291,7 @@ export default {
             console.log("----------");
             console.log(res);
             console.log(_this.userGoodsList);
+            _this.updateGoods(_this.goodsList ,_this.userGoodsList);
           });
         }
         
@@ -299,6 +300,17 @@ export default {
     getImgUrl(val){
       console.log(val);
       return require("@/assets/images/"+val);
+    },
+    updateGoods(goods,usergoods){
+      goods.forEach(itemData => {
+        usergoods.forEach(itemUser => {
+          if(itemData.name === itemUser.name) {
+            console.log(itemUser.name);
+            console.log(itemUser.num);
+            itemData.num = itemUser.num;
+          }
+        });
+      });
     } 
   }
 }
