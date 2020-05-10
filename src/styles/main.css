@@ -3172,3 +3172,8 @@ top: 10px;
 .subject-head i {
   font-size: 20px;
 }
+
+/*element ui 样式重置*/
+.el-message-box {
+  width: 300px;
+}

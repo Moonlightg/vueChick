@@ -121,8 +121,8 @@
                   <div class="mask-bg shortage-tips" v-if="food.num == 0 && food.unlock == 1">
                     <el-button type="success" size="mini">购买</el-button>
                   </div>
-                  <div class="mask-bg shortage-tips" v-if="food.unlock == 0">
-                    <el-button type="success" size="mini">解锁</el-button>
+                  <div class="mask-bg shortage-tips" v-if="food.unlock == 0" @click.stop="unlockGoods(food.name,food.price)">
+                    <el-button type="warning" size="mini">解锁</el-button>
                   </div>
                 </div>
               </li>
@@ -301,6 +301,7 @@ export default {
       console.log(val);
       return require("@/assets/images/"+val);
     },
+    // 更新商店
     updateGoods(goods,usergoods){
       goods.forEach(itemData => {
         usergoods.forEach(itemUser => {
@@ -308,10 +309,55 @@ export default {
             console.log(itemUser.name);
             console.log(itemUser.num);
             itemData.num = itemUser.num;
+            itemData.unlock = itemUser.unlock;
           }
         });
       });
-    } 
+    },
+    // 更新商店解锁状态
+    updateUnlock(goods,unlockgood){
+      console.log("++++++");
+      console.log(goods);
+      goods.forEach(itemData => {
+        if(itemData.name === unlockgood) {
+          itemData.unlock = 1;
+        }
+      });
+    },
+    // 解锁商品
+    unlockGoods(name,price) {
+      let _this = this;
+      let html = "解锁该商品需要"+ price + "元";
+      _this.$confirm(html, '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+        center: true
+      }).then(() => {
+        const obj = {
+          openId: _this.userinfo._id,
+          name: name
+        };
+        _this.$ajax.post('/api/unlock', obj).then((res) => {
+          console.log('---------返回解锁的商品状态-------');
+          console.log(res);
+          if (res.data.code === 0) {
+            // 解锁成功
+            console.log('---------'+name);
+            _this.updateUnlock(_this.goodsList, name);
+            _this.$message({
+              type: 'success',
+              message: '解锁成功!'
+            });
+          } else {
+            // 解锁失败
+            console.log(res.data.message)
+          }
+        });
+      }).catch(() => {
+        console.log("取消解锁");         
+      });
+    }
   }
 }
 </script>
