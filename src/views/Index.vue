@@ -121,7 +121,7 @@
                   <div class="mask-bg shortage-tips" v-if="food.num == 0 && food.unlock == 1">
                     <el-button type="success" size="mini">购买</el-button>
                   </div>
-                  <div class="mask-bg shortage-tips" v-if="food.unlock == 0" @click.stop="unlockGoods(food.name,food.price)">
+                  <div class="mask-bg shortage-tips" v-if="food.unlock == 0" @click.stop="unlockGoods(food.name,food.unlockPrice)">
                     <el-button type="warning" size="mini">解锁</el-button>
                   </div>
                 </div>
@@ -298,7 +298,6 @@ export default {
       });
     },
     getImgUrl(val){
-      console.log(val);
       return require("@/assets/images/"+val);
     },
     // 更新商店
@@ -325,35 +324,45 @@ export default {
       });
     },
     // 解锁商品
-    unlockGoods(name,price) {
+    unlockGoods(name,unlockPrice) {
       let _this = this;
-      let html = "解锁该商品需要"+ price + "元";
+      let html = "解锁该商品需要"+ unlockPrice + "元";
       _this.$confirm(html, '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning',
         center: true
       }).then(() => {
-        const obj = {
-          openId: _this.userinfo._id,
-          name: name
-        };
-        _this.$ajax.post('/api/unlock', obj).then((res) => {
-          console.log('---------返回解锁的商品状态-------');
-          console.log(res);
-          if (res.data.code === 0) {
-            // 解锁成功
-            console.log('---------'+name);
-            _this.updateUnlock(_this.goodsList, name);
-            _this.$message({
-              type: 'success',
-              message: '解锁成功!'
-            });
-          } else {
-            // 解锁失败
-            console.log(res.data.message)
-          }
-        });
+        if (unlockPrice > _this.userinfo.money ) {
+          _this.$message({
+            message: '您的金币不足!',
+            type: 'error'
+          });
+        } else {
+          const obj = {
+            openId: _this.userinfo._id,
+            name: name,
+            money: _this.userinfo.money - unlockPrice
+          };
+          // 扣除金币
+          _this.$store.commit("deduct_money", unlockPrice);
+          _this.$ajax.post('/api/unlock', obj).then((res) => {
+            console.log('---------返回解锁的商品状态-------');
+            console.log(res);
+            if (res.data.code === 0) {
+              // 解锁成功
+              console.log('---------'+name);
+              _this.updateUnlock(_this.goodsList, name);
+              _this.$message({
+                type: 'success',
+                message: '解锁成功!'
+              });
+            } else {
+              // 解锁失败
+              console.log(res.data.message)
+            }
+          });
+        }
       }).catch(() => {
         console.log("取消解锁");         
       });

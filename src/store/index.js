@@ -21,6 +21,10 @@ export default new Vuex.Store({
     isLogin :(state) => state.isLogin
   },
   mutations: {
+    // 扣除金币
+    deduct_money(state,money) {
+      state.userinfo.money = state.userinfo.money - money;
+    },
     // 修改token，并将token存入localStorage
     set_token(state,token) {
       state.token = token;
