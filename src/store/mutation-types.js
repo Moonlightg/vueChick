@@ -1,0 +1,11 @@
+export const DEDUCT_MONEY = 'deduct_money'; // 扣除金币
+export const UPDATE_MONEY = 'update_money'; // 更新金币
+export const UPDATE_GOODS_UNLOCK = 'update_goods_unlock'; // 更新商品解锁状态
+export const SET_TOKEN = 'set_token';       // 保存token
+export const SET_USERINFO = 'set_userinfo'; // 保存用户信息
+export const IS_LOGIN = 'is_login';         // 保存登录状态
+export const LOGIN_OUT = 'login_out';       // 退出登录
+export const GET_GOODS = 'git_goods';       // 获取商品列表
+export const GET_USER_GOODS = 'get_user_goods'; // 当前用户商品列表
+export const SET_STORE = 'set_store';       // 缓存store
+export const GET_STORE = 'get_store';       // 读取store

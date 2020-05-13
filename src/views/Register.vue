@@ -58,13 +58,9 @@ export default {
         username: this.user.username,
         pass: this.user.pass
       };
+
       this.$ajax.post('/api/register', obj).then((res) => {
-        console.log('---------res-------');
-        console.log(res);
-        console.log('---------obj-------');
-        console.log(obj);
         if (res.data.code === 0) {
-          console.log('注册成功')
           this.$message({
 						message: '注册成功!',
 						type: 'success'
@@ -76,7 +72,6 @@ export default {
             });
           }, 2000);
         } else if (res.data.status === 1001) {
-          console.log('该用户名已经注册！')
           this.$message({
 						message: '该用户名已经注册！',
 						type: 'error'

@@ -56,18 +56,16 @@ export default {
         username: this.user.username,
         pass: this.user.pass
       };
+      // 获取商品列表
       this.$ajax.post('/api/login', obj).then((res) => {
-        console.log('---------res-------');
-        console.log(res);
+        console.log('---------登录后用户信息-------');
+        console.log(res.data);
+        console.log(res.data.token);
+        console.log(res.data.data);
         if (res.data.code === 0) {
           // 登录成功
-          // 保存token
-          this.$store.commit("set_token", res.data.token);
-          // 保存用户
-          this.$store.commit("set_userInfo", res.data.data);
-          // 保存登录状态
-          this.$store.commit("isLogin", true);
-          this.loading = true;
+          // 保存用户信息
+          this.$store.dispatch("setUserInfo", res.data);
           // 跳转路由
           setTimeout(() => {
             this.$router.push({

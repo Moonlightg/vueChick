@@ -1,5 +1,5 @@
 <template>
-  <div class="container" :class="{ beingskin: skinBox}">
+  <div class="container" :class="{ beingskin: skinBox}" style="opacity: .05">
     <div class="user-box" @click="opendialog">
       <div class="user-logo">
         <div class="user-level">{{userinfo.level}}</div>
@@ -118,10 +118,14 @@
                   </div>
                   <p class="food-name">{{food.name}}{{food.num}}</p>
                   <span class="food-num" v-if="food.num !== 0">{{food.num}}</span>
-                  <div class="mask-bg shortage-tips" v-if="food.num == 0 && food.unlock == 1">
+                  <div class="mask-bg shortage-tips" 
+                    v-if="food.num == 0 && food.unlock == 1" 
+                    @click.stop="showShop(food.name)">
                     <el-button type="success" size="mini">购买</el-button>
                   </div>
-                  <div class="mask-bg shortage-tips" v-if="food.unlock == 0" @click.stop="unlockGoods(food.name,food.unlockPrice)">
+                  <div class="mask-bg shortage-tips" 
+                    v-if="food.unlock == 0" 
+                    @click.stop="unlockGoods(food.name,food.unlockPrice)">
                     <el-button type="warning" size="mini">解锁</el-button>
                   </div>
                 </div>
@@ -153,7 +157,17 @@
     </div>
 
     <!-- 个人中心 -->
-    <Upersonal :dialogStatus="dialogStatus" @opendialog="opendialog" @closeDialog="closeHandle" @signOut="loginOut"></Upersonal>
+    <Upersonal 
+      :dialogStatus="dialogStatus" 
+      @opendialog="opendialog" 
+      @closeDialog="closeHandle" 
+      @signOut="loginOut"></Upersonal>
+
+    <!-- 购买 -->
+    <Upurchase 
+      :purchaseDialog="purchaseDialog" 
+      :currGood="currGood"
+      @closeDialog="closeUpurchase"></Upurchase>
   </div>
 </template>
 
@@ -169,12 +183,15 @@ import Cbee from '../components/Cbee.vue'           // 蜜蜂鲜花
 import Cleaf from '../components/Cleaf.vue'         // 叶子
 import Ctrough from '../components/Ctrough.vue'     // 鸡饭碗
 import Upersonal from '../components/Upersonal.vue' // 个人中心
+import Upurchase from '../components/Upurchase.vue'   // 购买
+
 import {mapGetters} from "vuex";
 export default {
   name: 'Index',
   data() {
     return {
-      dialogStatus: false, // 弹出窗状态
+      dialogStatus: false,   // 个人中心弹出窗状态
+      purchaseDialog: false, // 购买单个商品弹出窗状态
       modalAchievement: false,
       skinBox: false,
       skin: 'skin',
@@ -185,12 +202,12 @@ export default {
       isShop: false,
       isBag: false,
       isStudy: false,
-      goodsList: [],
+      //goodsList: [],
       userGoodsList: []
     }
   },
   computed: {
-    ...mapGetters(["userinfo"])
+    ...mapGetters(["userinfo","goodsList","currGood"])
   },
   components: {
     Csunlight,
@@ -202,7 +219,8 @@ export default {
     Cbee,
     Cleaf,
     Ctrough,
-    Upersonal
+    Upersonal,
+    Upurchase
   },
   mounted: function() {
   //这个是钩子函数
@@ -233,7 +251,7 @@ export default {
     // 退出登录
     loginOut() {
       // 清除用户数据
-      this.$store.commit("loginOut");
+      this.$store.dispatch("loginOut");
       // 退出登录跳转到登录界面
       this.$router.push({
         path: '/login'
@@ -274,54 +292,23 @@ export default {
     opendialog() {
       this.dialogStatus = true
     },
-    closeHandle () {
-      this.dialogStatus = false  // 控制取消和X按钮，关闭弹窗
+    closeHandle() {
+      this.dialogStatus = false
+    },
+    closeUpurchase() {
+      this.purchaseDialog = false
     },
     getGoods() {
       let _this = this;
-      _this.$ajax.get('/api/getGoods').then((res) => {
-        _this.goodsList = res.data.data;
-        if (res.data.code === 1) {
-          _this.$ajax.get('/api/getUserGoods',{
-            params: {
-                id: _this.userinfo._id
-            }
-          }).then((res) => {
-            _this.userGoodsList = res.data.data;
-            console.log("----------");
-            console.log(res);
-            console.log(_this.userGoodsList);
-            _this.updateGoods(_this.goodsList ,_this.userGoodsList);
-          });
+      // 获取商品列表
+      _this.$store.dispatch('reqGetGoods',{
+        params:{
+          id: _this.userinfo._id
         }
-        
       });
     },
     getImgUrl(val){
       return require("@/assets/images/"+val);
-    },
-    // 更新商店
-    updateGoods(goods,usergoods){
-      goods.forEach(itemData => {
-        usergoods.forEach(itemUser => {
-          if(itemData.name === itemUser.name) {
-            console.log(itemUser.name);
-            console.log(itemUser.num);
-            itemData.num = itemUser.num;
-            itemData.unlock = itemUser.unlock;
-          }
-        });
-      });
-    },
-    // 更新商店解锁状态
-    updateUnlock(goods,unlockgood){
-      console.log("++++++");
-      console.log(goods);
-      goods.forEach(itemData => {
-        if(itemData.name === unlockgood) {
-          itemData.unlock = 1;
-        }
-      });
     },
     // 解锁商品
     unlockGoods(name,unlockPrice) {
@@ -344,28 +331,17 @@ export default {
             name: name,
             money: _this.userinfo.money - unlockPrice
           };
-          // 扣除金币
-          _this.$store.commit("deduct_money", unlockPrice);
-          _this.$ajax.post('/api/unlock', obj).then((res) => {
-            console.log('---------返回解锁的商品状态-------');
-            console.log(res);
-            if (res.data.code === 0) {
-              // 解锁成功
-              console.log('---------'+name);
-              _this.updateUnlock(_this.goodsList, name);
-              _this.$message({
-                type: 'success',
-                message: '解锁成功!'
-              });
-            } else {
-              // 解锁失败
-              console.log(res.data.message)
-            }
-          });
+          // 解锁商品
+          _this.$store.dispatch('reqUnlock',obj);
         }
       }).catch(() => {
         console.log("取消解锁");         
       });
+    },
+    // 购买商品
+    showShop(name) {
+      console.log(name);
+      this.purchaseDialog = true;
     }
   }
 }
