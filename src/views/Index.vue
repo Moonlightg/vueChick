@@ -1,5 +1,5 @@
 <template>
-  <div class="container" :class="{ beingskin: skinBox}" style="opacity: .05">
+  <div class="container" :class="{ beingskin: skinBox}">
     <div class="user-box" @click="opendialog">
       <div class="user-logo">
         <div class="user-level">{{userinfo.level}}</div>
@@ -111,21 +111,21 @@
         <div class="popup-content">
           <div class="food-box">
             <ul class="food-list">
-              <li v-for="food in goodsList" :key="food.id" :class="{ isMask: food.num == 0 || food.unlock == 0}">
+              <li v-for="good in goodsList" :key="good.id" :class="{ isMask: good.num == 0 || good.unlock == 0}">
                 <div class="food-item">
                   <div class="food-img">
-                    <img :src="getImgUrl(food.img)">
+                    <img :src="getImgUrl(good.img)">
                   </div>
-                  <p class="food-name">{{food.name}}{{food.num}}</p>
-                  <span class="food-num" v-if="food.num !== 0">{{food.num}}</span>
+                  <p class="food-name">{{good.name}}{{good.num}}</p>
+                  <span class="food-num" v-if="good.num !== 0">{{good.num}}</span>
                   <div class="mask-bg shortage-tips" 
-                    v-if="food.num == 0 && food.unlock == 1" 
-                    @click.stop="showShop(food.name)">
+                    v-if="good.num == 0 && good.unlock == 1" 
+                    @click.stop="showShop(good.name)">
                     <el-button type="success" size="mini">购买</el-button>
                   </div>
                   <div class="mask-bg shortage-tips" 
-                    v-if="food.unlock == 0" 
-                    @click.stop="unlockGoods(food.name,food.unlockPrice)">
+                    v-if="good.unlock == 0" 
+                    @click.stop="unlockGoods(good.name,good.unlockPrice)">
                     <el-button type="warning" size="mini">解锁</el-button>
                   </div>
                 </div>
@@ -327,7 +327,6 @@ export default {
           });
         } else {
           const obj = {
-            openId: _this.userinfo._id,
             name: name,
             money: _this.userinfo.money - unlockPrice
           };
@@ -341,6 +340,7 @@ export default {
     // 购买商品
     showShop(name) {
       console.log(name);
+      this.$store.dispatch('setCurrGood', name);
       this.purchaseDialog = true;
     }
   }

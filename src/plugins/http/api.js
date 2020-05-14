@@ -9,3 +9,6 @@ export const getUserGoods = (params) => ajax.getData('/api/getUserGoods',params)
 
 // 解锁商品
 export const postUnlock = (params) => ajax.postData('/api/unlock',params);
+
+// 购买商品
+export const postClosingGood = (params) => ajax.postData('/api/closingGood',params);

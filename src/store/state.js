@@ -7,8 +7,5 @@ export default {
   isLogin: false, // 登录状态
   goodsList: [],  // 商品列表  
   userGoodsList: [], // 当前用户商品列表
-  currGood: {
-    name: '呵呵',
-    price: 23
-  },   // 当前选中的商品
+  currGood: {},   // 当前选中的商品
 }

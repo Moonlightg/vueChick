@@ -47,7 +47,7 @@ const router = new VueRouter({
 
 // 设置路由守卫，在进页面之前，判断有token，才进入页面，否则返回登录页面
 if (storage.get("token")) {
-  store.commit("set_token", storage.get("token"));
+  store.dispatch('setToken', storage.get("token"));
 }
 router.beforeEach((to, from, next) => {
   // 判断要去的路由有没有requiresAuth

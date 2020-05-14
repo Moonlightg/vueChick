@@ -3,17 +3,21 @@ Message.closeAll();
 import {
   getGoods,
   getUserGoods,
-  postUnlock
+  postUnlock,
+  postClosingGood
 } from '../plugins/http/api'
 
 import {
   DEDUCT_MONEY,
   UPDATE_MONEY,
   UPDATE_GOODS_UNLOCK,
+  SET_TOKEN,
   SET_USERINFO,
+  SET_CURR_GOOD,
   LOGIN_OUT,
   GET_GOODS,
   GET_USER_GOODS,
+  UPDATE_USER_GOODS,
   SET_STORE,
   GET_STORE
 } from './mutation-types'
@@ -21,6 +25,9 @@ import {
 export default {
   deductMoney(context, value) {
     context.commit(DEDUCT_MONEY,value);
+  },
+  setToken(context, value) {
+    context.commit(SET_TOKEN, value);
   },
   setUserInfo(context, value) {
     context.commit(SET_USERINFO,value);
@@ -54,9 +61,25 @@ export default {
       // 更新商品解锁状态
       context.commit(UPDATE_GOODS_UNLOCK, value.name);
       Message({
-          message: '解锁成功',
-          type: 'success'
+        message: '解锁成功',
+        type: 'success'
       });
     }
+  },
+  // 设置当前选择商品
+  setCurrGood(context, value) {
+    context.commit(SET_CURR_GOOD, value);
+  },
+  // 购买商品
+  async reqClosingGood(context, value) {
+    const result = await postClosingGood(value);
+    // 更新金币
+    context.commit(UPDATE_MONEY, value.money);
+    // 更新vuex用户商品信息
+    context.commit(UPDATE_USER_GOODS,result.data);
+    Message({
+      message: '购买成功',
+      type: 'success'
+    });
   }
 }
