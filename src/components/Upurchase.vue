@@ -72,20 +72,11 @@ export default {
           type: 'error'
         });
       } else {
-        // const obj = {
-        //   name: this.currGood.name,
-        //   money: this.currGood.price * this.shoppingNum
-        // };
         const obj = {
-            goodName: this.currGood.name, // 购买商品名称
-            goodNum: this.shoppingNum, // 购买数量
-            money: this.userinfo.money - this.currGood.price * this.shoppingNum // 商品总价
-          };
-        console.log(obj);
-        // this.$message({
-        //   message: "购买成功",
-        //   type: 'success'
-        // });
+          goodName: this.currGood.name, // 购买商品名称
+          goodNum: this.shoppingNum, // 购买数量
+          money: this.userinfo.money - this.currGood.price * this.shoppingNum // 购买后金额计算
+        };
         this.$store.dispatch('reqClosingGood',obj);
         this.shoppingNum = 1;
         this.handleClose();

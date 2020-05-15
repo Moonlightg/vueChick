@@ -5,7 +5,7 @@ import './plugins/axios'
 import './styles/main.css'
 import router from './router'
 import store from './store'
-import { Icon, Button, Dialog, Select, Input, Loading, MessageBox, Message} from 'element-ui';
+import { Icon, Button, Dialog, Select, Input, Loading, MessageBox, Message, Tabs, TabPane} from 'element-ui';
 
 Vue.config.productionTip = false
 //Vue.prototype.$axios = axios;
@@ -15,6 +15,8 @@ Vue.use(Button);
 Vue.use(Dialog);
 Vue.use(Select);
 Vue.use(Input);
+Vue.use(Tabs);
+Vue.use(TabPane);
 Vue.use(Loading.directive);
 
 Vue.prototype.$loading = Loading.service;

@@ -108,30 +108,36 @@
           <span class="popup-title fl">商店</span>
           <i class="el-icon-error" @click="hidePopup"></i>
         </div>
-        <div class="popup-content">
-          <div class="food-box">
-            <ul class="food-list">
-              <li v-for="good in goodsList" :key="good.id" :class="{ isMask: good.num == 0 || good.unlock == 0}">
-                <div class="food-item">
-                  <div class="food-img">
-                    <img :src="getImgUrl(good.img)">
-                  </div>
-                  <p class="food-name">{{good.name}}{{good.num}}</p>
-                  <span class="food-num" v-if="good.num !== 0">{{good.num}}</span>
-                  <div class="mask-bg shortage-tips" 
-                    v-if="good.num == 0 && good.unlock == 1" 
-                    @click.stop="showShop(good.name)">
-                    <el-button type="success" size="mini">购买</el-button>
-                  </div>
-                  <div class="mask-bg shortage-tips" 
-                    v-if="good.unlock == 0" 
-                    @click.stop="unlockGoods(good.name,good.unlockPrice)">
-                    <el-button type="warning" size="mini">解锁</el-button>
-                  </div>
-                </div>
-              </li>
-            </ul>
-          </div>
+        <div class="popup-content popup-tabs-box">
+          <el-tabs v-model="shopTabs">
+            <el-tab-pane label="食物" name="good">
+              <div class="food-box">
+                <ul class="food-list">
+                  <li v-for="good in goodsList" :key="good.id" :class="{ isMask: good.num == 0 || good.unlock == 0}">
+                    <div class="food-item">
+                      <div class="food-img">
+                        <img :src="getImgUrl(good.img)">
+                      </div>
+                      <p class="food-name">{{good.name}}</p>
+                      <span class="food-num" v-if="good.num !== 0">{{good.num}}</span>
+                      <div class="mask-bg shortage-tips" 
+                        v-if="good.num == 0 && good.unlock == 1" 
+                        @click.stop="showShop(good.name)">
+                        <el-button type="success" size="mini">购买</el-button>
+                      </div>
+                      <div class="mask-bg shortage-tips" 
+                        v-if="good.unlock == 0" 
+                        @click.stop="unlockGoods(good.name,good.unlockPrice)">
+                        <el-button type="warning" size="mini">解锁</el-button>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </el-tab-pane>
+            <el-tab-pane label="道具" name="prop">道具</el-tab-pane>
+          </el-tabs>
+          
         </div>
       </div>
       <!-- 背包 -->
@@ -203,7 +209,8 @@ export default {
       isBag: false,
       isStudy: false,
       //goodsList: [],
-      userGoodsList: []
+      userGoodsList: [],
+      shopTabs: 'good'
     }
   },
   computed: {
@@ -223,21 +230,15 @@ export default {
     Upurchase
   },
   mounted: function() {
-  //这个是钩子函数
-  //如果cartView函数要执行，必须先执行钩子函数
-  //这个钩子函数完成了对cratView函数的调用
-  //应该注意的是，使用mounted 并不能保证钩子函数中的 this.$el 在 document 中。为此还应该引入Vue.nextTick/vm.$nextTick
     this.$nextTick(function () {
       this.getChick();
       this.getUser();
     })
   },
   methods: {
-    // 获取chick进食情况
+    // 获取当前用户chick进食情况
     getChick() {
-      var _id = this.userinfo._id;
-      console.log("_id:"+_id);
-      // this.$ajax.get()
+      _this.$store.dispatch('reqChick');
     },
     // 获取用户信息
     getUser() {
@@ -301,11 +302,7 @@ export default {
     getGoods() {
       let _this = this;
       // 获取商品列表
-      _this.$store.dispatch('reqGetGoods',{
-        params:{
-          id: _this.userinfo._id
-        }
-      });
+      _this.$store.dispatch('reqGetGoods');
     },
     getImgUrl(val){
       return require("@/assets/images/"+val);

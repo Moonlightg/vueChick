@@ -1,6 +1,7 @@
 import { Message } from 'element-ui';
 Message.closeAll();
 import {
+  getChick,
   getGoods,
   getUserGoods,
   postUnlock,
@@ -41,14 +42,20 @@ export default {
   getStore(context) {
     context.commit(GET_STORE);
   },
-  async reqGetGoods(context, value) {
+  async reqChick(context) {
+    const result = await getChick();
+    if (result.code === 1) {
+      console.log("读取小鸡成功");
+    }
+  },
+  async reqGetGoods(context) {
     // 请求商品列表数据
     const result = await getGoods();
     // 把商品列表数据赋值给state
     context.commit(GET_GOODS,{goodsList: result.data});
     if (result.code === 1) {
       // 获取商品成功后再获取当前用户的商品
-      const result2 = await getUserGoods(value);
+      const result2 = await getUserGoods();
       context.commit(GET_USER_GOODS,{userGoodsList: result2.data});
     }
   },

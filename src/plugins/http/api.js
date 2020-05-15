@@ -1,6 +1,9 @@
 import ajax from './http'
 // 请求方法
 
+// 获取小鸡chick状态
+export const getChick = () => ajax.getData('/api/getChick');
+
 // 获取商品列表
 export const getGoods = () => ajax.getData('/api/getGoods');
 
