@@ -147,6 +147,7 @@
           <i class="el-icon-error" @click="hidePopup"></i>
         </div>
         <div class="popup-content">
+          <div @click="getChick">test</div>
           背包
         </div>
       </div>
@@ -214,7 +215,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["userinfo","goodsList","currGood"])
+    ...mapGetters(["userinfo","goodsList","currGood","chick"])
   },
   components: {
     Csunlight,
@@ -230,15 +231,15 @@ export default {
     Upurchase
   },
   mounted: function() {
-    this.$nextTick(function () {
-      this.getChick();
-      this.getUser();
+    var _this = this;
+    _this.$nextTick(function () {
+      _this.getChick();
     })
   },
   methods: {
     // 获取当前用户chick进食情况
     getChick() {
-      _this.$store.dispatch('reqChick');
+      this.$store.dispatch('reqChick');
     },
     // 获取用户信息
     getUser() {

@@ -6,6 +6,7 @@ export const SET_USERINFO = 'set_userinfo';               // 保存用户信息
 export const SET_CURR_GOOD = 'set_curr_good';             // 当前选择商品
 export const IS_LOGIN = 'is_login';                       // 保存登录状态
 export const LOGIN_OUT = 'login_out';                     // 退出登录
+export const SET_CHICK = 'set_chick';                     // 绑定小鸡
 export const GET_GOODS = 'git_goods';                     // 获取商品列表
 export const GET_USER_GOODS = 'get_user_goods';           // 当前用户商品列表
 export const UPDATE_USER_GOODS = 'update_user_goods';     // 更新用户商品信息

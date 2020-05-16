@@ -7,6 +7,7 @@ import {
   SET_USERINFO,
   SET_CURR_GOOD,
   LOGIN_OUT,
+  SET_CHICK,
   GET_GOODS,
   GET_USER_GOODS,
   UPDATE_USER_GOODS,
@@ -53,6 +54,9 @@ export default {
     state.token = '',
     state.userinfo = {};
     state.isLogin = false;
+  },
+  [SET_CHICK](state,chick) {
+    state.chick = chick;
   },
   [GET_GOODS](state,{goodsList}) {
     state.goodsList = goodsList;

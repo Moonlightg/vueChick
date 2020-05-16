@@ -5,7 +5,13 @@
     width="80%"
     center
     :before-close="handleClose">
-    <span>需要注意的是内容是默认不居中的</span>
+    <p>{{chick.openId}}</p>
+    <p>{{chick.exp}}</p>
+    <p>{{chick.upgradeExp}}</p>
+    <p>{{chick.level}}</p>
+    <p>{{chick.eat}}</p>
+    <p>{{chick.eatTime}}</p>
+    <p>{{chick.eatEndTime}}</p>
     <span slot="footer" class="dialog-footer">
       <el-button type="danger" @click="signOutClose">退出登录</el-button>
     </span>
@@ -14,6 +20,7 @@
 
 <script>
 
+import {mapGetters} from "vuex";
 export default {
   name: 'Personal',
   props: {
@@ -21,7 +28,8 @@ export default {
       type: Boolean
     }
   },
-  components: {
+  computed: {
+    ...mapGetters(["userinfo","chick"])
   },
   methods: {
     handleClose() {

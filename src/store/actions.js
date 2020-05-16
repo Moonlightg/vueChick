@@ -16,6 +16,7 @@ import {
   SET_USERINFO,
   SET_CURR_GOOD,
   LOGIN_OUT,
+  SET_CHICK,
   GET_GOODS,
   GET_USER_GOODS,
   UPDATE_USER_GOODS,
@@ -45,7 +46,7 @@ export default {
   async reqChick(context) {
     const result = await getChick();
     if (result.code === 1) {
-      console.log("读取小鸡成功");
+      context.commit(SET_CHICK,result.data[0]);
     }
   },
   async reqGetGoods(context) {

@@ -6,5 +6,6 @@ export default {
   userinfo: (state) => state.userinfo,
   isLogin :(state) => state.isLogin,
   goodsList :(state) => state.goodsList,
-  currGood :(state) => state.currGood
+  currGood :(state) => state.currGood,
+  chick :(state) => state.chick
 }
