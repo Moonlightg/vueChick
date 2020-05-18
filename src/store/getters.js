@@ -6,6 +6,8 @@ export default {
   userinfo: (state) => state.userinfo,
   isLogin :(state) => state.isLogin,
   goodsList :(state) => state.goodsList,
+  userGoodsList :(state) => state.userGoodsList,
+  userFoodsList :(state) => state.userFoodsList,
   currGood :(state) => state.currGood,
   chick :(state) => state.chick
 }

@@ -10,6 +10,7 @@ import {
   SET_CHICK,
   GET_GOODS,
   GET_USER_GOODS,
+  GET_USER_FOODS,
   UPDATE_USER_GOODS,
   SET_STORE,
   GET_STORE
@@ -72,6 +73,9 @@ export default {
         }
       })
     })
+  },
+  [GET_USER_FOODS](state,{userFoodsList}) {
+    state.userFoodsList = userFoodsList;
   },
   [UPDATE_USER_GOODS](state,good) {
     // 遍历比较更新前端界面显示

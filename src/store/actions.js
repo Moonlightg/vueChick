@@ -4,6 +4,7 @@ import {
   getChick,
   getGoods,
   getUserGoods,
+  getUserFoods,
   postUnlock,
   postClosingGood
 } from '../plugins/http/api'
@@ -19,6 +20,7 @@ import {
   SET_CHICK,
   GET_GOODS,
   GET_USER_GOODS,
+  GET_USER_FOODS,
   UPDATE_USER_GOODS,
   SET_STORE,
   GET_STORE
@@ -59,6 +61,10 @@ export default {
       const result2 = await getUserGoods();
       context.commit(GET_USER_GOODS,{userGoodsList: result2.data});
     }
+  },
+  async reqGetUserFood(context) {
+    const result = await getUserFoods();
+    context.commit(GET_USER_FOODS,{userFoodsList: result.data});
   },
   async reqUnlock(context, value) {
     // 请求解锁商品接口

@@ -1,5 +1,5 @@
 <template>
-  <div class="container" :class="{ beingskin: skinBox}">
+  <div class="container" :class="{ beingskin: skinBox}" style="opacity: 1">
     <div class="user-box" @click="opendialog">
       <div class="user-logo">
         <div class="user-level">{{userinfo.level}}</div>
@@ -43,7 +43,7 @@
       <!-- 鸡饭碗 -->
       <Ctrough></Ctrough>
       <!-- chick -->
-      <div class="chick">
+      <div class="chick" :class="{noeat:!chick.eat}">
         <div class="chick-head"></div>
         <div class="chick-body"></div>
         <div class="eye">
@@ -113,7 +113,10 @@
             <el-tab-pane label="食物" name="good">
               <div class="food-box">
                 <ul class="food-list">
-                  <li v-for="good in goodsList" :key="good.id" :class="{ isMask: good.num == 0 || good.unlock == 0}">
+                  <li v-for="good in goodsList"
+                    :key="good.id" 
+                    :class="{ isMask: good.num == 0 || good.unlock == 0}"
+                    @click="showGood(name)">
                     <div class="food-item">
                       <div class="food-img">
                         <img :src="getImgUrl(good.img)">
@@ -127,7 +130,7 @@
                       </div>
                       <div class="mask-bg shortage-tips" 
                         v-if="good.unlock == 0" 
-                        @click.stop="unlockGoods(good.name,good.unlockPrice)">
+                        @click.stop="unlockGoods(good)">
                         <el-button type="warning" size="mini">解锁</el-button>
                       </div>
                     </div>
@@ -137,7 +140,6 @@
             </el-tab-pane>
             <el-tab-pane label="道具" name="prop">道具</el-tab-pane>
           </el-tabs>
-          
         </div>
       </div>
       <!-- 背包 -->
@@ -146,9 +148,27 @@
           <span class="popup-title fl">背包</span>
           <i class="el-icon-error" @click="hidePopup"></i>
         </div>
-        <div class="popup-content">
-          <div @click="getChick">test</div>
-          背包
+        <div class="popup-content popup-tabs-box">
+          <el-tabs v-model="shopTabs2">
+            <el-tab-pane label="食物" name="good">
+              <div class="food-box">
+                <ul class="food-list" v-if="userFoodsList.length != 0 ">
+                  <li v-for="good in userFoodsList"
+                    :key="good.id"
+                    @click="showGood(name)">
+                    <div class="food-item">
+                      <div class="food-img">
+                        <img :src="getImgUrl(good.img)">
+                      </div>
+                      <p class="food-name">{{good.name}}</p>
+                      <span class="food-num" v-if="good.num !== 0">{{good.num}}</span>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </el-tab-pane>
+            <el-tab-pane label="道具" name="prop">道具</el-tab-pane>
+          </el-tabs>
         </div>
       </div>
       <!-- 学习 -->
@@ -169,6 +189,8 @@
       @opendialog="opendialog" 
       @closeDialog="closeHandle" 
       @signOut="loginOut"></Upersonal>
+
+    <!-- 商品详情 -->
 
     <!-- 购买 -->
     <Upurchase 
@@ -209,13 +231,18 @@ export default {
       isShop: false,
       isBag: false,
       isStudy: false,
-      //goodsList: [],
-      userGoodsList: [],
-      shopTabs: 'good'
+      shopTabs: 'good',
+      shopTabs2: 'good'
     }
   },
   computed: {
-    ...mapGetters(["userinfo","goodsList","currGood","chick"])
+    ...mapGetters([
+      "userinfo",
+      "goodsList",
+      "userFoodsList",
+      "currGood",
+      "chick"
+    ])
   },
   components: {
     Csunlight,
@@ -243,10 +270,6 @@ export default {
     },
     // 获取用户信息
     getUser() {
-      //this.user.username = "test";
-      // this.$ajax.get('/api/users/info').then((res) => {
-      //   console.log(res);
-      // });
       var aaa = this.userinfo;
       console.log(aaa);
     },
@@ -272,6 +295,8 @@ export default {
         this.isStudy = true;
       } else {
         this.isBag = true;
+        // 获取用户背包物品
+        this.getUserFood();
       }
     },
     // 关闭功能菜单弹窗
@@ -305,28 +330,34 @@ export default {
       // 获取商品列表
       _this.$store.dispatch('reqGetGoods');
     },
+    getUserFood() {
+      let _this = this;
+      // 获取用户背包物品
+      _this.$store.dispatch('reqGetUserFood');
+    },
     getImgUrl(val){
       return require("@/assets/images/"+val);
     },
     // 解锁商品
-    unlockGoods(name,unlockPrice) {
+    unlockGoods(good) {
       let _this = this;
-      let html = "解锁该商品需要"+ unlockPrice + "元";
+      let html = "解锁该商品需要"+ good.unlockPrice + "元";
       _this.$confirm(html, '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning',
         center: true
       }).then(() => {
-        if (unlockPrice > _this.userinfo.money ) {
+        if (good.unlockPrice > _this.userinfo.money ) {
           _this.$message({
             message: '您的金币不足!',
             type: 'error'
           });
         } else {
           const obj = {
-            name: name,
-            money: _this.userinfo.money - unlockPrice
+            name: good.name,
+            img: good.img,
+            money: _this.userinfo.money - good.unlockPrice
           };
           // 解锁商品
           _this.$store.dispatch('reqUnlock',obj);

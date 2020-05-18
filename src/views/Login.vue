@@ -14,6 +14,7 @@
       <div style="margin: 20px 0;"></div>
       <el-input v-model="user.pass" placeholder="Pass" show-password></el-input>
       <div style="margin: 20px 0;"></div>
+      <el-button type="primary" @click="loginOut" style="display: none;">清缓存</el-button>
       <el-button type="primary" @click="submitForm">登录</el-button>
       <el-button type="text" @click="goRegister">没有账号,前往注册</el-button>
     </div>
@@ -37,6 +38,10 @@ export default {
     Cbee
   },
   methods: {
+    loginOut() {
+      // 清除用户数据
+      this.$store.dispatch("loginOut");
+    },
     submitForm () {
       if (!this.user.username) {
         this.$message({
