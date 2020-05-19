@@ -116,7 +116,7 @@
                   <li v-for="good in goodsList"
                     :key="good.id" 
                     :class="{ isMask: good.num == 0 || good.unlock == 0}"
-                    @click="showGood(name)">
+                    @click="showGood(good)">
                     <div class="food-item">
                       <div class="food-img">
                         <img :src="getImgUrl(good.img)">
@@ -155,7 +155,7 @@
                 <ul class="food-list" v-if="userFoodsList.length != 0 ">
                   <li v-for="good in userFoodsList"
                     :key="good.id"
-                    @click="showGood(name)">
+                    @click="showGood(good)">
                     <div class="food-item">
                       <div class="food-img">
                         <img :src="getImgUrl(good.img)">
@@ -196,7 +196,13 @@
     <Upurchase 
       :purchaseDialog="purchaseDialog" 
       :currGood="currGood"
-      @closeDialog="closeUpurchase"></Upurchase>
+      @closeDialog="closeUpurchase" v-if="purchaseDialog"></Upurchase>
+
+    <!-- 物品详情 -->
+    <Ugooddetails
+      :goodDialog="goodDialog"
+      :currFood="currFood"
+      @closeDialog="closeUgood" v-if="goodDialog"></Ugooddetails>
   </div>
 </template>
 
@@ -213,6 +219,7 @@ import Cleaf from '../components/Cleaf.vue'         // 叶子
 import Ctrough from '../components/Ctrough.vue'     // 鸡饭碗
 import Upersonal from '../components/Upersonal.vue' // 个人中心
 import Upurchase from '../components/Upurchase.vue'   // 购买
+import Ugooddetails from '../components/Ugooddetails.vue' // 物品详情
 
 import {mapGetters} from "vuex";
 export default {
@@ -221,6 +228,7 @@ export default {
     return {
       dialogStatus: false,   // 个人中心弹出窗状态
       purchaseDialog: false, // 购买单个商品弹出窗状态
+      goodDialog: false, // 物品详情
       modalAchievement: false,
       skinBox: false,
       skin: 'skin',
@@ -232,7 +240,8 @@ export default {
       isBag: false,
       isStudy: false,
       shopTabs: 'good',
-      shopTabs2: 'good'
+      shopTabs2: 'good',
+      currFood:{}
     }
   },
   computed: {
@@ -255,7 +264,8 @@ export default {
     Cleaf,
     Ctrough,
     Upersonal,
-    Upurchase
+    Upurchase,
+    Ugooddetails
   },
   mounted: function() {
     var _this = this;
@@ -325,6 +335,9 @@ export default {
     closeUpurchase() {
       this.purchaseDialog = false
     },
+    closeUgood() {
+      this.goodDialog = false
+    },
     getGoods() {
       let _this = this;
       // 获取商品列表
@@ -340,6 +353,7 @@ export default {
     },
     // 解锁商品
     unlockGoods(good) {
+      good.money = this.userinfo.money - good.unlockPrice;
       let _this = this;
       let html = "解锁该商品需要"+ good.unlockPrice + "元";
       _this.$confirm(html, '提示', {
@@ -354,17 +368,18 @@ export default {
             type: 'error'
           });
         } else {
-          const obj = {
-            name: good.name,
-            img: good.img,
-            money: _this.userinfo.money - good.unlockPrice
-          };
           // 解锁商品
-          _this.$store.dispatch('reqUnlock',obj);
+          _this.$store.dispatch('reqUnlock',good);
         }
       }).catch(() => {
         console.log("取消解锁");         
       });
+    },
+    // 查看物品详情
+    showGood(good) {
+      this.currFood = good;
+      this.goodDialog = true;
+      console.log(good);
     },
     // 购买商品
     showShop(name) {
