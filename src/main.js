@@ -1,5 +1,7 @@
 import Vue from 'vue'
 //import axios from './plugins/axios'
+//注册filter
+import filters from '../utils/filters.js'
 import App from './App.vue'
 import './plugins/axios'
 import './styles/main.css'
@@ -26,6 +28,9 @@ Vue.prototype.$confirm = MessageBox.confirm;
 Vue.prototype.$prompt = MessageBox.prompt;
 Vue.prototype.$message = Message;
 
+Object.keys(filters).forEach(key => {  
+  Vue.filter(key, filters[key])  
+}) 
 new Vue({
   router,
   store,

@@ -11,7 +11,7 @@
       </div>
       <p class="good-title">{{currFood.name}}</p>
       <P>增加经验:{{currFood.exp}}</P>
-      <P>进食时长:{{currFood.eatTime}}</P>
+      <P>进食时长:{{currFood.eatTime | SecondToDate }}</P>
       <P>库存拥有:{{currFood.num}}</P>
     </div>
     <span slot="footer" class="dialog-footer">
