@@ -18,3 +18,6 @@ export const postUnlock = (params) => ajax.postData('/api/unlock',params);
 
 // 购买商品
 export const postClosingGood = (params) => ajax.postData('/api/closingGood',params);
+
+// 投喂食物
+export const postFeeding = (params) => ajax.postData('/api/feeding',params);

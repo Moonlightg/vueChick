@@ -15,14 +15,14 @@
       <P>库存拥有:{{currFood.num}}</P>
     </div>
     <span slot="footer" class="dialog-footer">
-      <el-button type="danger">喂食</el-button>
+      <el-button type="danger" @click="feeding">喂食</el-button>
     </span>
   </el-dialog>
 </template>
 
 <script>
 
-//import {mapGetters} from "vuex";
+import {mapGetters} from "vuex";
 export default {
   props: {
     goodDialog: {
@@ -37,7 +37,7 @@ export default {
     }
   },
   computed: {
-    //...mapGetters(["userinfo"])
+    ...mapGetters(["chick"])
   },
   methods: {
     getImgUrl(val){
@@ -45,7 +45,31 @@ export default {
       return require("@/assets/images/"+val);
     },
     handleClose() {
-      this.$emit('closeDialog') // 取消和 x 按钮的事件，防止重复操作createDialog变量
+      this.$emit('closeDialog')
+    },
+    feeding() {
+      // 判断是否在进食
+      if (this.chick.eat) {
+        this.$message({
+          message: '我还在吃着呢!',
+          type: 'error'
+        });
+        return
+      } else if (this.currFood.num > 0) {
+        let startDate = new Date().getTime();
+        let eatEndTime = startDate + this.currFood.eatTime;
+        this.currFood.num-- ;
+        var obj = this.currFood;
+        obj.eatEndTime = eatEndTime;
+        console.log(obj);
+        this.$store.dispatch('reqFeeding',obj);
+        this.$emit('countdown',startDate, eatEndTime);
+      } else {
+        this.$message({
+          message: "你没有"+this.currFood.name+"食物了",
+          type: 'error'
+        });
+      }
     }
   }
 }

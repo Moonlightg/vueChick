@@ -65,8 +65,7 @@ export default {
       this.$ajax.post('/api/login', obj).then((res) => {
         console.log('---------登录后用户信息-------');
         console.log(res.data);
-        console.log(res.data.token);
-        console.log(res.data.data);
+        console.log(res.data.chick);
         if (res.data.code === 0) {
           // 登录成功
           // 保存用户信息

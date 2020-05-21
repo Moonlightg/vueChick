@@ -3,9 +3,11 @@ import {
   DEDUCT_MONEY,
   UPDATE_MONEY,
   UPDATE_GOODS_UNLOCK,
+  // UPDATE_CHICK,
   SET_TOKEN,
   SET_USERINFO,
   SET_CURR_GOOD,
+  SET_CURR_FOOD,
   LOGIN_OUT,
   SET_CHICK,
   GET_GOODS,
@@ -30,15 +32,25 @@ export default {
       }
     });
   },
+  // [UPDATE_CHICK](state, chick) {
+  //   state.chick.eat = chick.eat;
+  //   state.chick.eatEndTime = chick.eatEndTime;
+  //   state.chick.eatTime = chick.eatTime;
+  //   state.chick.exp = chick.exp;
+  //   state.chick.level = chick.level;
+  //   state.chick.upgradeExp = chick.upgradeExp
+  // },
   [SET_TOKEN](state, token) {
     state.token = token;
     storage.set('token', token);
   },
-  [SET_USERINFO](state, user) {
-    state.userinfo = user.data;
-    state.token = user.token;
+  [SET_USERINFO](state, value) {
+    state.userinfo = value.user;
+    state.chick = value.chick;
+    state.token = value.token;
     state.isLogin = true;
     storage.set('userinfo',state.userinfo);
+    storage.set('chick', state.chick);
     storage.set('token', state.token);
     storage.set('isLogin', true);
     console.log('store、localstorage中保存用户信息成功！');
@@ -50,6 +62,10 @@ export default {
       }
     })
   },
+  [SET_CURR_FOOD](state, food) {
+    state.currFood = food;
+    storage.set('currFood',state.currFood);
+  },
   [LOGIN_OUT](state) {
     storage.removeAll(); // 清除缓存
     state.token = '',
@@ -58,6 +74,8 @@ export default {
   },
   [SET_CHICK](state,chick) {
     state.chick = chick;
+    storage.set('chick', state.chick);
+    console.log('小鸡信息缓存成功！');
   },
   [GET_GOODS](state,{goodsList}) {
     state.goodsList = goodsList;
@@ -92,7 +110,7 @@ export default {
     storage.set('store',state);
   },
   // 读取缓存中的state
-  [GET_STORE]() {
-    storage.get('store');
+  [GET_STORE](state,value) {
+    storage.get(value);
   }
 }

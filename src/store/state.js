@@ -9,5 +9,6 @@ export default {
   userGoodsList: [], // 当前用户商品列表
   userFoodsList: [], // 当前用户背包食物列表
   currGood: {},   // 当前选中的商品
+  currFood: {},   // 当前选中的食物
   chick: {}       // 小鸡信息
 }

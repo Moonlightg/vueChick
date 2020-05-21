@@ -1,12 +1,14 @@
 export const DEDUCT_MONEY = 'deduct_money';               // 扣除金币
 export const UPDATE_MONEY = 'update_money';               // 更新金币
 export const UPDATE_GOODS_UNLOCK = 'update_goods_unlock'; // 更新商品解锁状态
+// export const UPDATE_CHICK = 'update_chick';       		  // 更新小鸡数据
 export const SET_TOKEN = 'set_token';                     // 保存token
 export const SET_USERINFO = 'set_userinfo';               // 保存用户信息
 export const SET_CURR_GOOD = 'set_curr_good';             // 当前选择商品
+export const SET_CURR_FOOD = 'set_curr_food';             // 当前选择食物
 export const IS_LOGIN = 'is_login';                       // 保存登录状态
 export const LOGIN_OUT = 'login_out';                     // 退出登录
-export const SET_CHICK = 'set_chick';                     // 绑定小鸡
+export const SET_CHICK = 'set_chick';                     // 设置小鸡信息
 export const GET_GOODS = 'git_goods';                     // 获取商品列表
 export const GET_USER_GOODS = 'get_user_goods';           // 当前用户商品列表
 export const GET_USER_FOODS = 'get_user_foods';           // 当前用户背包食物列表

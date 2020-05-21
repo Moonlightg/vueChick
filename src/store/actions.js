@@ -6,16 +6,19 @@ import {
   getUserGoods,
   getUserFoods,
   postUnlock,
-  postClosingGood
+  postClosingGood,
+  postFeeding
 } from '../plugins/http/api'
 
 import {
   DEDUCT_MONEY,
   UPDATE_MONEY,
   UPDATE_GOODS_UNLOCK,
+  // UPDATE_CHICK,
   SET_TOKEN,
   SET_USERINFO,
   SET_CURR_GOOD,
+  SET_CURR_FOOD,
   LOGIN_OUT,
   SET_CHICK,
   GET_GOODS,
@@ -36,14 +39,17 @@ export default {
   setUserInfo(context, value) {
     context.commit(SET_USERINFO,value);
   },
+  setChick(context, value) {
+    context.commit(SET_CHICK,value);
+  },
   loginOut(context) {
     context.commit(LOGIN_OUT);
   },
   setStore(context) {
     context.commit(SET_STORE);
   },
-  getStore(context) {
-    context.commit(GET_STORE);
+  getStore(context, value) {
+    context.commit(GET_STORE, value);
   },
   async reqChick(context) {
     const result = await getChick();
@@ -84,6 +90,10 @@ export default {
   setCurrGood(context, value) {
     context.commit(SET_CURR_GOOD, value);
   },
+  // 设置当前选中食物
+  setCurrFood(context, value) {
+    context.commit(SET_CURR_FOOD, value);
+  },
   // 购买商品
   async reqClosingGood(context, value) {
     const result = await postClosingGood(value);
@@ -95,5 +105,22 @@ export default {
       message: '购买成功',
       type: 'success'
     });
-  }
+  },
+  // 投喂食物
+  async reqFeeding(context, value) {
+    const resule = await postFeeding(value);
+    console.log("投喂请求后返回的数据");
+    console.log(resule.data.chick);
+    console.log(resule.data.data);
+    // 更新投喂后的小鸡信息
+    context.commit(SET_CHICK, resule.data.chick);
+    Message({
+      message: '投喂成功',
+      type: 'success'
+    });
+  },
+  // 进食结束(需要更新小鸡等级等信息)
+  // endeat (context) {
+  //   context.commit('END_EAT');
+  // }
 }

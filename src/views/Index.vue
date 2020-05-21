@@ -1,5 +1,5 @@
 <template>
-  <div class="container" :class="{ beingskin: skinBox}" style="opacity: 1">
+  <div class="container" :class="{ beingskin: skinBox}" style="opacity: .05">
     <div class="user-box" @click="opendialog">
       <div class="user-logo">
         <div class="user-level">{{userinfo.level}}</div>
@@ -44,6 +44,14 @@
       <Ctrough></Ctrough>
       <!-- chick -->
       <div class="chick" :class="{noeat:!chick.eat}">
+        <!-- 进食倒计 -->
+        <div class="countdown-box">
+          <p class="countdown-text" :class="{active : !chick.eat }">{{textContent}}</p>
+          <!-- 进食进度条 -->
+          <div class="progress" v-if="progressValue != 0 && progressValue < 100">
+            <div class="progress-content" :style="'width:' + progressValue + '%' "></div>
+          </div>
+        </div>
         <div class="chick-head"></div>
         <div class="chick-body"></div>
         <div class="eye">
@@ -202,11 +210,13 @@
     <Ugooddetails
       :goodDialog="goodDialog"
       :currFood="currFood"
+      @countdown="setCountdown(arguments)"
       @closeDialog="closeUgood" v-if="goodDialog"></Ugooddetails>
   </div>
 </template>
 
 <script>
+import storage from '../plugins/storage'
 // 场景组件
 import Csunlight from '../components/Csunlight.vue' // 太阳光
 import Cpeak from '../components/Cpeak.vue'         // 山峰
@@ -241,7 +251,8 @@ export default {
       isStudy: false,
       shopTabs: 'good',
       shopTabs2: 'good',
-      currFood:{}
+      progressValue: 0, // 进度条
+      textContent: 'Hello 嘿嘿嘿' // 进度条上方显示文字
     }
   },
   computed: {
@@ -250,6 +261,7 @@ export default {
       "goodsList",
       "userFoodsList",
       "currGood",
+      "currFood",
       "chick"
     ])
   },
@@ -270,10 +282,40 @@ export default {
   mounted: function() {
     var _this = this;
     _this.$nextTick(function () {
-      _this.getChick();
+      //_this.getChick();
+      _this.init();
     })
   },
   methods: {
+    // 初始化,
+    init() {
+      // 页面加载读取缓存
+      let getChick = storage.get('chick');
+      this.$store.dispatch('setChick',getChick);
+      console.log("初始化页面拿到小鸡");
+      console.log(this.chick);
+      // 判断小鸡是否在进食
+      this.chickIsEat();
+    },
+    // 判断是否正在进食
+    chickIsEat: function() {
+        // 页面加载获取当前时间
+        let loadDate = new Date().getTime();
+        // 判断上一次是否进食结束
+        let isEat = this.chick.eatEndTime - loadDate;
+        if (isEat > 0) {
+          // 拿到当时投喂的食物
+          this.$store.dispatch('setCurrFood', storage.get('currFood'));
+          this.chick.eat = true;
+          this.countdown(loadDate, this.chick.eatEndTime);
+        } else {
+          this.chick.eat = false;
+          this.chick.eatEndTime = '';
+          this.textContent = "吃完了, 好饿!";
+          this.$store.dispatch('setChick',this.chick);
+          return;
+        }
+    },
     // 获取当前用户chick进食情况
     getChick() {
       this.$store.dispatch('reqChick');
@@ -377,7 +419,7 @@ export default {
     },
     // 查看物品详情
     showGood(good) {
-      this.currFood = good;
+      this.$store.dispatch('setCurrFood', good);
       this.goodDialog = true;
       console.log(good);
     },
@@ -386,6 +428,81 @@ export default {
       console.log(name);
       this.$store.dispatch('setCurrGood', name);
       this.purchaseDialog = true;
+    },
+    // 设置倒计时
+    setCountdown(data) {
+      // data[0]投喂时的时间
+      // data[0]投喂时计算后的结束时间
+      console.log("测试下开始时间");
+      console.log(data[0]);
+      console.log("测试下结束时间");
+      console.log(data[1]);
+      console.log("测试下小鸡结束时间");
+      console.log(this.chick.eatEndTime);
+      // 开始计算倒计时
+      this.countdown (data[0], data[1]);
+    },
+    countdown(startTime, endTime) {
+      let self = this;
+      let es = endTime - startTime;
+      let delay = 100/self.currFood.eatTime*1000; // 计算每秒走的进度
+      console.log("计算每秒走的进度:"+delay+"%");
+      if (es > 0) {
+        let timer = setInterval (function() {
+          let nowTime = new Date().getTime();
+          let t = endTime - nowTime;
+          let value = (self.currFood.eatTime - t)/1000 * delay; // 计算进度条
+          console.log("计算进度条:"+value+"%");
+          if (value <= 100) {
+            self.progressValue = value
+          } else {
+            self.progressValue = 100;
+          }
+          console.log("t:"+t+"进度条："+value+"%");
+          if (t > 0) {
+            self.chick.eat = true;
+            let day = Math.floor(t/86400000);
+            let hour=Math.floor((t/3600000)%24);
+            let min=Math.floor((t/60000)%60);
+            let sec=Math.floor((t/1000)%60);
+            hour = hour < 10 ? "0" + hour : hour;
+            min = min < 10 ? "0" + min : min;
+            sec = sec < 10 ? "0" + sec : sec;
+            let format = '';
+            if (day > 0) {
+              format = `${day}天${hour}小时${min}分${sec}秒`;
+            } 
+            if (day <= 0 && hour > 0 ) {
+              format = `${hour}小时${min}分${sec}秒`; 
+            }
+            if (day <= 0 && hour <= 0) {
+              format =`${min}分${sec}秒`;
+            }
+            self.textContent = format; // 显示倒计时
+            //self.$store.dispatch('savegame');
+          } else {
+            clearInterval(timer); // 清除定时器
+            // 喂食结束
+            console.log("喂食结束");
+            self.textContent = '我吃完了...';
+            self.settleExp();
+            self.$store.dispatch('endeat');
+            // 弹出鸡蛋加成
+            //self.$refs.paper.popAdd(self.$store.state.chick.egg.addEggExps+'%');
+          }
+        },1000)
+      }
+    },
+    // 喂食结束结算
+    settleExp () {
+      
+        // state.chick.egg.addEggExps = parseInt(state.currFood.exp/state.chick.egg.eggBase);// 鸡蛋加成 = 食物经验/基数，取整数
+        // let eggExps = state.chick.egg.progress += state.chick.egg.addEggExps;
+        // console.log("鸡蛋进度条增加后："+eggExps);
+        // let exps = state.chick.exp + state.currFood.exp;
+        // console.log("小鸡经验增加后为："+exps);
+        // this.commit('SETTLE_LEVEL', exps);
+        // this.commit('settleEgg', eggExps);
     }
   }
 }
