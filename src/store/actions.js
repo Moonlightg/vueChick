@@ -2,6 +2,7 @@ import { Message } from 'element-ui';
 Message.closeAll();
 import {
   getChick,
+  postChick,
   getGoods,
   getUserGoods,
   getUserFoods,
@@ -11,6 +12,7 @@ import {
 } from '../plugins/http/api'
 
 import {
+  SET_LOGIN,
   DEDUCT_MONEY,
   UPDATE_MONEY,
   UPDATE_GOODS_UNLOCK,
@@ -30,6 +32,9 @@ import {
 } from './mutation-types'
 
 export default {
+  setLogin(context) {
+    context.commit(SET_LOGIN);
+  },
   deductMoney(context, value) {
     context.commit(DEDUCT_MONEY,value);
   },
@@ -119,6 +124,16 @@ export default {
       type: 'success'
     });
   },
+  // 进食结束(请求更新数据库)
+  async reqUpdateChick(context, value) {
+    console.log("需要更新的小鸡数据");
+    console.log(value);
+    const resule = await postChick(value);
+    console.log("更新后的小鸡数据");
+    console.log(resule);
+    console.log(resule.data);
+    context.commit(SET_CHICK,resule.data);
+  }
   // 进食结束(需要更新小鸡等级等信息)
   // endeat (context) {
   //   context.commit('END_EAT');

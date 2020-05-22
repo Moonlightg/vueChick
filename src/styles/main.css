@@ -93,6 +93,7 @@ ul,li{ padding: 0;margin: 0; }
 .face:before,
 .face:after,
 .wing-left:before,
+.wing-left2:before,
 .house-6:before,
 .house-7:before,
 .house-7:after,
@@ -552,7 +553,7 @@ ul,li{ padding: 0;margin: 0; }
   width: 7.6rem;
   height: 100%;
   background-color: #f2e3cb;
-  border-radius: 66% 66% 66% 66% / 80% 80% 50% 50%;
+  border-radius: 66% 66% 66% 66% / 84% 84% 50% 50%;
   z-index: 5;
 /*  -webkit-animation:chickbody 1.5s ease-in infinite;
   animation:chickbody 1.5s ease-in infinite;*/
@@ -660,7 +661,8 @@ ul,li{ padding: 0;margin: 0; }
   border-radius: 50%;
   background-color: #fff;
 }
-.wing-left{
+.wing-left,
+.wing-left2{
   left: -.34rem;
   width: 2rem;
   height: 4rem;
@@ -671,13 +673,25 @@ ul,li{ padding: 0;margin: 0; }
   transform: rotate(20deg);
   overflow: hidden;
 }
-.wing-left:before{
+.wing-left:before,
+.wing-left2:before{
   left: -.4rem;
   width: 1rem;
   height: 4rem;
   border-radius: 50%;
   background-color: #fff;
   transform: rotate(-15deg);
+}
+.wing-left2:before {
+  left: 1.2rem;
+  -webkit-transform: rotate(15deg);
+  transform: rotate(15deg);
+}
+.wing-left2 {
+  display: none;
+  left: 6rem;
+  -webkit-transform: rotate(-20deg);
+  transform: rotate(-20deg);
 }
 .wing-right,.wing-content,.wing-dh{
   top: 3rem;
@@ -2185,11 +2199,16 @@ top: 10px;
   75% {transform: scale(1,1)}
   100% { transform: scale(.8,.8)}
 }
+
 /* 没有进食状态 */
 .noeat .face,
 .noeat .food,
-.noeat .wing-right {
+.noeat .wing-right,
+.noeat .wing-content {
   display: none;
+}
+.noeat .wing-left2 {
+  display: block;
 }
 .noeat .blusher,
 .noeat .mouth span,
@@ -3199,4 +3218,17 @@ top: 10px;
 /*element ui 样式重置*/
 .el-message-box {
   width: 300px;
+}
+.welcome-message {
+  background: #eee5ff;
+  color: #673AB7;
+  border-color: #d7beff;
+}
+.welcome-message i {
+  margin-right: 5px;
+  color: #aa5db7;
+}
+.welcome-message b {
+  margin: 0 10px;
+  color: #3F51B5;
 }

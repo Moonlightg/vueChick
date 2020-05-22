@@ -64,6 +64,7 @@ export default {
         console.log(obj);
         this.$store.dispatch('reqFeeding',obj);
         this.$emit('countdown',startDate, eatEndTime);
+        this.$emit('closeDialog');
       } else {
         this.$message({
           message: "你没有"+this.currFood.name+"食物了",

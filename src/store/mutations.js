@@ -1,5 +1,6 @@
 import storage from '../plugins/storage'
 import {
+  SET_LOGIN,
   DEDUCT_MONEY,
   UPDATE_MONEY,
   UPDATE_GOODS_UNLOCK,
@@ -19,6 +20,10 @@ import {
 } from './mutation-types'
 
 export default {
+  [SET_LOGIN](state) {
+    state.isLogin = true;
+    storage.set('isLogin', true);
+  },
   [DEDUCT_MONEY](state,money) {
     state.userinfo.money = state.userinfo.money - money;
   },
@@ -48,11 +53,9 @@ export default {
     state.userinfo = value.user;
     state.chick = value.chick;
     state.token = value.token;
-    state.isLogin = true;
     storage.set('userinfo',state.userinfo);
     storage.set('chick', state.chick);
     storage.set('token', state.token);
-    storage.set('isLogin', true);
     console.log('store、localstorage中保存用户信息成功！');
   },
   [SET_CURR_GOOD](state, good) {

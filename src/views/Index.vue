@@ -1,5 +1,5 @@
 <template>
-  <div class="container" :class="{ beingskin: skinBox}" style="opacity: .05">
+  <div class="container" :class="{ beingskin: skinBox}" style="opacity: 1">
     <div class="user-box" @click="opendialog">
       <div class="user-logo">
         <div class="user-level">{{userinfo.level}}</div>
@@ -37,6 +37,11 @@
         <Cfence></Cfence>
         <!-- 蜜蜂鲜花 -->
         <Cbee></Cbee>
+        <!-- 鸡蛋 -->
+        <Cegg 
+          :eggnum="chick.eggNum" 
+          :eggprogress="chick.eggProgress"  
+          ref="paper"></Cegg>
       </div>
       <!-- 叶子 -->
       <Cleaf></Cleaf>
@@ -64,6 +69,7 @@
         </div>
         <div class="face"></div>
         <div class="wing-left"></div>
+        <div class="wing-left2"></div>
         <div class="wing-content">
           <span></span>
         </div>
@@ -163,13 +169,13 @@
                 <ul class="food-list" v-if="userFoodsList.length != 0 ">
                   <li v-for="good in userFoodsList"
                     :key="good.id"
-                    @click="showGood(good)">
+                    @click="showGood(good)" v-show="good.num != 0">
                     <div class="food-item">
                       <div class="food-img">
                         <img :src="getImgUrl(good.img)">
                       </div>
                       <p class="food-name">{{good.name}}</p>
-                      <span class="food-num" v-if="good.num !== 0">{{good.num}}</span>
+                      <span class="food-num">{{good.num}}</span>
                     </div>
                   </li>
                 </ul>
@@ -225,6 +231,7 @@ import Cgrass from '../components/Cgrass.vue'       // 草地
 import Chouse from '../components/Chouse.vue'       // 房子
 import Cfence from '../components/Cfence.vue'       // 护栏
 import Cbee from '../components/Cbee.vue'           // 蜜蜂鲜花
+import Cegg from '../components/Cegg.vue'           // 鸡蛋
 import Cleaf from '../components/Cleaf.vue'         // 叶子
 import Ctrough from '../components/Ctrough.vue'     // 鸡饭碗
 import Upersonal from '../components/Upersonal.vue' // 个人中心
@@ -252,11 +259,13 @@ export default {
       shopTabs: 'good',
       shopTabs2: 'good',
       progressValue: 0, // 进度条
-      textContent: 'Hello 嘿嘿嘿' // 进度条上方显示文字
+      textContent: 'Hello 嘿嘿嘿', // 进度条上方显示文字,
+      modalLevel: false, // 升级弹窗,用于连续升级检测
     }
   },
   computed: {
     ...mapGetters([
+      "isLogin",
       "userinfo",
       "goodsList",
       "userFoodsList",
@@ -273,6 +282,7 @@ export default {
     Chouse,
     Cfence,
     Cbee,
+    Cegg,
     Cleaf,
     Ctrough,
     Upersonal,
@@ -289,6 +299,16 @@ export default {
   methods: {
     // 初始化,
     init() {
+      if (!this.isLogin) {
+        // 提示欢迎回来
+        this.$message({
+          iconClass: 'el-icon-message-solid',
+          dangerouslyUseHTMLString: true,
+          customClass: 'welcome-message',
+          message: '亲爱的<b>'+ this.userinfo.username +'</b>欢迎回来!'
+        });
+        this.$store.dispatch('setLogin');
+      }
       // 页面加载读取缓存
       let getChick = storage.get('chick');
       this.$store.dispatch('setChick',getChick);
@@ -433,12 +453,6 @@ export default {
     setCountdown(data) {
       // data[0]投喂时的时间
       // data[0]投喂时计算后的结束时间
-      console.log("测试下开始时间");
-      console.log(data[0]);
-      console.log("测试下结束时间");
-      console.log(data[1]);
-      console.log("测试下小鸡结束时间");
-      console.log(this.chick.eatEndTime);
       // 开始计算倒计时
       this.countdown (data[0], data[1]);
     },
@@ -486,23 +500,45 @@ export default {
             console.log("喂食结束");
             self.textContent = '我吃完了...';
             self.settleExp();
-            self.$store.dispatch('endeat');
-            // 弹出鸡蛋加成
-            //self.$refs.paper.popAdd(self.$store.state.chick.egg.addEggExps+'%');
           }
         },1000)
       }
     },
     // 喂食结束结算
-    settleExp () {
-      
-        // state.chick.egg.addEggExps = parseInt(state.currFood.exp/state.chick.egg.eggBase);// 鸡蛋加成 = 食物经验/基数，取整数
-        // let eggExps = state.chick.egg.progress += state.chick.egg.addEggExps;
-        // console.log("鸡蛋进度条增加后："+eggExps);
-        // let exps = state.chick.exp + state.currFood.exp;
-        // console.log("小鸡经验增加后为："+exps);
-        // this.commit('SETTLE_LEVEL', exps);
-        // this.commit('settleEgg', eggExps);
+    settleExp() {
+      // 进食结束时间清零
+      this.chick.eatEndTime = '';
+      this.chick.eat = false;
+      // 经验结算
+      this.chick.eggAddExps = parseInt(this.currFood.exp/this.chick.eggBase); // 鸡蛋经验加成 = 食物经验/基数, 取整数
+      let ep = this.chick.eggProgress += this.chick.eggAddExps;
+      console.log("鸡蛋进度条增加后："+ ep);
+      this.chick.eggExps = this.chick.exp + this.currFood.exp;
+      console.log("小鸡经验增加后为："+ this.chick.eggExps);
+      this.$store.dispatch('reqUpdateChick',this.chick);
+      // 弹出鸡蛋加成
+      this.$refs.paper.popAdd(this.chick.eggAddExps+'%');
+      // 升级计算
+      if (this.chick.eggExps >= this.chick.upgradeExp) {
+        this.chick.level += 1;
+        this.chick.exp = this.chick.eggExps - this.chick.upgradeExp;
+        this.chick.upgradeExp = parseInt(this.chick.upgradeExp * 2); // 提高升级所需经验
+        this.modalLevel = true;
+        // 生成鸡蛋个数计算
+        this.settleEgg(ep);
+      }
+    },
+    // 生成鸡蛋个数计算
+    settleEgg(ep){
+      if (ep > 100) {
+        console.log("鸡蛋进度条:"+ep);
+        let eggNum = parseInt(ep/100);
+        this.chick.eggNum += eggNum;
+        console.log("生成的鸡蛋数："+this.chick.eggNum);
+        this.chick.eggProgress = ep - eggNum * 100;
+        console.log("剩余的鸡蛋经验值："+this.chick.eggProgress);
+        this.$store.dispatch('reqUpdateChick',this.chick);
+      }
     }
   }
 }

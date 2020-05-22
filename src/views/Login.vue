@@ -61,6 +61,8 @@ export default {
         username: this.user.username,
         pass: this.user.pass
       };
+      // 显示loading
+      this.loading = true;
       // 获取商品列表
       this.$ajax.post('/api/login', obj).then((res) => {
         console.log('---------登录后用户信息-------');

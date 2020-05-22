@@ -4,6 +4,9 @@ import ajax from './http'
 // 获取小鸡chick状态
 export const getChick = () => ajax.getData('/api/getChick');
 
+// 更新小鸡chick状态
+export const postChick = (params) => ajax.postData('/api/postChick',params);
+
 // 获取商品列表
 export const getGoods = () => ajax.getData('/api/getGoods');
 
