@@ -2945,6 +2945,10 @@ top: 10px;
 .shopping-box {
   text-align: center;
 }
+.shopping-box .food-img {
+  width: 5rem;
+  margin: 0 auto;
+}
 .num-form {
   width: 8rem;
   display: flex;

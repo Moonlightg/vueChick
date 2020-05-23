@@ -65,6 +65,8 @@ export default {
   async reqGetGoods(context) {
     // 请求商品列表数据
     const result = await getGoods();
+    console.log("baocuole,ceshiyxiia ");
+    console.log(result);
     // 把商品列表数据赋值给state
     context.commit(GET_GOODS,{goodsList: result.data});
     if (result.code === 1) {

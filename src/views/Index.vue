@@ -181,7 +181,7 @@
                 </ul>
               </div>
             </el-tab-pane>
-            <el-tab-pane label="道具" name="prop">道具</el-tab-pane>
+            <el-tab-pane label="道具" name="prop"></el-tab-pane>
           </el-tabs>
         </div>
       </div>
