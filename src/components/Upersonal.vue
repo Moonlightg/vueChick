@@ -22,6 +22,12 @@
       <p><span class="card-label">待拾取鸡蛋量:</span>{{chick.eggNum}}</p>
       <p><span class="card-label">当前鸡蛋进度:</span>{{chick.eggProgress}}%</p>
     </div>
+    <div class="card-box">
+      <h3>庄园信息-小鸭</h3>
+    </div>
+    <div class="card-box">
+      <h3>庄园信息-小树</h3>
+    </div>
     <span slot="footer" class="dialog-footer">
       <el-button type="danger" @click="signOutClose">退出登录</el-button>
     </span>
