@@ -9,7 +9,8 @@
       <h3>个人信息</h3>
       <p><span class="card-label">用户名:</span>{{userinfo.username}}</p>
       <p><span class="card-label">用户ID:</span>{{chick.openId}}</p>
-      <p><span class="card-label">注册时间:</span>{{userinfo.creat_date}}</p>
+      <p><span class="card-label">注册时间:</span>{{userinfo.register_date}}</p>
+      <p><span class="card-label">最近登录:</span>{{userinfo.update_date}}</p>
       <p><span class="card-label">财富:</span>{{userinfo.money}}</p>
     </div>
     <div class="card-box">
