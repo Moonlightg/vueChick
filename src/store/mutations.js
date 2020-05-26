@@ -15,6 +15,7 @@ import {
   GET_USER_GOODS,
   GET_USER_FOODS,
   UPDATE_USER_GOODS,
+  INFO_TASKS,
   SET_STORE,
   GET_STORE
 } from './mutation-types'
@@ -107,6 +108,11 @@ export default {
         itemUser.num = good.num;
       }
     })
+  },
+  [INFO_TASKS](state, value) {
+    state.tasks = value.tasks;
+    storage.set('tasks', value);
+    console.log('保存tasks成功！');
   },
   // 在缓存中存储state
   [SET_STORE](state) {

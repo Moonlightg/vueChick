@@ -8,7 +8,8 @@ import {
   getUserFoods,
   postUnlock,
   postClosingGood,
-  postFeeding
+  postFeeding,
+  postTasks
 } from '../plugins/http/api'
 
 import {
@@ -27,6 +28,7 @@ import {
   GET_USER_GOODS,
   GET_USER_FOODS,
   UPDATE_USER_GOODS,
+  INFO_TASKS,
   SET_STORE,
   GET_STORE
 } from './mutation-types'
@@ -55,6 +57,13 @@ export default {
   },
   getStore(context, value) {
     context.commit(GET_STORE, value);
+  },
+  async setTasks(context) {
+    const result = await postTasks();
+    console.log(result);
+    if (result.code === 0) {
+      context.commit(INFO_TASKS,result.docs);
+    }
   },
   async reqChick(context) {
     const result = await getChick();

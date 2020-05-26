@@ -10,5 +10,6 @@ export default {
   userFoodsList :(state) => state.userFoodsList,
   currGood :(state) => state.currGood,
   currFood :(state) => state.currFood,
-  chick :(state) => state.chick
+  chick :(state) => state.chick,
+  tasks :(state) => state.tasks
 }

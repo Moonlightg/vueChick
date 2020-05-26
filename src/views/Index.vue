@@ -18,7 +18,7 @@
       <li @click="showPopup(skin)"><span class="nav-icon"><i class="el-icon-brush"></i></span><span class="nav-name">换装</span></li>
       <li @click="showPopup(shop)"><span class="nav-icon"><i class="el-icon-shopping-bag-1"></i></span><span class="nav-name">商店</span></li>
       <li @click="showPopup(bag)"><span class="nav-icon"><i class="el-icon-suitcase"></i></span><span class="nav-name">背包</span></li>
-      <li @click="showAchievement()"><span class="nav-icon"><i class="el-icon-medal"></i></span><span class="nav-name">勋章</span></li>
+      <li @click="showTasks()"><span class="nav-icon"><i class="el-icon-medal"></i></span><span class="nav-name">任务</span></li>
       <li @click="showPopup(study)" class="n-green"><span class="nav-icon"><i class="el-icon-collection"></i></span><span class="nav-name">学习</span></li>
     </ul>
     <div class="content">
@@ -218,6 +218,11 @@
       :currFood="currFood"
       @countdown="setCountdown(arguments)"
       @closeDialog="closeUgood" v-if="goodDialog"></Ugooddetails>
+
+    <!-- 任务列表 -->
+    <Utasks
+      :taskDialog="taskDialog"
+      @closeDialog="closeUtask" v-if="taskDialog"></Utasks>
   </div>
 </template>
 
@@ -237,15 +242,18 @@ import Ctrough from '../components/Ctrough.vue'     // 鸡饭碗
 import Upersonal from '../components/Upersonal.vue' // 个人中心
 import Upurchase from '../components/Upurchase.vue'   // 购买
 import Ugooddetails from '../components/Ugooddetails.vue' // 物品详情
+import Utasks from '../components/Utasks.vue' // 物品详情
 
 import {mapGetters} from "vuex";
+const moment = require("moment");
 export default {
   name: 'Index',
   data() {
     return {
       dialogStatus: false,   // 个人中心弹出窗状态
       purchaseDialog: false, // 购买单个商品弹出窗状态
-      goodDialog: false, // 物品详情
+      goodDialog: false, // 物品详情弹窗
+      taskDialog: false, // 任务列表弹窗
       modalAchievement: false,
       skinBox: false,
       skin: 'skin',
@@ -271,7 +279,8 @@ export default {
       "userFoodsList",
       "currGood",
       "currFood",
-      "chick"
+      "chick",
+      "tasks"
     ])
   },
   components: {
@@ -287,7 +296,8 @@ export default {
     Ctrough,
     Upersonal,
     Upurchase,
-    Ugooddetails
+    Ugooddetails,
+    Utasks
   },
   mounted: function() {
     var _this = this;
@@ -400,6 +410,9 @@ export default {
     closeUgood() {
       this.goodDialog = false
     },
+    closeUtask() {
+      this.taskDialog = false
+    },
     getGoods() {
       let _this = this;
       // 获取商品列表
@@ -412,6 +425,19 @@ export default {
     },
     getImgUrl(val){
       return require("@/assets/images/"+val);
+    },
+    // 查看任务列表
+    showTasks(){
+      var newDate = moment().format('YYYY-MM-DD');
+      if (storage.get('tasks')){
+        var taskTime = storage.get('tasks').time;
+        if (taskTime != newDate) {
+          this.$store.dispatch('setTasks');
+        }
+      } else {
+        this.$store.dispatch('setTasks');
+      }
+      this.taskDialog = true;
     },
     // 解锁商品
     unlockGoods(good) {

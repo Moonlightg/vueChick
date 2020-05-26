@@ -14,5 +14,6 @@ export const GET_GOODS = 'git_goods';                     // 获取商品列表
 export const GET_USER_GOODS = 'get_user_goods';           // 当前用户商品列表
 export const GET_USER_FOODS = 'get_user_foods';           // 当前用户背包食物列表
 export const UPDATE_USER_GOODS = 'update_user_goods';     // 更新用户商品信息
+export const INFO_TASKS = 'info_tasks';                   // 初始化任务
 export const SET_STORE = 'set_store';                     // 缓存store
 export const GET_STORE = 'get_store';                     // 读取store

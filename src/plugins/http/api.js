@@ -24,3 +24,6 @@ export const postClosingGood = (params) => ajax.postData('/api/closingGood',para
 
 // 投喂食物
 export const postFeeding = (params) => ajax.postData('/api/feeding',params);
+
+// 初始化每日任务
+export const postTasks = () => ajax.postData('/api/postTasks');

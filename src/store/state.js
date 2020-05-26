@@ -10,5 +10,6 @@ export default {
   userFoodsList: [], // 当前用户背包食物列表
   currGood: {},   // 当前选中的商品
   currFood: {},   // 当前选中的食物
-  chick: {}       // 小鸡信息
+  chick: {},      // 小鸡信息
+  tasks: {},  // 每日任务列表
 }
