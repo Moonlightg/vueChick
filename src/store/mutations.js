@@ -74,6 +74,7 @@ export default {
     storage.removeAll(); // 清除缓存
     state.token = '',
     state.userinfo = {};
+    state.tasks = {};
     state.isLogin = false;
   },
   [SET_CHICK](state,chick) {
@@ -110,7 +111,7 @@ export default {
     })
   },
   [INFO_TASKS](state, value) {
-    state.tasks = value.tasks;
+    state.tasks = value;
     storage.set('tasks', value);
     console.log('保存tasks成功！');
   },

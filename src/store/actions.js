@@ -62,7 +62,7 @@ export default {
     const result = await postTasks();
     console.log(result);
     if (result.code === 0) {
-      context.commit(INFO_TASKS,result.docs);
+      context.commit(INFO_TASKS,result.data);
     }
   },
   async reqChick(context) {

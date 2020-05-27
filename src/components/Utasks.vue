@@ -5,11 +5,27 @@
     width="80%"
     center
     :before-close="handleClose">
-    <ul>
-      <li v-for="task in tasks" :key="task.taskId" >
-        <p>{{task.taskId}}</p>
-        <p>{{task.taskTitle}}</p>
-        <p>{{task.state}}</p>
+    <ul class="tasks-list">
+      <li v-for="task in tasks.tasks" :key="task.taskId" >
+<!--         <p>{{task.taskId}}</p> -->
+        <div class="task-item">
+          <div class="task-l">
+            <p>{{task.taskTitle}}</p>
+            <div class="reward-t">
+              <p>奖励<i class="el-icon-s-help"></i><span>{{task.rewardMoney}}</span></p>
+              <p v-if="task.rewardGem != 0"><i class="el-icon-trophy-1"></i><span>{{task.rewardGem}}</span></p></div>
+          </div>
+          <div class="task-c">
+            {{task.currCount}}/{{task.needCount}}
+          </div>
+          <div class="task-r">
+            <p v-if="task.state === 0">未完成</p>
+            <p v-if="task.state === 1">领取奖励</p>
+            <p v-if="task.state === 2">已领取</p>
+          </div>
+        </div>
+        
+        
       </li>
     </ul>
   </el-dialog>
@@ -36,3 +52,36 @@ export default {
 }
 
 </script>
+<style type="text/css">
+  .tasks-list li{
+    border: 1px solid #cab2a9;
+    padding: 10px;
+    background: #fffcf8;
+    border-radius: 3px;
+  }
+  .tasks-list li + li {
+    margin-top: 10px;
+  }
+  .task-item {
+    display: flex;
+  }
+  .task-l {
+    flex: 1;
+  }
+  .task-c {
+    padding-right: 10px;
+    flex: 0 0 40px;
+    text-align: right;
+  }
+  .task-r {
+    flex: 0 0 60px;
+    text-align: right;
+  }
+  .reward-t {
+    display: flex;
+    margin-top: 5px;
+  }
+  .reward-t p i{
+    margin-left: 10px;
+  }
+</style>

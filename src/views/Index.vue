@@ -302,8 +302,10 @@ export default {
   mounted: function() {
     var _this = this;
     _this.$nextTick(function () {
-      //_this.getChick();
+      // 初始化
       _this.init();
+      // 初始化任务列表
+      _this.initTask();
     })
   },
   methods: {
@@ -319,13 +321,22 @@ export default {
         });
         this.$store.dispatch('setLogin');
       }
-      // 页面加载读取缓存
+      // 页面加载读取小鸡缓存并初始化
       let getChick = storage.get('chick');
       this.$store.dispatch('setChick',getChick);
-      console.log("初始化页面拿到小鸡");
-      console.log(this.chick);
       // 判断小鸡是否在进食
       this.chickIsEat();
+    },
+    initTask() {
+      var newDate = moment().format('YYYY-MM-DD');
+      if (storage.get('tasks')){
+        var taskTime = storage.get('tasks').time;
+        if (taskTime != newDate) {
+          this.$store.dispatch('setTasks');
+        }
+      } else {
+        this.$store.dispatch('setTasks');
+      }
     },
     // 判断是否正在进食
     chickIsEat: function() {
@@ -428,15 +439,7 @@ export default {
     },
     // 查看任务列表
     showTasks(){
-      var newDate = moment().format('YYYY-MM-DD');
-      if (storage.get('tasks')){
-        var taskTime = storage.get('tasks').time;
-        if (taskTime != newDate) {
-          this.$store.dispatch('setTasks');
-        }
-      } else {
-        this.$store.dispatch('setTasks');
-      }
+      this.initTask();
       this.taskDialog = true;
     },
     // 解锁商品
