@@ -16,6 +16,7 @@ import {
   GET_USER_FOODS,
   UPDATE_USER_GOODS,
   INFO_TASKS,
+  UPDATE_TASKS,
   SET_STORE,
   GET_STORE
 } from './mutation-types'
@@ -114,6 +115,11 @@ export default {
     state.tasks = value;
     storage.set('tasks', value);
     console.log('保存tasks成功！');
+  },
+  [UPDATE_TASKS](state, value) {
+    console.log("测试下更新任务");
+    console.log(state.tasks);
+    console.log(value);
   },
   // 在缓存中存储state
   [SET_STORE](state) {

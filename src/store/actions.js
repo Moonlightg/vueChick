@@ -9,7 +9,8 @@ import {
   postUnlock,
   postClosingGood,
   postFeeding,
-  postTasks
+  postTasks,
+  postReceiveTask
 } from '../plugins/http/api'
 
 import {
@@ -29,6 +30,7 @@ import {
   GET_USER_FOODS,
   UPDATE_USER_GOODS,
   INFO_TASKS,
+  UPDATE_TASKS,
   SET_STORE,
   GET_STORE
 } from './mutation-types'
@@ -65,6 +67,15 @@ export default {
       context.commit(INFO_TASKS,result.data);
     }
   },
+  async receiveTask(context, value) {
+    var obj = {
+      taskId: value
+    }
+    const result = await postReceiveTask(obj);
+    console.log("领取任务后更新的数据");
+    console.log(result);
+    context.commit(UPDATE_TASKS,result.data);
+  },
   async reqChick(context) {
     const result = await getChick();
     if (result.code === 1) {
@@ -74,8 +85,6 @@ export default {
   async reqGetGoods(context) {
     // 请求商品列表数据
     const result = await getGoods();
-    console.log("baocuole,ceshiyxiia ");
-    console.log(result);
     // 把商品列表数据赋值给state
     context.commit(GET_GOODS,{goodsList: result.data});
     if (result.code === 1) {

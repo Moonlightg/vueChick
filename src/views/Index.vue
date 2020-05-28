@@ -329,8 +329,12 @@ export default {
     },
     initTask() {
       var newDate = moment().format('YYYY-MM-DD');
+      console.log("newDate");
+      console.log(newDate);
       if (storage.get('tasks')){
         var taskTime = storage.get('tasks').time;
+        console.log("taskTime");
+        console.log(taskTime);
         if (taskTime != newDate) {
           this.$store.dispatch('setTasks');
         }

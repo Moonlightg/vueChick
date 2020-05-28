@@ -27,3 +27,6 @@ export const postFeeding = (params) => ajax.postData('/api/feeding',params);
 
 // 初始化每日任务
 export const postTasks = () => ajax.postData('/api/postTasks');
+
+// 领取任务奖励
+export const postReceiveTask = (params) => ajax.postData('/api/postReceiveTask',params);
