@@ -1,6 +1,7 @@
 export const SET_LOGIN = 'set_login';                     // 登录状态
 export const DEDUCT_MONEY = 'deduct_money';               // 扣除金币
 export const UPDATE_MONEY = 'update_money';               // 更新金币
+export const UPDATE_GEM = 'update_gem';                   // 更新宝石
 export const UPDATE_GOODS_UNLOCK = 'update_goods_unlock'; // 更新商品解锁状态
 // export const UPDATE_CHICK = 'update_chick';       		  // 更新小鸡数据
 export const SET_TOKEN = 'set_token';                     // 保存token

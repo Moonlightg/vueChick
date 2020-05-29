@@ -17,6 +17,7 @@ import {
   SET_LOGIN,
   DEDUCT_MONEY,
   UPDATE_MONEY,
+  UPDATE_GEM,
   UPDATE_GOODS_UNLOCK,
   // UPDATE_CHICK,
   SET_TOKEN,
@@ -72,9 +73,12 @@ export default {
       taskId: value
     }
     const result = await postReceiveTask(obj);
-    console.log("领取任务后更新的数据");
     console.log(result);
-    context.commit(UPDATE_TASKS,result.data);
+    if (result.code === 0) {
+      context.commit(UPDATE_TASKS,result.data.data);
+      context.commit(UPDATE_MONEY,result.data.user.money);
+      context.commit(UPDATE_GEM,result.data.user.gem);
+    }
   },
   async reqChick(context) {
     const result = await getChick();

@@ -2732,6 +2732,13 @@ top: 10px;
   display: inline-block;
   vertical-align: middle;
 }
+p + .user-mi {
+  margin-left: 10px;
+}
+.user-mi.c-blue,
+.c-blue{
+  color: #2196F3;
+}
 .user-form {
   width: 80%;
   margin: 0 auto;

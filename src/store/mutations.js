@@ -3,6 +3,7 @@ import {
   SET_LOGIN,
   DEDUCT_MONEY,
   UPDATE_MONEY,
+  UPDATE_GEM,
   UPDATE_GOODS_UNLOCK,
   // UPDATE_CHICK,
   SET_TOKEN,
@@ -31,6 +32,9 @@ export default {
   },
   [UPDATE_MONEY](state,newMoney) {
     state.userinfo.money = newMoney;
+  },
+  [UPDATE_GEM](state,newGem) {
+    state.userinfo.gem = newGem;
   },
   [UPDATE_GOODS_UNLOCK](state, name) {
     state.goodsList.forEach(itemData => {
@@ -117,9 +121,9 @@ export default {
     console.log('保存tasks成功！');
   },
   [UPDATE_TASKS](state, value) {
-    console.log("测试下更新任务");
-    console.log(state.tasks);
-    console.log(value);
+    state.tasks = value;
+    storage.set('tasks', value);
+    console.log('更新tasks缓存成功！');
   },
   // 在缓存中存储state
   [SET_STORE](state) {

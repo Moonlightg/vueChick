@@ -21,7 +21,7 @@
           <div class="task-r">
             <p v-if="task.state === 0">未完成</p>
             <p v-if="task.state === 1"><el-button type="primary" round @click="receiveTask(task.taskId)">领取奖励</el-button></p>
-            <p v-if="task.state === 2">已领取</p>
+            <p v-if="task.state === 2"><el-button type="info" round disabled>已领取</el-button></p>
           </div>
         </div>
         
@@ -49,8 +49,6 @@ export default {
       this.$emit('closeDialog') // 取消和 x 按钮的事件，防止重复操作createDialog变量
     },
     receiveTask(val) {
-      console.log("领取任务类型");
-      console.log(val);
       this.$store.dispatch('receiveTask',val);
     }
   }

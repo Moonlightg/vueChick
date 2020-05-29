@@ -10,6 +10,8 @@
         <div class="user-money">
           <div class="user-mi"><i class="el-icon-s-help"></i></div>
           <p>{{userinfo.money}}</p>
+          <div class="user-mi c-blue"><i class="el-icon-trophy-1"></i></div>
+          <p class="c-blue">{{userinfo.gem}}</p>
         </div>
       </div>
     </div>
@@ -210,19 +212,19 @@
     <Upurchase 
       :purchaseDialog="purchaseDialog" 
       :currGood="currGood"
-      @closeDialog="closeUpurchase" v-if="purchaseDialog"></Upurchase>
+      @closeDialog="closeUpurchase" v-show="purchaseDialog"></Upurchase>
 
     <!-- 物品详情 -->
     <Ugooddetails
       :goodDialog="goodDialog"
       :currFood="currFood"
       @countdown="setCountdown(arguments)"
-      @closeDialog="closeUgood" v-if="goodDialog"></Ugooddetails>
+      @closeDialog="closeUgood" v-show="goodDialog"></Ugooddetails>
 
     <!-- 任务列表 -->
     <Utasks
       :taskDialog="taskDialog"
-      @closeDialog="closeUtask" v-if="taskDialog"></Utasks>
+      @closeDialog="closeUtask" v-show="taskDialog"></Utasks>
   </div>
 </template>
 

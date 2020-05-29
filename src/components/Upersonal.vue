@@ -11,7 +11,8 @@
       <p><span class="card-label">用户ID:</span>{{chick.openId}}</p>
       <p><span class="card-label">注册时间:</span>{{userinfo.register_date}}</p>
       <p><span class="card-label">最近登录:</span>{{userinfo.update_date}}</p>
-      <p><span class="card-label">财富:</span>{{userinfo.money}}</p>
+      <p><span class="card-label">金币:</span>{{userinfo.money}}</p>
+      <p><span class="card-label">宝石:</span>{{userinfo.gem}}</p>
     </div>
     <div class="card-box">
       <h3>庄园信息-小鸡</h3>
