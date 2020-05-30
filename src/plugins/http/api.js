@@ -30,3 +30,6 @@ export const postTasks = () => ajax.postData('/api/postTasks');
 
 // 领取任务奖励
 export const postReceiveTask = (params) => ajax.postData('/api/postReceiveTask',params);
+
+// 添加任务进度次数
+export const addTaskCount = (params) => ajax.postData('/api/addTaskCount',params);

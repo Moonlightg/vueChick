@@ -10,7 +10,8 @@ import {
   postClosingGood,
   postFeeding,
   postTasks,
-  postReceiveTask
+  postReceiveTask,
+  addTaskCount
 } from '../plugins/http/api'
 
 import {
@@ -139,14 +140,25 @@ export default {
   async reqFeeding(context, value) {
     const resule = await postFeeding(value);
     console.log("投喂请求后返回的数据");
+    console.log(resule);
     console.log(resule.data.chick);
     console.log(resule.data.data);
     // 更新投喂后的小鸡信息
-    context.commit(SET_CHICK, resule.data.chick);
-    Message({
-      message: '投喂成功',
-      type: 'success'
-    });
+    if (resule.code == 1) {
+      context.commit(SET_CHICK, resule.data.chick);
+      Message({
+        message: '投喂成功',
+        type: 'success'
+      });
+      var obj {
+        type: 1,
+        count: 1
+      }
+      const resule2 = await addTaskCount(obj);
+      console.log("测试下更新任务的次数");
+      console.log(resule2);
+    }
+    
   },
   // 进食结束(请求更新数据库)
   async reqUpdateChick(context, value) {
