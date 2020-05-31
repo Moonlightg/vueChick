@@ -138,25 +138,26 @@ export default {
   },
   // 投喂食物
   async reqFeeding(context, value) {
-    const resule = await postFeeding(value);
+    const result = await postFeeding(value);
     console.log("投喂请求后返回的数据");
-    console.log(resule);
-    console.log(resule.data.chick);
-    console.log(resule.data.data);
+    console.log(result);
+    console.log(result.data.chick);
+    console.log(result.data.data);
     // 更新投喂后的小鸡信息
-    if (resule.code == 1) {
-      context.commit(SET_CHICK, resule.data.chick);
+    if (result.code == 1) {
+      context.commit(SET_CHICK, result.data.chick);
       Message({
         message: '投喂成功',
         type: 'success'
       });
-      var obj {
+      var obj = {
         type: 1,
         count: 1
       }
-      const resule2 = await addTaskCount(obj);
+      const result2 = await addTaskCount(obj);
       console.log("测试下更新任务的次数");
-      console.log(resule2);
+      console.log(result2);
+      context.commit(UPDATE_TASKS,result2.data.data);
     }
     
   },
@@ -164,11 +165,11 @@ export default {
   async reqUpdateChick(context, value) {
     console.log("需要更新的小鸡数据");
     console.log(value);
-    const resule = await postChick(value);
+    const result = await postChick(value);
     console.log("更新后的小鸡数据");
-    console.log(resule);
-    console.log(resule.data);
-    context.commit(SET_CHICK,resule.data);
+    console.log(result);
+    console.log(result.data);
+    context.commit(SET_CHICK,result.data);
   }
   // 进食结束(需要更新小鸡等级等信息)
   // endeat (context) {

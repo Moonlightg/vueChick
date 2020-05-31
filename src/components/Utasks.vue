@@ -2,7 +2,7 @@
   <el-dialog
     title="每日任务"
     :visible.sync="taskDialog"
-    width="80%"
+    width="90%"
     center
     :before-close="handleClose">
     <ul class="tasks-list">
