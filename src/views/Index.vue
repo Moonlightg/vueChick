@@ -550,7 +550,6 @@ export default {
       console.log("鸡蛋进度条增加后："+ ep);
       this.chick.eggExps = this.chick.exp + this.currFood.exp;
       console.log("小鸡经验增加后为："+ this.chick.eggExps);
-      this.$store.dispatch('reqUpdateChick',this.chick);
       // 弹出鸡蛋加成
       this.$refs.paper.popAdd(this.chick.eggAddExps+'%');
       // 升级计算
@@ -561,6 +560,10 @@ export default {
         this.modalLevel = true;
         // 生成鸡蛋个数计算
         this.settleEgg(ep);
+        this.$store.dispatch('reqUpdateChick',this.chick);
+      } else {
+        this.settleEgg(ep);
+        this.$store.dispatch('reqUpdateChick',this.chick);
       }
     },
     // 生成鸡蛋个数计算
@@ -572,7 +575,6 @@ export default {
         console.log("生成的鸡蛋数："+this.chick.eggNum);
         this.chick.eggProgress = ep - eggNum * 100;
         console.log("剩余的鸡蛋经验值："+this.chick.eggProgress);
-        this.$store.dispatch('reqUpdateChick',this.chick);
       }
     }
   }

@@ -139,7 +139,7 @@ ul,li{ padding: 0;margin: 0; }
     text-align: center;
     position: absolute;
     transform: translate(-25%, -100%);
-    animation: fadeOut 500ms ease-out;
+    animation: fadeOut 1500ms ease-out;
 }
 
 @keyframes fadeOut {
