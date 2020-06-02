@@ -13,11 +13,13 @@ import {
   postReceiveTask,
   addTaskCount,
   postEgg,
-  postEggNum
+  postEggNum,
+  addLog
 } from '../plugins/http/api'
 
 import {
   SET_LOGIN,
+  SET_LOG,
   DEDUCT_MONEY,
   UPDATE_MONEY,
   UPDATE_GEM,
@@ -64,6 +66,14 @@ export default {
   },
   getStore(context, value) {
     context.commit(GET_STORE, value);
+  },
+  async addLog(context, value) {
+    const result = await addLog(value);
+    console.log("测试日志动态");
+    console.log(result);
+    if (result.code === 0) {
+      context.commit(SET_LOG,result.data);
+    }
   },
   async setTasks(context) {
     const result = await postTasks();

@@ -1,6 +1,7 @@
 import storage from '../plugins/storage'
 import {
   SET_LOGIN,
+  SET_LOG,
   DEDUCT_MONEY,
   UPDATE_MONEY,
   UPDATE_GEM,
@@ -27,6 +28,9 @@ export default {
   [SET_LOGIN](state) {
     state.isLogin = true;
     storage.set('isLogin', true);
+  },
+  [SET_LOG](state, log) {
+    state.log = log;
   },
   [DEDUCT_MONEY](state,money) {
     state.userinfo.money = state.userinfo.money - money;

@@ -39,3 +39,6 @@ export const postEgg = (params) => ajax.postData('/api/postEgg',params);
 
 // 收获鸡蛋(总产量),更新小鸡信息
 export const postEggNum = (params) => ajax.postData('/api/postEggNum',params);
+
+// 添加动态日志
+export const addLog = (params) => ajax.postData('/api/addLog',params);

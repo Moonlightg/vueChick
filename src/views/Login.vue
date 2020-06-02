@@ -72,6 +72,9 @@ export default {
           // 登录成功
           // 保存用户信息
           this.$store.dispatch("setUserInfo", res.data);
+          // 添加日志
+
+          this.$store.dispatch("addLog", {log_title: '登录成功'});
           // 跳转路由
           setTimeout(() => {
             this.$router.push({
@@ -81,10 +84,10 @@ export default {
         } else {
           // 登录失败
           this.$message({
-            message: res.data.message,
+            message: res.data.msg,
             type: 'error'
           });
-          console.log(res.data.message)
+          console.log(res.data.msg)
         }
       });
     },

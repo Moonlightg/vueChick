@@ -1,5 +1,5 @@
 <template>
-  <div class="container" :class="{ beingskin: skinBox}" style="opacity: .1">
+  <div class="container" :class="{ beingskin: skinBox}" style="opacity: 1">
     <!-- 个人信息简介 -->
     <div class="user-box" @click="opendialog">
       <div class="user-logo">
@@ -16,6 +16,10 @@
         </div>
       </div>
     </div>
+    <!-- 功能菜单 left -->
+    <ul class="nav-list nav-l">
+      <li class="n-violet" @click="goLog()"><span class="nav-icon"><i class="el-icon-bell"></i></span><span class="nav-name">动态</span></li>
+    </ul>
     <!-- 功能菜单 -->
     <ul class="nav-list">
       <li @click="showPopup(skin)"><span class="nav-icon"><i class="el-icon-brush"></i></span><span class="nav-name">换装</span></li>
@@ -285,7 +289,6 @@ export default {
       shopTabs2: 'good',
       progressValue: 0, // 进度条
       textContent: 'Hello 嘿嘿嘿', // 进度条上方显示文字,
-      modalLevel: false, // 升级弹窗,用于连续升级检测
       hoursType: '', // 0上午,1下午,2晚上
       hoursTip:'' // 上午好,下午好,晚上好
     }
@@ -585,19 +588,10 @@ export default {
       console.log("小鸡经验增加后为："+ this.chick.eggExps);
       // 弹出鸡蛋加成
       this.$refs.paper.popAdd(this.chick.eggAddExps+'%');
+      // 生成鸡蛋个数计算
+      this.settleEgg(ep);
       // 升级计算
-      if (this.chick.eggExps >= this.chick.upgradeExp) {
-        this.chick.level += 1;
-        this.chick.exp = this.chick.eggExps - this.chick.upgradeExp;
-        this.chick.upgradeExp = parseInt(this.chick.upgradeExp * 2); // 提高升级所需经验
-        this.modalLevel = true;
-        // 生成鸡蛋个数计算
-        this.settleEgg(ep);
-        this.$store.dispatch('reqUpdateChick',this.chick);
-      } else {
-        this.settleEgg(ep);
-        this.$store.dispatch('reqUpdateChick',this.chick);
-      }
+      this.settleLevel();
     },
     // 生成鸡蛋个数计算
     settleEgg(ep){
@@ -609,6 +603,31 @@ export default {
         this.chick.eggProgress = ep - eggNum * 100;
         console.log("剩余的鸡蛋经验值："+this.chick.eggProgress);
       }
+    },
+    // 小鸡升级计算
+    settleLevel() {
+      if (this.chick.eggExps >= this.chick.upgradeExp) {
+        this.chick.level += 1;
+        this.chick.exp = this.chick.eggExps - this.chick.upgradeExp;
+        this.chick.upgradeExp = parseInt(this.chick.upgradeExp * 2); // 提高升级所需经验
+        this.$store.dispatch('reqUpdateChick',this.chick);
+        this.$confirm('恭喜你升级了,'+this.chick.level+'级!', '提示', {
+          confirmButtonText: '确定',
+          showCancelButton: false,
+          type: 'success',
+          center: true
+        }).then(() => {
+          this.settleLevel();
+        })
+      } else {
+        this.$store.dispatch('reqUpdateChick',this.chick);
+      }
+    },
+    // 跳转到动态
+    goLog() {
+      this.$router.push({
+        path: '/log'
+      });
     }
   }
 }
