@@ -10,12 +10,21 @@
         <img :src="getImgUrl(currFood.img)">
       </div>
       <p class="good-title">{{currFood.name}}</p>
-      <P>增加经验:{{currFood.exp}}</P>
-      <P>进食时长:{{currFood.eatTime | SecondToDate }}</P>
+      <div v-if="currFood.type == 1">
+        <P>增加经验:{{currFood.exp}}</P>
+        <P>进食时长:{{currFood.eatTime | SecondToDate }}</P>
+      </div>
+      <div v-if="currFood.type == 2">
+        <P>物品单价:{{currFood.price}}金币</P>
+      </div>
+      <div v-if="currFood.type == 3">
+        <P>物品单价:{{currFood.price}}宝石</P>
+      </div>
       <P>库存拥有:{{currFood.num}}</P>
     </div>
     <span slot="footer" class="dialog-footer">
-      <el-button type="danger" @click="feeding">喂食</el-button>
+      <el-button type="danger" @click="feeding" v-if="currFood.type == 1">喂食</el-button>
+      <el-button type="success" @click="sell" v-if="currFood.type == 2">出售</el-button>
     </span>
   </el-dialog>
 </template>
@@ -71,6 +80,9 @@ export default {
           type: 'error'
         });
       }
+    },
+    sell() {
+      console.log("出售:"+this.currFood.name);
     }
   }
 }

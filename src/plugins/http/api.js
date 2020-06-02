@@ -33,3 +33,9 @@ export const postReceiveTask = (params) => ajax.postData('/api/postReceiveTask',
 
 // 添加任务进度次数
 export const addTaskCount = (params) => ajax.postData('/api/addTaskCount',params);
+
+// 收获鸡蛋(物品)
+export const postEgg = (params) => ajax.postData('/api/postEgg',params);
+
+// 收获鸡蛋(总产量),更新小鸡信息
+export const postEggNum = (params) => ajax.postData('/api/postEggNum',params);

@@ -46,16 +46,17 @@ export default {
     harvestEgg() {
       let self = this;
       let eggNum = self.chick.eggNum;
-      //let eggPrice = 1000; // 鸡蛋价格
-      console.log("可收获的鸡蛋："+self.chick.eggNum);
+      let eggPrice = 1000; // 鸡蛋价格1000金币
+      console.log("可收获的鸡蛋："+ eggNum);
       if (eggNum > 0) {
-        // var obj = {
-        //   name: '精美鸡蛋',
-        //   num: eggNum,
-        //   price: eggPrice,
-        //   img: 'images/egg.png',
-        // }
-        //self.$store.dispatch('harvestegg',obj);
+        var obj = {
+          name: '精美鸡蛋',
+          type: 2,
+          num: eggNum,
+          price: eggPrice,
+          img: 'egg.png',
+        }
+        self.$store.dispatch('harvestegg',obj);
         self.popAdd(eggNum+"鸡蛋");
       }
     }

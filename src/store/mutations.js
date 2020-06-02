@@ -16,6 +16,7 @@ import {
   GET_USER_GOODS,
   GET_USER_FOODS,
   UPDATE_USER_GOODS,
+  UPDATE_USER_FOODS,
   INFO_TASKS,
   UPDATE_TASKS,
   SET_STORE,
@@ -103,15 +104,33 @@ export default {
     })
   },
   [GET_USER_FOODS](state,{userFoodsList}) {
-    state.userFoodsList = userFoodsList;
+    state.userFoodsList = [];
+    state.userFoodsList2 = [];
+    userFoodsList.forEach(item => {
+      if(item.type == 1) {
+        state.userFoodsList.push(item);
+      } else if (item.type == 2) {
+        state.userFoodsList2.push(item);
+      }
+    });
   },
   [UPDATE_USER_GOODS](state,good) {
     // 遍历比较更新前端界面显示
     console.log("good");
     console.log(good);
-    state.goodsList.forEach(itemUser => {
-      if(itemUser.name === good.name) {
-        itemUser.num = good.num;
+    state.goodsList.forEach(item => {
+      if(item.name === good.name) {
+        item.num = good.num;
+      }
+    })
+  },
+  [UPDATE_USER_FOODS](state,food) {
+    // 遍历比较更新前端界面显示
+    console.log("food");
+    console.log(food);
+    state.userFoodsList2.forEach(item => {
+      if(item.name === food.name) {
+        item.num = food.num;
       }
     })
   },

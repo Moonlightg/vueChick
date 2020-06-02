@@ -11,7 +11,9 @@ import {
   postFeeding,
   postTasks,
   postReceiveTask,
-  addTaskCount
+  addTaskCount,
+  postEgg,
+  postEggNum
 } from '../plugins/http/api'
 
 import {
@@ -31,6 +33,7 @@ import {
   GET_USER_GOODS,
   GET_USER_FOODS,
   UPDATE_USER_GOODS,
+  UPDATE_USER_FOODS,
   INFO_TASKS,
   UPDATE_TASKS,
   SET_STORE,
@@ -170,6 +173,19 @@ export default {
     console.log(result);
     console.log(result.data);
     context.commit(SET_CHICK,result.data);
+  },
+  // 收取鸡蛋
+  async harvestegg(context, value) {
+    const result = await postEgg(value);
+    console.log("测试收获鸡蛋后的返回数据");
+    console.log(result);
+    if ( result.code == 0 ) {
+      context.commit(UPDATE_USER_FOODS,result.data);
+      const result2 = await postEggNum(value);
+      if ( result2.code == 0 ) {
+        context.commit(SET_CHICK,result2.data);
+      }
+    } 
   }
   // 进食结束(需要更新小鸡等级等信息)
   // endeat (context) {

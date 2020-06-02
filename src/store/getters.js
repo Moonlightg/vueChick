@@ -8,6 +8,7 @@ export default {
   goodsList :(state) => state.goodsList,
   userGoodsList :(state) => state.userGoodsList,
   userFoodsList :(state) => state.userFoodsList,
+  userFoodsList2 :(state) => state.userFoodsList2,
   currGood :(state) => state.currGood,
   currFood :(state) => state.currFood,
   chick :(state) => state.chick,

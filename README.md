@@ -31,3 +31,8 @@ npm run lint
 | api/getUserGoods|get|获取当前用户商品列表|
 | api/unlock|post|解锁商品|
 | api/closingGood|post|购买商品|
+| api/feeding|post|投喂食物|
+| api/postTasks|post|初始化每日任务|
+| api/postReceiveTask|post|领取任务奖励|
+| api/addTaskCount|post|增加任务进度次数|
+| api/postEgg|post|收获鸡蛋(物品)|

@@ -1,5 +1,6 @@
 <template>
-  <div class="container" :class="{ beingskin: skinBox}" style="opacity: 1">
+  <div class="container" :class="{ beingskin: skinBox}" style="opacity: .1">
+    <!-- 个人信息简介 -->
     <div class="user-box" @click="opendialog">
       <div class="user-logo">
         <div class="user-level">{{userinfo.level}}</div>
@@ -183,7 +184,21 @@
                 </ul>
               </div>
             </el-tab-pane>
-            <el-tab-pane label="道具" name="prop"></el-tab-pane>
+            <el-tab-pane label="道具" name="prop">
+              <ul class="food-list" v-if="userFoodsList2.length != 0 ">
+                  <li v-for="good in userFoodsList2"
+                    :key="good.id"
+                    @click="showGood(good)" v-show="good.num != 0">
+                    <div class="food-item">
+                      <div class="food-img">
+                        <img :src="getImgUrl(good.img)">
+                      </div>
+                      <p class="food-name">{{good.name}}</p>
+                      <span class="food-num">{{good.num}}</span>
+                    </div>
+                  </li>
+                </ul>
+            </el-tab-pane>
           </el-tabs>
         </div>
       </div>
@@ -271,6 +286,8 @@ export default {
       progressValue: 0, // 进度条
       textContent: 'Hello 嘿嘿嘿', // 进度条上方显示文字,
       modalLevel: false, // 升级弹窗,用于连续升级检测
+      hoursType: '', // 0上午,1下午,2晚上
+      hoursTip:'' // 上午好,下午好,晚上好
     }
   },
   computed: {
@@ -279,6 +296,7 @@ export default {
       "userinfo",
       "goodsList",
       "userFoodsList",
+      "userFoodsList2",
       "currGood",
       "currFood",
       "chick",
@@ -313,13 +331,15 @@ export default {
   methods: {
     // 初始化,
     init() {
+      // 判断是上午,下午还是晚上
+      this.getMycount();
       if (!this.isLogin) {
         // 提示欢迎回来
         this.$message({
           iconClass: 'el-icon-message-solid',
           dangerouslyUseHTMLString: true,
           customClass: 'welcome-message',
-          message: '亲爱的<b>'+ this.userinfo.username +'</b>欢迎回来!'
+          message: '<b>'+ this.userinfo.username +'</b>'+this.hoursTip+'!'
         });
         this.$store.dispatch('setLogin');
       }
@@ -344,8 +364,21 @@ export default {
         this.$store.dispatch('setTasks');
       }
     },
+    getMycount() {
+      let date = new Date();
+      if (date.getHours() >= 0 && date.getHours() < 12) {
+        this.hoursType = 0;
+        this.hoursTip = "上午好"
+      } else if (date.getHours() >= 12 && date.getHours() < 18) {
+        this.hoursType = 1;
+        this.hoursTip = "下午好"
+      } else {
+        this.hoursType = 2;
+        this.hoursTip = "晚上好"
+      }
+    },
     // 判断是否正在进食
-    chickIsEat: function() {
+    chickIsEat() {
         // 页面加载获取当前时间
         let loadDate = new Date().getTime();
         // 判断上一次是否进食结束
@@ -382,7 +415,7 @@ export default {
       });
     },
     // 打开功能菜单弹窗
-    showPopup: function (val) {
+    showPopup(val) {
       this.skinBox = true;
       if (val == 'skin') {
         this.isSkin = true;
@@ -399,7 +432,7 @@ export default {
       }
     },
     // 关闭功能菜单弹窗
-    hidePopup: function () {
+    hidePopup() {
       this.skinBox = false;
       var that = this;
       setTimeout(function(){ 
@@ -409,10 +442,10 @@ export default {
         that.isStudy = false;
       }, 400);
     },
-    showAchievement: function() {
+    showAchievement() {
       this.modalAchievement = true;
     },
-    hideAchievement: function() {
+    hideAchievement() {
       this.modalAchievement = false;
     },
     opendialog() {
