@@ -119,8 +119,36 @@
           <span class="popup-title fl">换装</span>
           <i class="el-icon-error" @click="hidePopup"></i>
         </div>
-        <div class="popup-content">
-          换装
+        <div class="popup-content popup-tabs-box">
+          <el-tabs v-model="shopTabs1">
+            <el-tab-pane label="套装" name="skin-suits">
+              <ul class="opt-list">
+                <li 
+                  v-for="suit in chickSkin[0].list"
+                  :key="suit.skinName">
+                  {{suit.skinName}}
+                </li>
+              </ul>
+            </el-tab-pane>
+            <el-tab-pane label="帽子" name="skin-hats">
+              <ul class="opt-list">
+                <li 
+                  v-for="hat in chickSkin[1].list"
+                  :key="hat.skinName">
+                  {{hat.skinName}}
+                </li>
+              </ul>
+            </el-tab-pane>
+            <el-tab-pane label="上衣" name="skin-clothes">
+              <ul class="opt-list">
+                <li 
+                  v-for="clothe in chickSkin[2].list"
+                  :key="clothe.skinName">
+                  {{clothe.skinName}}
+                </li>
+              </ul>
+            </el-tab-pane>
+          </el-tabs>
         </div>
       </div>
       <!-- 商店 -->
@@ -130,7 +158,7 @@
           <i class="el-icon-error" @click="hidePopup"></i>
         </div>
         <div class="popup-content popup-tabs-box">
-          <el-tabs v-model="shopTabs">
+          <el-tabs v-model="shopTabs2">
             <el-tab-pane label="食物" name="good">
               <div class="food-box">
                 <ul class="food-list">
@@ -159,7 +187,9 @@
                 </ul>
               </div>
             </el-tab-pane>
-            <el-tab-pane label="道具" name="prop">道具</el-tab-pane>
+            <el-tab-pane label="道具" name="prop">
+              <p style="padding-top: 30px;">功能开发中...</p>
+            </el-tab-pane>
           </el-tabs>
         </div>
       </div>
@@ -170,7 +200,7 @@
           <i class="el-icon-error" @click="hidePopup"></i>
         </div>
         <div class="popup-content popup-tabs-box">
-          <el-tabs v-model="shopTabs2">
+          <el-tabs v-model="shopTabs3">
             <el-tab-pane label="食物" name="good">
               <div class="food-box">
                 <ul class="food-list" v-if="userFoodsList.length != 0 ">
@@ -214,7 +244,7 @@
           <i class="el-icon-error" @click="hidePopup"></i>
         </div>
         <div class="popup-content">
-          学习
+          <p style="padding-top: 30px;">功能开发中...</p>
         </div>
       </div>
     </div>
@@ -287,8 +317,9 @@ export default {
       isShop: false,
       isBag: false,
       isStudy: false,
-      shopTabs: 'good',
+      shopTabs1: 'skin-suits',
       shopTabs2: 'good',
+      shopTabs3: 'good',
       progressValue: 0, // 进度条
       textContent: 'Hello 嘿嘿嘿', // 进度条上方显示文字,
       hoursType: '', // 0上午,1下午,2晚上
@@ -305,6 +336,7 @@ export default {
       "currGood",
       "currFood",
       "chick",
+      "chickSkin",
       "tasks"
     ])
   },
@@ -351,7 +383,7 @@ export default {
       }
       // 页面加载读取小鸡缓存并初始化
       let getChick = storage.get('chick');
-      this.$store.dispatch('setChick',getChick);
+      this.$store.dispatch('setChick',getChick); 
       // 判断小鸡是否在进食
       this.chickIsEat();
     },
@@ -425,9 +457,11 @@ export default {
       this.skinBox = true;
       if (val == 'skin') {
         this.isSkin = true;
+        // 获取皮肤数据
+        this.getSkins();
       } else if (val == 'shop') {
         this.isShop = true;
-        // 获取商品列表
+        // 获取商品数据
         this.getGoods();
       } else if (val == 'study') {
         this.isStudy = true;
@@ -469,15 +503,17 @@ export default {
     closeUtask() {
       this.taskDialog = false
     },
+    getSkins() {
+      // 获取皮肤数据
+      this.$store.dispatch('reqGetSkins');
+    },
     getGoods() {
-      let _this = this;
-      // 获取商品列表
-      _this.$store.dispatch('reqGetGoods');
+      // 获取商品数据
+      this.$store.dispatch('reqGetGoods');
     },
     getUserFood() {
-      let _this = this;
       // 获取用户背包物品
-      _this.$store.dispatch('reqGetUserFood');
+      this.$store.dispatch('reqGetUserFood');
     },
     getImgUrl(val){
       return require("@/assets/images/"+val);

@@ -13,5 +13,6 @@ export default {
   currGood :(state) => state.currGood,
   currFood :(state) => state.currFood,
   chick :(state) => state.chick,
+  chickSkin :(state) => state.chickSkin,
   tasks :(state) => state.tasks
 }

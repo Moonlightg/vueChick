@@ -6,6 +6,8 @@ import {
   getGoods,
   getUserGoods,
   getUserFoods,
+  getUserSkins,
+  infoUserSkins,
   postUnlock,
   postClosingGood,
   postFeeding,
@@ -35,6 +37,7 @@ import {
   GET_GOODS,
   GET_USER_GOODS,
   GET_USER_FOODS,
+  GET_USER_SKINS,
   UPDATE_USER_GOODS,
   UPDATE_USER_FOODS,
   INFO_TASKS,
@@ -106,6 +109,19 @@ export default {
     if (result.code === 1) {
       context.commit(SET_CHICK,result.data[0]);
     }
+  },
+  async reqGetSkins(context) {
+    const result = await getUserSkins();
+    console.log("测试获取用户皮肤数据");
+    console.log(result.data);
+    if (result.data == null){
+      // 如果没有数据,则初始化数据
+      const result2 = await infoUserSkins();
+      console.log("初始化用户皮肤数据");
+      console.log(result2.data);
+      context.commit(GET_USER_SKINS,result2.data);
+    }
+    context.commit(GET_USER_SKINS,result.data);
   },
   async reqGetGoods(context) {
     // 请求商品列表数据

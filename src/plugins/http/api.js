@@ -16,6 +16,12 @@ export const getUserGoods = (params) => ajax.getData('/api/getUserGoods',params)
 // 获取当前用户背包食物列表
 export const getUserFoods = () => ajax.getData('/api/getUserFoods');
 
+// 获取小鸡皮肤数据
+export const getUserSkins = () => ajax.getData('/api/getUserSkins');
+
+// 初始化当前用户小鸡皮肤数据
+export const infoUserSkins = () => ajax.postData('/api/infoUserSkins');
+
 // 解锁商品
 export const postUnlock = (params) => ajax.postData('/api/unlock',params);
 

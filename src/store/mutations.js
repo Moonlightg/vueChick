@@ -18,6 +18,7 @@ import {
   GET_USER_FOODS,
   UPDATE_USER_GOODS,
   UPDATE_USER_FOODS,
+  GET_USER_SKINS,
   INFO_TASKS,
   UPDATE_TASKS,
   SET_STORE,
@@ -120,6 +121,9 @@ export default {
         state.userFoodsList2.push(item);
       }
     });
+  },
+  [GET_USER_SKINS](state, skin){
+    state.chickSkin = skin.skinList;
   },
   [UPDATE_USER_GOODS](state,good) {
     // 遍历比较更新前端界面显示
