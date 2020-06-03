@@ -14,7 +14,8 @@ import {
   addTaskCount,
   postEgg,
   postEggNum,
-  addLog
+  addLog,
+  getLog
 } from '../plugins/http/api'
 
 import {
@@ -67,6 +68,12 @@ export default {
   getStore(context, value) {
     context.commit(GET_STORE, value);
   },
+  async getLog(context) {
+    const result = await getLog();
+    if (result.code === 0) {
+      context.commit(SET_LOG,result.data);
+    }
+  },
   async addLog(context, value) {
     const result = await addLog(value);
     console.log("测试日志动态");
@@ -84,7 +91,7 @@ export default {
   },
   async receiveTask(context, value) {
     var obj = {
-      taskId: value
+      taskId: value.taskId
     }
     const result = await postReceiveTask(obj);
     console.log(result);

@@ -57,6 +57,7 @@ export default {
           img: 'egg.png',
         }
         self.$store.dispatch('harvestegg',obj);
+        this.$store.dispatch("addLog", {log_title: '收获了'+obj.num+'个鸡蛋!'});
         self.popAdd(eggNum+"鸡蛋");
       }
     }

@@ -20,7 +20,7 @@
           </div>
           <div class="task-r">
             <p v-if="task.state === 0">未完成</p>
-            <p v-if="task.state === 1"><el-button type="primary" round @click="receiveTask(task.taskId)">领取奖励</el-button></p>
+            <p v-if="task.state === 1"><el-button type="primary" round @click="receiveTask(task)">领取奖励</el-button></p>
             <p v-if="task.state === 2"><el-button type="info" round disabled>已领取</el-button></p>
           </div>
         </div>
@@ -50,6 +50,7 @@ export default {
     },
     receiveTask(val) {
       this.$store.dispatch('receiveTask',val);
+      this.$store.dispatch("addLog", {log_title: '领取了"'+val.taskTitle+'"任务,奖励金币:'+val.rewardMoney+';宝石:'+val.rewardGem});
     }
   }
 }

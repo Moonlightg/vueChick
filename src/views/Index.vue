@@ -176,7 +176,7 @@
                 <ul class="food-list" v-if="userFoodsList.length != 0 ">
                   <li v-for="good in userFoodsList"
                     :key="good.id"
-                    @click="showGood(good)" v-show="good.num != 0">
+                    @click="showGood(good)">
                     <div class="food-item">
                       <div class="food-img">
                         <img :src="getImgUrl(good.img)">
@@ -186,13 +186,14 @@
                     </div>
                   </li>
                 </ul>
+                <Nodata v-if="userFoodsList.length == 0 "></Nodata>
               </div>
             </el-tab-pane>
             <el-tab-pane label="道具" name="prop">
               <ul class="food-list" v-if="userFoodsList2.length != 0 ">
                   <li v-for="good in userFoodsList2"
                     :key="good.id"
-                    @click="showGood(good)" v-show="good.num != 0">
+                    @click="showGood(good)">
                     <div class="food-item">
                       <div class="food-img">
                         <img :src="getImgUrl(good.img)">
@@ -264,6 +265,7 @@ import Upersonal from '../components/Upersonal.vue' // 个人中心
 import Upurchase from '../components/Upurchase.vue'   // 购买
 import Ugooddetails from '../components/Ugooddetails.vue' // 物品详情
 import Utasks from '../components/Utasks.vue' // 物品详情
+import Nodata from '../components/Nodata.vue' // 暂无数据
 
 import {mapGetters} from "vuex";
 const moment = require("moment");
@@ -320,7 +322,8 @@ export default {
     Upersonal,
     Upurchase,
     Ugooddetails,
-    Utasks
+    Utasks,
+    Nodata
   },
   mounted: function() {
     var _this = this;
@@ -503,6 +506,7 @@ export default {
         } else {
           // 解锁商品
           _this.$store.dispatch('reqUnlock',good);
+          _this.$store.dispatch("addLog", {log_title: '解锁了'+good.name});
         }
       }).catch(() => {
         console.log("取消解锁");         
@@ -531,19 +535,16 @@ export default {
       let self = this;
       let es = endTime - startTime;
       let delay = 100/self.currFood.eatTime*1000; // 计算每秒走的进度
-      console.log("计算每秒走的进度:"+delay+"%");
       if (es > 0) {
         let timer = setInterval (function() {
           let nowTime = new Date().getTime();
           let t = endTime - nowTime;
           let value = (self.currFood.eatTime - t)/1000 * delay; // 计算进度条
-          console.log("计算进度条:"+value+"%");
           if (value <= 100) {
             self.progressValue = value
           } else {
             self.progressValue = 100;
           }
-          console.log("t:"+t+"进度条："+value+"%");
           if (t > 0) {
             self.chick.eat = true;
             let day = Math.floor(t/86400000);
@@ -568,7 +569,6 @@ export default {
           } else {
             clearInterval(timer); // 清除定时器
             // 喂食结束
-            console.log("喂食结束");
             self.textContent = '我吃完了...';
             self.settleExp();
           }
@@ -583,9 +583,7 @@ export default {
       // 经验结算
       this.chick.eggAddExps = parseInt(this.currFood.exp/this.chick.eggBase); // 鸡蛋经验加成 = 食物经验/基数, 取整数
       let ep = this.chick.eggProgress += this.chick.eggAddExps;
-      console.log("鸡蛋进度条增加后："+ ep);
       this.chick.eggExps = this.chick.exp + this.currFood.exp;
-      console.log("小鸡经验增加后为："+ this.chick.eggExps);
       // 弹出鸡蛋加成
       this.$refs.paper.popAdd(this.chick.eggAddExps+'%');
       // 生成鸡蛋个数计算
@@ -596,12 +594,9 @@ export default {
     // 生成鸡蛋个数计算
     settleEgg(ep){
       if (ep > 100) {
-        console.log("鸡蛋进度条:"+ep);
         let eggNum = parseInt(ep/100);
         this.chick.eggNum += eggNum;
-        console.log("生成的鸡蛋数："+this.chick.eggNum);
         this.chick.eggProgress = ep - eggNum * 100;
-        console.log("剩余的鸡蛋经验值："+this.chick.eggProgress);
       }
     },
     // 小鸡升级计算

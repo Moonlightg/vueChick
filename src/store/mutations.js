@@ -30,7 +30,10 @@ export default {
     storage.set('isLogin', true);
   },
   [SET_LOG](state, log) {
-    state.log = log;
+    let logList = log.logList.reverse();
+    state.log = logList;
+    console.log("state.log");
+    console.log(state.log);
   },
   [DEDUCT_MONEY](state,money) {
     state.userinfo.money = state.userinfo.money - money;
@@ -111,9 +114,9 @@ export default {
     state.userFoodsList = [];
     state.userFoodsList2 = [];
     userFoodsList.forEach(item => {
-      if(item.type == 1) {
+      if(item.type == 1 && item.num > 0) {
         state.userFoodsList.push(item);
-      } else if (item.type == 2) {
+      } else if (item.type == 2 && item.num > 0) {
         state.userFoodsList2.push(item);
       }
     });

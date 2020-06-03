@@ -46,7 +46,10 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["chick"])
+    ...mapGetters([
+        "chick",
+        "userFoodsList"
+      ])
   },
   methods: {
     getImgUrl(val){
@@ -68,10 +71,17 @@ export default {
         let startDate = new Date().getTime();
         let eatEndTime = startDate + this.currFood.eatTime;
         this.currFood.num-- ;
+        if ( this.currFood.num == 0) {
+          this.userFoodsList.forEach((item,index) => {
+            if(item.name === this.currFood.name) {
+              this.userFoodsList.splice(index,1);
+            }
+          })
+        }
         var obj = this.currFood;
         obj.eatEndTime = eatEndTime;
-        console.log(obj);
         this.$store.dispatch('reqFeeding',obj);
+        this.$store.dispatch("addLog", {log_title: '投喂了'+this.currFood.name+'*1'});
         this.$emit('countdown',startDate, eatEndTime);
         this.$emit('closeDialog');
       } else {

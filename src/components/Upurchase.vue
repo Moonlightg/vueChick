@@ -78,6 +78,7 @@ export default {
           money: this.userinfo.money - this.currGood.price * this.shoppingNum // 购买后金额计算
         };
         this.$store.dispatch('reqClosingGood',obj);
+        this.$store.dispatch("addLog", {log_title: '购买了'+obj.goodName+'*'+obj.goodNum});
         this.shoppingNum = 1;
         this.handleClose();
       }

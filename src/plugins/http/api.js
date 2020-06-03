@@ -42,3 +42,6 @@ export const postEggNum = (params) => ajax.postData('/api/postEggNum',params);
 
 // 添加动态日志
 export const addLog = (params) => ajax.postData('/api/addLog',params);
+
+// 获取动态日志
+export const getLog = () => ajax.getData('/api/getLog');

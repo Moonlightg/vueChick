@@ -482,7 +482,6 @@ ul,li{ padding: 0;margin: 0; }
   width: 100%;
   height: 100%;
   background: #03A9F4;
-  border: 1px solid #03A9F4;
   transition: all .3s;
 }
 .egg-progress-wrap>p {
@@ -3242,6 +3241,32 @@ p + .user-mi {
 .subject-head i {
   font-size: 20px;
 }
+/* log 日志 */
+.log-list {
+  padding: 15px 0;
+  width: 90%;
+  margin: 0 auto;
+  text-align: left;
+}
+.log-list li {
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  background: #e4d1d1;
+  border-radius: 3px;
+}
+.log-list li + li {
+  margin-top: 15px;
+}
+.log-list li p.log-tit{
+  flex: 1;
+  color: #5a4943;
+  line-height: 1.2;
+}
+.log-list li p.log-time{
+  font-size: .875rem;
+  color: #607D8B;
+}
 /* card */
 .card-box {
   border: 2px solid #ca9684;
@@ -3262,6 +3287,44 @@ p + .user-mi {
 }
 .card-label {
   flex: 0 0 65px;
+}
+/* 页面皮肤背景 */
+.skin_b1 {
+  background-image: -webkit-linear-gradient(to bottom, #ffede7,#f3d5ca);
+  background-image: linear-gradient(to bottom,#ffede7,#f3d5ca);
+}
+/* 返回按钮 */
+.return-link {
+  position: absolute;
+  left: 15px;
+  padding: 5px 10px;
+  background: #ffefd7;
+  border-radius: 30px;
+  border: 2px solid #bd8d7c;
+  color: #9e614b;
+  font-weight: bold;
+}
+.return-link i {
+  font-weight: bold;
+}
+/* flex布局 */
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+.box-head {
+  flex: 0 0 55px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.box-head h1 {
+  font-size: 1.2rem;
+  color: #a78174;
+}
+.box-content {
+  flex: 1;
+  overflow: auto;
 }
 /*element ui 样式重置*/
 .el-message-box {
