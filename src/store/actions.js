@@ -34,6 +34,7 @@ import {
   SET_CURR_FOOD,
   LOGIN_OUT,
   SET_CHICK,
+  SET_CHICK_SKIN,
   GET_GOODS,
   GET_USER_GOODS,
   GET_USER_FOODS,
@@ -61,6 +62,9 @@ export default {
   },
   setChick(context, value) {
     context.commit(SET_CHICK,value);
+  },
+  setChickSkin(context, value) {
+    context.commit(SET_CHICK_SKIN,value);
   },
   loginOut(context) {
     context.commit(LOGIN_OUT);

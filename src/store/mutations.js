@@ -13,6 +13,7 @@ import {
   SET_CURR_FOOD,
   LOGIN_OUT,
   SET_CHICK,
+  SET_CHICK_SKIN,
   GET_GOODS,
   GET_USER_GOODS,
   GET_USER_FOODS,
@@ -96,6 +97,10 @@ export default {
     storage.set('chick', state.chick);
     console.log('小鸡信息缓存成功！');
   },
+  [SET_CHICK_SKIN](state,skin) {
+    state.chickSkin = skin;
+    storage.set('skin', state.chickSkin);
+  },
   [GET_GOODS](state,{goodsList}) {
     state.goodsList = goodsList;
   },
@@ -124,6 +129,7 @@ export default {
   },
   [GET_USER_SKINS](state, skin){
     state.chickSkin = skin.skinList;
+    storage.set('skin', state.chickSkin);
   },
   [UPDATE_USER_GOODS](state,good) {
     // 遍历比较更新前端界面显示

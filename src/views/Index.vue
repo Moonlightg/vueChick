@@ -114,7 +114,7 @@
     <!-- 功能弹窗面板 -->
     <div class="page-popup">
       <!-- 换装 -->
-      <div class="popup-item" v-show="isSkin">
+      <div class="popup-item" v-if="isSkin">
         <div class="popup-head border-bottom-1px">
           <span class="popup-title fl">换装</span>
           <i class="el-icon-error" @click="hidePopup"></i>
@@ -126,7 +126,10 @@
                 <li 
                   v-for="suit in chickSkin[0].list"
                   :key="suit.skinName">
-                  {{suit.skinName}}
+                  <div class="skin-img">
+                    <img :src="getImgUrl(suit.img)">
+                  </div>
+                  <span class="skin-name">{{suit.skinName}}</span>
                 </li>
               </ul>
             </el-tab-pane>
@@ -135,7 +138,10 @@
                 <li 
                   v-for="hat in chickSkin[1].list"
                   :key="hat.skinName">
-                  {{hat.skinName}}
+                  <div class="skin-img">
+                    <img :src="getImgUrl(hat.img)">
+                  </div>
+                  <span class="skin-name">{{hat.skinName}}</span>
                 </li>
               </ul>
             </el-tab-pane>
@@ -144,7 +150,10 @@
                 <li 
                   v-for="clothe in chickSkin[2].list"
                   :key="clothe.skinName">
-                  {{clothe.skinName}}
+                  <div class="skin-img">
+                    <img :src="getImgUrl(clothe.img)">
+                  </div>
+                  <span class="skin-name">{{clothe.skinName}}</span>
                 </li>
               </ul>
             </el-tab-pane>
@@ -262,19 +271,19 @@
     <Upurchase 
       :purchaseDialog="purchaseDialog" 
       :currGood="currGood"
-      @closeDialog="closeUpurchase" v-show="purchaseDialog"></Upurchase>
+      @closeDialog="closeUpurchase" v-if="purchaseDialog"></Upurchase>
 
     <!-- 物品详情 -->
     <Ugooddetails
       :goodDialog="goodDialog"
       :currFood="currFood"
       @countdown="setCountdown(arguments)"
-      @closeDialog="closeUgood" v-show="goodDialog"></Ugooddetails>
+      @closeDialog="closeUgood" v-if="goodDialog"></Ugooddetails>
 
     <!-- 任务列表 -->
     <Utasks
       :taskDialog="taskDialog"
-      @closeDialog="closeUtask" v-show="taskDialog"></Utasks>
+      @closeDialog="closeUtask" v-if="taskDialog"></Utasks>
   </div>
 </template>
 
@@ -384,17 +393,18 @@ export default {
       // 页面加载读取小鸡缓存并初始化
       let getChick = storage.get('chick');
       this.$store.dispatch('setChick',getChick); 
+      // 初始化小鸡皮肤
+      if (!storage.get('skin')) {
+        // 获取皮肤数据
+        this.getSkins();
+      }
       // 判断小鸡是否在进食
       this.chickIsEat();
     },
     initTask() {
       var newDate = moment().format('YYYY-MM-DD');
-      console.log("newDate");
-      console.log(newDate);
       if (storage.get('tasks')){
         var taskTime = storage.get('tasks').time;
-        console.log("taskTime");
-        console.log(taskTime);
         if (taskTime != newDate) {
           this.$store.dispatch('setTasks');
         }
@@ -447,6 +457,7 @@ export default {
     loginOut() {
       // 清除用户数据
       this.$store.dispatch("loginOut");
+      this.$store.dispatch("addLog", {log_title: '退出登录!'});
       // 退出登录跳转到登录界面
       this.$router.push({
         path: '/login'
@@ -457,8 +468,6 @@ export default {
       this.skinBox = true;
       if (val == 'skin') {
         this.isSkin = true;
-        // 获取皮肤数据
-        this.getSkins();
       } else if (val == 'shop') {
         this.isShop = true;
         // 获取商品数据
