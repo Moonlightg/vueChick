@@ -2599,20 +2599,32 @@ top: 10px;
   position: relative;
   width: 23%;
   margin: 1%;
-  border: 1px solid #e7e7e7;
-  border-radius: 5px;
   text-align: center;
+}
+.skin-img {
+  position: relative;
+  margin-bottom: 5px;
+  border-radius: 5px;
+  overflow: hidden;
+  border: 1px solid #fff0ed;
 }
 .skin-img,
 .skin-img img {
   width: 100%;
+  display: block;
 }
-.skin-name {
+.skin-img.mask:before{
   position: absolute;
+  content: "";
+  top: 0;
+  right: 0;
   bottom: 0;
   left: 0;
-  right: 0;
-  background: rgba(0, 0, 0, 0.11);
+  background: rgba(0, 0, 0, 0.34);
+  z-index: 2;
+  border-radius: 5px;
+} 
+.skin-name {
   font-size: .65rem;
   padding: .2rem 0;
   color: #373738;

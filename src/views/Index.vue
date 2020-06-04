@@ -126,7 +126,8 @@
                 <li 
                   v-for="suit in chickSkin[0].list"
                   :key="suit.skinName">
-                  <div class="skin-img">
+                  <div class="skin-img" 
+                    :class="[{mask:suit.skinState === 0}]">
                     <img :src="getImgUrl(suit.img)">
                   </div>
                   <span class="skin-name">{{suit.skinName}}</span>
@@ -138,7 +139,8 @@
                 <li 
                   v-for="hat in chickSkin[1].list"
                   :key="hat.skinName">
-                  <div class="skin-img">
+                  <div class="skin-img"
+                    :class="[{mask:hat.skinState === 0}]">
                     <img :src="getImgUrl(hat.img)">
                   </div>
                   <span class="skin-name">{{hat.skinName}}</span>
@@ -150,7 +152,8 @@
                 <li 
                   v-for="clothe in chickSkin[2].list"
                   :key="clothe.skinName">
-                  <div class="skin-img">
+                  <div class="skin-img"
+                    :class="[{mask:clothe.skinState === 0}]">
                     <img :src="getImgUrl(clothe.img)">
                   </div>
                   <span class="skin-name">{{clothe.skinName}}</span>
