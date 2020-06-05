@@ -1,5 +1,5 @@
 <template>
-  <div class="container" :class="{ beingskin: skinBox}" style="opacity: 1">
+  <div class="container" :class="{ beingskin: skinBox}" style="opacity: .1">
     <!-- 个人信息简介 -->
     <div class="user-box" @click="opendialog">
       <div class="user-logo">
@@ -124,39 +124,42 @@
             <el-tab-pane label="套装" name="skin-suits">
               <ul class="opt-list">
                 <li 
-                  v-for="suit in chickSkin[0].list"
-                  :key="suit.skinName">
+                  v-for="item in chickSkin[0].list"
+                  :key="item.skinName"
+                  @click="showSkin(item)">
                   <div class="skin-img" 
-                    :class="[{mask:suit.skinState === 0}]">
-                    <img :src="getImgUrl(suit.img)">
+                    :class="[{mask:item.skinState === 0},{active:item.skinState === 2}]">
+                    <img :src="getImgUrl(item.img)">
                   </div>
-                  <span class="skin-name">{{suit.skinName}}</span>
+                  <span class="skin-name">{{item.skinName}}</span>
                 </li>
               </ul>
             </el-tab-pane>
             <el-tab-pane label="帽子" name="skin-hats">
               <ul class="opt-list">
                 <li 
-                  v-for="hat in chickSkin[1].list"
-                  :key="hat.skinName">
+                  v-for="item in chickSkin[1].list"
+                  :key="item.skinName"
+                  @click="showSkin(item)">
                   <div class="skin-img"
-                    :class="[{mask:hat.skinState === 0}]">
-                    <img :src="getImgUrl(hat.img)">
+                    :class="[{mask:item.skinState === 0},{active:item.skinState === 2}]">
+                    <img :src="getImgUrl(item.img)">
                   </div>
-                  <span class="skin-name">{{hat.skinName}}</span>
+                  <span class="skin-name">{{item.skinName}}</span>
                 </li>
               </ul>
             </el-tab-pane>
             <el-tab-pane label="上衣" name="skin-clothes">
               <ul class="opt-list">
                 <li 
-                  v-for="clothe in chickSkin[2].list"
-                  :key="clothe.skinName">
+                  v-for="item in chickSkin[2].list"
+                  :key="item.skinName"
+                  @click="showSkin(item)">
                   <div class="skin-img"
-                    :class="[{mask:clothe.skinState === 0}]">
-                    <img :src="getImgUrl(clothe.img)">
+                    :class="[{mask:item.skinState === 0},{active:item.skinState === 2}]">
+                    <img :src="getImgUrl(item.img)">
                   </div>
-                  <span class="skin-name">{{clothe.skinName}}</span>
+                  <span class="skin-name">{{item.skinName}}</span>
                 </li>
               </ul>
             </el-tab-pane>
@@ -232,7 +235,8 @@
               </div>
             </el-tab-pane>
             <el-tab-pane label="道具" name="prop">
-              <ul class="food-list" v-if="userFoodsList2.length != 0 ">
+              <div class="food-box">
+                <ul class="food-list" v-if="userFoodsList2.length != 0 ">
                   <li v-for="good in userFoodsList2"
                     :key="good.id"
                     @click="showGood(good)">
@@ -245,6 +249,7 @@
                     </div>
                   </li>
                 </ul>
+              </div>
             </el-tab-pane>
           </el-tabs>
         </div>
@@ -283,6 +288,12 @@
       @countdown="setCountdown(arguments)"
       @closeDialog="closeUgood" v-if="goodDialog"></Ugooddetails>
 
+    <!-- 皮肤详情 -->
+    <Uskindetails
+      :skinDialog="skinDialog"
+      :currSkin="currSkin"
+      @closeDialog="closeUskin" v-if="skinDialog"></Uskindetails>
+
     <!-- 任务列表 -->
     <Utasks
       :taskDialog="taskDialog"
@@ -305,6 +316,7 @@ import Cleaf from '../components/Cleaf.vue'         // 叶子
 import Ctrough from '../components/Ctrough.vue'     // 鸡饭碗
 import Upersonal from '../components/Upersonal.vue' // 个人中心
 import Upurchase from '../components/Upurchase.vue'   // 购买
+import Uskindetails from '../components/Uskindetails.vue' // 皮肤详情
 import Ugooddetails from '../components/Ugooddetails.vue' // 物品详情
 import Utasks from '../components/Utasks.vue' // 物品详情
 import Nodata from '../components/Nodata.vue' // 暂无数据
@@ -317,6 +329,7 @@ export default {
     return {
       dialogStatus: false,   // 个人中心弹出窗状态
       purchaseDialog: false, // 购买单个商品弹出窗状态
+      skinDialog: false, // 皮肤详情弹窗
       goodDialog: false, // 物品详情弹窗
       taskDialog: false, // 任务列表弹窗
       modalAchievement: false,
@@ -345,6 +358,7 @@ export default {
       "goodsList",
       "userFoodsList",
       "userFoodsList2",
+      "currSkin",
       "currGood",
       "currFood",
       "chick",
@@ -365,6 +379,7 @@ export default {
     Ctrough,
     Upersonal,
     Upurchase,
+    Uskindetails,
     Ugooddetails,
     Utasks,
     Nodata
@@ -494,27 +509,14 @@ export default {
         that.isStudy = false;
       }, 400);
     },
-    showAchievement() {
-      this.modalAchievement = true;
-    },
-    hideAchievement() {
-      this.modalAchievement = false;
-    },
-    opendialog() {
-      this.dialogStatus = true
-    },
-    closeHandle() {
-      this.dialogStatus = false
-    },
-    closeUpurchase() {
-      this.purchaseDialog = false
-    },
-    closeUgood() {
-      this.goodDialog = false
-    },
-    closeUtask() {
-      this.taskDialog = false
-    },
+    showAchievement() { this.modalAchievement = true;},
+    hideAchievement() { this.modalAchievement = false;},
+    opendialog() { this.dialogStatus = true},
+    closeHandle() { this.dialogStatus = false},
+    closeUpurchase() { this.purchaseDialog = false},
+    closeUskin() { this.skinDialog = false},
+    closeUgood() { this.goodDialog = false},
+    closeUtask() { this.taskDialog = false},
     getSkins() {
       // 获取皮肤数据
       this.$store.dispatch('reqGetSkins');
@@ -560,11 +562,17 @@ export default {
         console.log("取消解锁");         
       });
     },
+    // 查看皮肤详情
+    showSkin(skin) {
+      console.log(skin);
+      this.$store.dispatch('setCurrSkin', skin);
+      console.log(this.currSkin);
+      this.skinDialog = true;
+    },
     // 查看物品详情
     showGood(good) {
       this.$store.dispatch('setCurrFood', good);
       this.goodDialog = true;
-      console.log(good);
     },
     // 购买商品
     showShop(name) {

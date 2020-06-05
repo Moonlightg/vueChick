@@ -10,6 +10,7 @@ export default {
   userGoodsList: [], // 当前用户商品列表
   userFoodsList: [], // 当前用户背包食物列表
   userFoodsList2: [], // 当前用户背包道具列表
+  currSkin: {},   // 当前选中的皮肤
   currGood: {},   // 当前选中的商品
   currFood: {},   // 当前选中的食物
   chick: {},      // 小鸡信息

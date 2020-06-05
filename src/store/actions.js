@@ -8,6 +8,7 @@ import {
   getUserFoods,
   getUserSkins,
   infoUserSkins,
+  postBdySkin,
   postUnlock,
   postClosingGood,
   postFeeding,
@@ -30,6 +31,7 @@ import {
   // UPDATE_CHICK,
   SET_TOKEN,
   SET_USERINFO,
+  SET_CURR_SKIN,
   SET_CURR_GOOD,
   SET_CURR_FOOD,
   LOGIN_OUT,
@@ -41,6 +43,7 @@ import {
   GET_USER_SKINS,
   UPDATE_USER_GOODS,
   UPDATE_USER_FOODS,
+  UPDATE_USER_SKINS,
   INFO_TASKS,
   UPDATE_TASKS,
   SET_STORE,
@@ -156,6 +159,10 @@ export default {
       });
     }
   },
+  // 设置当前选择皮肤
+  setCurrSkin(context, value) {
+    context.commit(SET_CURR_SKIN, value);
+  },
   // 设置当前选择商品
   setCurrGood(context, value) {
     context.commit(SET_CURR_GOOD, value);
@@ -223,6 +230,14 @@ export default {
         context.commit(SET_CHICK,result2.data);
       }
     } 
+  },
+  // 购买皮肤
+  async reqBuySkin(context, value) {
+    const result = await postBdySkin(value);
+    console.log(result.data);
+    if (result.cocde == 0) {
+      context.commit(UPDATE_USER_SKINS,result.data);
+    }
   }
   // 进食结束(需要更新小鸡等级等信息)
   // endeat (context) {

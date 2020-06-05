@@ -22,6 +22,9 @@ export const getUserSkins = () => ajax.getData('/api/getUserSkins');
 // 初始化当前用户小鸡皮肤数据
 export const infoUserSkins = () => ajax.postData('/api/infoUserSkins');
 
+// 购买皮肤
+export const postBdySkin = (params) => ajax.postData('/api/postBdySkin',params);
+
 // 解锁商品
 export const postUnlock = (params) => ajax.postData('/api/unlock',params);
 

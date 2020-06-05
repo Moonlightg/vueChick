@@ -15,10 +15,12 @@ import {
   SET_CHICK,
   SET_CHICK_SKIN,
   GET_GOODS,
+  SET_CURR_SKIN,
   GET_USER_GOODS,
   GET_USER_FOODS,
   UPDATE_USER_GOODS,
   UPDATE_USER_FOODS,
+  UPDATE_USER_SKINS,
   GET_USER_SKINS,
   INFO_TASKS,
   UPDATE_TASKS,
@@ -73,6 +75,10 @@ export default {
     storage.set('chick', state.chick);
     storage.set('token', state.token);
     console.log('store、localstorage中保存用户信息成功！');
+  },
+  [SET_CURR_SKIN](state, skin) {
+    state.currSkin = skin;
+    console.log(state.currSkin);
   },
   [SET_CURR_GOOD](state, good) {
     state.goodsList.forEach(obj => {
@@ -150,6 +156,18 @@ export default {
         item.num = food.num;
       }
     })
+  },
+  [UPDATE_USER_SKINS](state,skin) {
+    state.currSkin = skin;
+    state.chickSkin.forEach(item => {
+      if(item.skinName === skin.skinName) {
+        item = skin;
+      }
+    })
+    storage.set('skin', state.chickSkin);
+    console.log(skin);
+    console.log(state.currSkin);
+    console.log(state.chickSkin);
   },
   [INFO_TASKS](state, value) {
     state.tasks = value;

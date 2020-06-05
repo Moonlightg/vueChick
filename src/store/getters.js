@@ -10,6 +10,7 @@ export default {
   userGoodsList :(state) => state.userGoodsList,
   userFoodsList :(state) => state.userFoodsList,
   userFoodsList2 :(state) => state.userFoodsList2,
+  currSkin :(state) => state.currSkin,
   currGood :(state) => state.currGood,
   currFood :(state) => state.currFood,
   chick :(state) => state.chick,
