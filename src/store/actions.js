@@ -234,8 +234,9 @@ export default {
   // 购买皮肤
   async reqBuySkin(context, value) {
     const result = await postBdySkin(value);
+    console.log("购买皮肤返回");
     console.log(result.data);
-    if (result.cocde == 0) {
+    if (result.code == 0) {
       context.commit(UPDATE_USER_SKINS,result.data);
     }
   }

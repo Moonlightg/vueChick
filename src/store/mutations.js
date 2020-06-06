@@ -158,11 +158,13 @@ export default {
     })
   },
   [UPDATE_USER_SKINS](state,skin) {
-    state.currSkin = skin;
+    state.chickSkin = skin.skinList;
     state.chickSkin.forEach(item => {
-      if(item.skinName === skin.skinName) {
-        item = skin;
-      }
+      item.list.forEach(docs => {
+        if(docs.skinName === state.currSkin.skinName) {
+          state.currSkin = docs;
+        }
+      })  
     })
     storage.set('skin', state.chickSkin);
     console.log(skin);
