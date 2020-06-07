@@ -237,6 +237,13 @@ export default {
     console.log("购买皮肤返回");
     console.log(result.data);
     if (result.code == 0) {
+      // 扣除宝石
+      let obj = {
+        type: 1,
+        price: value.price
+      }
+      context.commit(DEDUCT_MONEY,obj);
+      // 更新数据
       context.commit(UPDATE_USER_SKINS,result.data);
     }
   }

@@ -39,8 +39,13 @@ export default {
     console.log("state.log");
     console.log(state.log);
   },
-  [DEDUCT_MONEY](state,money) {
-    state.userinfo.money = state.userinfo.money - money;
+  [DEDUCT_MONEY](state,value) {
+    if (value.type == 1) {
+      state.userinfo.gem = state.userinfo.gem - value.price;
+    } else {
+      state.userinfo.money = state.userinfo.money - value.price;
+    }
+    
   },
   [UPDATE_MONEY](state,newMoney) {
     state.userinfo.money = newMoney;

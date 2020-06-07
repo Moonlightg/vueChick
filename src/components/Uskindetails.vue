@@ -30,9 +30,9 @@
       
     </div>
     <span slot="footer" class="dialog-footer">
-      <div v-if="currSkin.skinState == 0" >
-        <el-button type="danger" @click="buy(currSkin.skinName,7,currSkin.price)">购买7天</el-button>
-        <el-button type="danger" @click="buy(currSkin.skinName,30,currSkin.price*3)">购买30天</el-button>
+      <div v-if="currSkin.skinState == 0 && currSkin.skinId == 1" >
+        <el-button type="danger" @click="buy(currSkin.skinType,7,currSkin.price)">购买7天</el-button>
+        <el-button type="danger" @click="buy(currSkin.skinType,30,currSkin.price*3)">购买30天</el-button>
       </div>
       <el-button type="success" v-if="currSkin.skinState == 1">使用</el-button>
       <el-button type="danger" v-if="currSkin.skinState == 2">关闭</el-button>
@@ -70,7 +70,7 @@ export default {
       this.$emit('closeDialog')
     },
     // 激活皮肤, 皮肤只能使用 "宝石" 购买
-    buy(name,days,price) {
+    buy(skinType,days,price) {
       let _this = this;
       let html = "购买"+days+"天需要,宝石"+price;
       _this.$confirm(html, '提示', {
@@ -87,8 +87,9 @@ export default {
         } else {
           // 购买皮肤
           var obj = {
-            skinName: name,
-            days: days
+            skinType: skinType,
+            days: days,
+            price: price
           }
           _this.$store.dispatch('reqBuySkin',obj);
           _this.$store.dispatch("addLog", {log_title: '购买了'+days+'天'+name});
