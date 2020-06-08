@@ -1,5 +1,5 @@
 <template>
-  <div class="container" :class="{ beingskin: skinBox}" style="opacity: .01">
+  <div class="container" :class="{ beingskin: skinBox}" style="opacity: 1">
     <!-- 个人信息简介 -->
     <div class="user-box" @click="opendialog">
       <div class="user-logo">
@@ -130,7 +130,9 @@
                   <div class="skin-img" 
                     :class="[{mask:item.skinState === 0},{active:item.skinState === 2}]">
                     <img :src="getImgUrl(item.img)">
+                    <span class="diff">{{item.diff}}</span>
                   </div>
+
                   <span class="skin-name">{{item.skinName}}</span>
                 </li>
               </ul>
@@ -144,6 +146,7 @@
                   <div class="skin-img"
                     :class="[{mask:item.skinState === 0},{active:item.skinState === 2}]">
                     <img :src="getImgUrl(item.img)">
+                    <span class="diff">{{item.diff}}</span>
                   </div>
                   <span class="skin-name">{{item.skinName}}</span>
                 </li>
@@ -158,6 +161,7 @@
                   <div class="skin-img"
                     :class="[{mask:item.skinState === 0},{active:item.skinState === 2}]">
                     <img :src="getImgUrl(item.img)">
+                    <span class="diff">{{item.diff}}</span>
                   </div>
                   <span class="skin-name">{{item.skinName}}</span>
                 </li>

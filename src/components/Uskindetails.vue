@@ -26,7 +26,7 @@
 
       <p>激活时间:{{currSkin.start_date}}</p>
       <p>到期时间:{{currSkin.end_date}}</p>
-      <p>有效期剩:{{currSkin.days}}天</p>
+      <p>有效期剩:{{currSkin.diff}}</p>
       
     </div>
     <span slot="footer" class="dialog-footer">

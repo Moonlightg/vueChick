@@ -2624,6 +2624,20 @@ top: 10px;
   z-index: 2;
   border-radius: 5px;
 } 
+.skin-img .diff {
+  display: block;
+  background: rgba(255, 224, 178, 0.7);
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  font-size: 12px;
+  padding: 2px 5px;
+  color: #FF9800;
+}
+.skin-img.mask .diff {
+  display: none;
+}
 .skin-name {
   font-size: .65rem;
   padding: .2rem 0;

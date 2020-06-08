@@ -127,6 +127,7 @@ export default {
       console.log("初始化用户皮肤数据");
       console.log(result2.data);
       context.commit(GET_USER_SKINS,result2.data);
+      return false;
     }
     context.commit(GET_USER_SKINS,result.data);
   },
