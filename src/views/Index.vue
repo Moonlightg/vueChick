@@ -1,5 +1,5 @@
 <template>
-  <div class="container" :class="{ beingskin: skinBox}" style="opacity: 1">
+  <div class="container" :class="{ beingskin: skinBox}" style="opacity: .01">
     <!-- 个人信息简介 -->
     <div class="user-box" @click="opendialog">
       <div class="user-logo">
@@ -412,10 +412,10 @@ export default {
       let getChick = storage.get('chick');
       this.$store.dispatch('setChick',getChick); 
       // 初始化小鸡皮肤
-      if (!storage.get('skin')) {
+      //if (!storage.get('skin')) {
         // 获取皮肤数据
         this.getSkins();
-      }
+      //}
       // 判断小鸡是否在进食
       this.chickIsEat();
     },
