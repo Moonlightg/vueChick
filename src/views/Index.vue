@@ -64,8 +64,21 @@
             <div class="progress-content" :style="'width:' + progressValue + '%' "></div>
           </div>
         </div>
+        <!-- 装扮-帽子 -->
+        <div class="skin-hat">
+          <keep-alive>
+            <component
+              :is="chick.skinHat"></component>
+          </keep-alive>
+        </div>
         <div class="chick-head"></div>
-        <div class="chick-body"></div>
+        <div class="chick-body">
+          <!-- 装扮-衣服 -->
+          <keep-alive>
+            <component
+              :is="chick.skinClothes"></component>
+          </keep-alive>
+        </div>
         <div class="eye">
           <span></span>
           <span></span>
@@ -131,6 +144,7 @@
                     :class="[{mask:item.skinState === 0},{active:item.skinState === 2}]">
                     <img :src="getImgUrl(item.img)">
                     <span class="diff">{{item.diff}}</span>
+                    <span class="use-badge">使用中</span>
                   </div>
 
                   <span class="skin-name">{{item.skinName}}</span>
@@ -147,6 +161,7 @@
                     :class="[{mask:item.skinState === 0},{active:item.skinState === 2}]">
                     <img :src="getImgUrl(item.img)">
                     <span class="diff">{{item.diff}}</span>
+                    <span class="use-badge">使用中</span>
                   </div>
                   <span class="skin-name">{{item.skinName}}</span>
                 </li>
@@ -162,6 +177,7 @@
                     :class="[{mask:item.skinState === 0},{active:item.skinState === 2}]">
                     <img :src="getImgUrl(item.img)">
                     <span class="diff">{{item.diff}}</span>
+                    <span class="use-badge">使用中</span>
                   </div>
                   <span class="skin-name">{{item.skinName}}</span>
                 </li>
@@ -325,6 +341,13 @@ import Ugooddetails from '../components/Ugooddetails.vue' // 物品详情
 import Utasks from '../components/Utasks.vue' // 物品详情
 import Nodata from '../components/Nodata.vue' // 暂无数据
 
+// 皮肤组件
+import Clothesdefault from '../components/chickskin/Clothesdefault.vue'
+import Clothesforg from '../components/chickskin/Clothesforg.vue'
+import Hatdefault from '../components/chickskin/Hatdefault.vue'
+import Hatforg from '../components/chickskin/Hatforg.vue'
+
+
 import {mapGetters} from "vuex";
 const moment = require("moment");
 export default {
@@ -386,7 +409,11 @@ export default {
     Uskindetails,
     Ugooddetails,
     Utasks,
-    Nodata
+    Nodata,
+    Clothesforg,
+    Clothesdefault,
+    Hatforg,
+    Hatdefault
   },
   mounted: function() {
     var _this = this;

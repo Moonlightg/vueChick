@@ -2638,6 +2638,20 @@ top: 10px;
 .skin-img.mask .diff {
   display: none;
 }
+.use-badge {
+  display: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: #8BC34A;
+  color: #fff;
+  font-size: 12px;
+  padding: 4px;
+  border-radius: 15px;
+}
+.skin-img.active .use-badge{
+  display: block;
+}
 .skin-name {
   font-size: .65rem;
   padding: .2rem 0;

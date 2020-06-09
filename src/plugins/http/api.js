@@ -25,6 +25,9 @@ export const infoUserSkins = () => ajax.postData('/api/infoUserSkins');
 // 购买皮肤
 export const postBdySkin = (params) => ajax.postData('/api/postBdySkin',params);
 
+// 使用皮肤
+export const postUseSkin = (params) => ajax.postData('/api/postUseSkin',params);
+
 // 解锁商品
 export const postUnlock = (params) => ajax.postData('/api/unlock',params);
 

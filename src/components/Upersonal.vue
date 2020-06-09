@@ -22,6 +22,8 @@
       <p><span class="card-label">总产蛋量:</span>{{chick.eggTotal}}</p>
       <p><span class="card-label">待拾蛋量:</span>{{chick.eggNum}}</p>
       <p><span class="card-label">鸡蛋进度:</span>{{chick.eggProgress}}%</p>
+      <p><span class="card-label">帽子皮肤:</span>{{chick.skinHat}}</p>
+      <p><span class="card-label">衣服皮肤:</span>{{chick.skinClothes}}</p>
     </div>
     <!-- <div class="card-box">
       <h3>庄园信息-小鸭</h3>

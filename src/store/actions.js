@@ -9,6 +9,7 @@ import {
   getUserSkins,
   infoUserSkins,
   postBdySkin,
+  postUseSkin,
   postUnlock,
   postClosingGood,
   postFeeding,
@@ -235,8 +236,6 @@ export default {
   // 购买皮肤
   async reqBuySkin(context, value) {
     const result = await postBdySkin(value);
-    console.log("购买皮肤返回");
-    console.log(result.data);
     if (result.code == 0) {
       // 扣除宝石
       let obj = {
@@ -247,9 +246,18 @@ export default {
       // 更新数据
       context.commit(UPDATE_USER_SKINS,result.data);
     }
+  },
+  // 使用皮肤
+  async reqUseSkin(context, value) {
+    const result = await postUseSkin(value);
+    console.log(result);
+    if (result.code == 0) {
+      context.commit(GET_USER_SKINS,result.data.userskin);
+      context.commit(SET_CHICK,result.data.chick);
+      Message({
+        message: '皮肤使用成功',
+        type: 'success'
+      });
+    }
   }
-  // 进食结束(需要更新小鸡等级等信息)
-  // endeat (context) {
-  //   context.commit('END_EAT');
-  // }
 }

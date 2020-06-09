@@ -23,7 +23,6 @@
       </p>
       <p>激活价格:
         7天:{{currSkin.price}};30天:{{currSkin.price*3}};</p>
-
       <p>激活时间:{{currSkin.start_date}}</p>
       <p>到期时间:{{currSkin.end_date}}</p>
       <p>有效期剩:{{currSkin.diff}}</p>
@@ -34,8 +33,8 @@
         <el-button type="danger" @click="buy(currSkin.skinType,7,currSkin.price,currSkin.skinName)">购买7天</el-button>
         <el-button type="danger" @click="buy(currSkin.skinType,30,currSkin.price*3,currSkin.skinName)">购买30天</el-button>
       </div>
-      <el-button type="success" v-if="currSkin.skinState == 1">使用</el-button>
-      <el-button type="danger" v-if="currSkin.skinState == 2">关闭</el-button>
+      <el-button type="success" v-if="currSkin.skinState == 1" @click="useSkin()">使用</el-button>
+      <el-button type="danger" v-if="currSkin.skinState == 2" @click="handleClose()">关闭</el-button>
     </span>
   </el-dialog>
 </template>
@@ -97,6 +96,13 @@ export default {
       }).catch(() => {
         console.log("取消购买");         
       });
+    },
+    // 使用皮肤
+    useSkin() {
+      console.log("使用当前皮肤:");
+      console.log(this.currSkin);
+      this.$store.dispatch('reqUseSkin',this.currSkin);
+      this.handleClose();
     }
   }
 }
