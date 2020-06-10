@@ -13,6 +13,7 @@ export default {
   currSkin: {},   // 当前选中的皮肤
   currGood: {},   // 当前选中的商品
   currFood: {},   // 当前选中的食物
+  feedingFood: {},// 当前喂食食物
   chick: {},      // 小鸡信息
   chickSkin: {},  // 小鸡皮肤
   tasks: {},  // 每日任务列表

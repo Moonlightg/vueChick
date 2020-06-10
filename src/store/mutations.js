@@ -14,6 +14,7 @@ import {
   LOGIN_OUT,
   SET_CHICK,
   SET_CHICK_SKIN,
+  SET_CHICK_FEEDING_FOOD,
   GET_GOODS,
   SET_CURR_SKIN,
   GET_USER_GOODS,
@@ -111,6 +112,11 @@ export default {
   [SET_CHICK_SKIN](state,skin) {
     state.chickSkin = skin;
     storage.set('skin', state.chickSkin);
+  },
+  [SET_CHICK_FEEDING_FOOD](state, value) {
+    console.log("当前喂食食物");
+    console.log(value);
+    state.feedingFood = value;
   },
   [GET_GOODS](state,{goodsList}) {
     state.goodsList = goodsList;

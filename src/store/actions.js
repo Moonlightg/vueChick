@@ -38,6 +38,7 @@ import {
   LOGIN_OUT,
   SET_CHICK,
   SET_CHICK_SKIN,
+  SET_CHICK_FEEDING_FOOD,
   GET_GOODS,
   GET_USER_GOODS,
   GET_USER_FOODS,
@@ -187,6 +188,7 @@ export default {
   },
   // 投喂食物
   async reqFeeding(context, value) {
+    context.commit(SET_CHICK_FEEDING_FOOD, value);
     const result = await postFeeding(value);
     console.log("投喂请求后返回的数据");
     console.log(result);

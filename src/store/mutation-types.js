@@ -14,6 +14,7 @@ export const IS_LOGIN = 'is_login';                       // 保存登录状态
 export const LOGIN_OUT = 'login_out';                     // 退出登录
 export const SET_CHICK = 'set_chick';                     // 设置小鸡信息
 export const SET_CHICK_SKIN = 'set_chick_skin';           // 设置小鸡皮肤信息
+export const SET_CHICK_FEEDING_FOOD = 'set_chick_feeding_food'; // 设置小鸡当前进食食物
 export const GET_GOODS = 'git_goods';                     // 获取商品列表
 export const GET_USER_GOODS = 'get_user_goods';           // 当前用户商品列表
 export const GET_USER_FOODS = 'get_user_foods';           // 当前用户背包食物列表

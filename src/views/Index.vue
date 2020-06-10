@@ -388,6 +388,7 @@ export default {
       "currSkin",
       "currGood",
       "currFood",
+      "feedingFood",
       "chick",
       "chickSkin",
       "tasks"
@@ -481,8 +482,6 @@ export default {
         // 判断上一次是否进食结束
         let isEat = this.chick.eatEndTime - loadDate;
         if (isEat > 0) {
-          // 拿到当时投喂的食物
-          this.$store.dispatch('setCurrFood', storage.get('currFood'));
           this.chick.eat = true;
           this.countdown(loadDate, this.chick.eatEndTime);
         } else {
@@ -621,12 +620,12 @@ export default {
     countdown(startTime, endTime) {
       let self = this;
       let es = endTime - startTime;
-      let delay = 100/self.currFood.eatTime*1000; // 计算每秒走的进度
+      let delay = 100/self.feedingFood.eatTime*1000; // 计算每秒走的进度
       if (es > 0) {
         let timer = setInterval (function() {
           let nowTime = new Date().getTime();
           let t = endTime - nowTime;
-          let value = (self.currFood.eatTime - t)/1000 * delay; // 计算进度条
+          let value = (self.feedingFood.eatTime - t)/1000 * delay; // 计算进度条
           if (value <= 100) {
             self.progressValue = value
           } else {
@@ -668,11 +667,10 @@ export default {
       this.chick.eatEndTime = '';
       this.chick.eat = false;
       // 经验结算
-      // (要重新定义当前喂食的食物,因为在喂食中操作了其他物品会重置currFood);
-      this.chick.eggAddExps = parseInt(this.currFood.exp/this.chick.eggBase); // 鸡蛋经验加成 = 食物经验/基数, 取整数
-      console.log();
+      // (要重新定义当前喂食的食物,因为在喂食中操作了其他物品会重置currFood,所以用feedingFood代替);
+      this.chick.eggAddExps = parseInt(this.feedingFood.exp/this.chick.eggBase); // 鸡蛋经验加成 = 食物经验/基数, 取整数
       let ep = this.chick.eggProgress += this.chick.eggAddExps;
-      this.chick.exp = this.chick.exp + this.currFood.exp;
+      this.chick.exp = this.chick.exp + this.feedingFood.exp;
       // 弹出鸡蛋加成
       this.$refs.paper.popAdd(this.chick.eggAddExps+'%');
       // 生成鸡蛋个数计算
