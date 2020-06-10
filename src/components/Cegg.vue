@@ -33,6 +33,8 @@ export default {
   methods: {
     // 弹出收成
     popAdd (addEggExps) {
+      console.log("测试下popadd");
+      console.log(addEggExps);
       let self = this;
         let popDom = document.createElement('div');// 创建dom
         popDom.classList.add('pop-money');// 给dom添加class

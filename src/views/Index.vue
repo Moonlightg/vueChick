@@ -668,9 +668,11 @@ export default {
       this.chick.eatEndTime = '';
       this.chick.eat = false;
       // 经验结算
+      // (要重新定义当前喂食的食物,因为在喂食中操作了其他物品会重置currFood);
       this.chick.eggAddExps = parseInt(this.currFood.exp/this.chick.eggBase); // 鸡蛋经验加成 = 食物经验/基数, 取整数
+      console.log();
       let ep = this.chick.eggProgress += this.chick.eggAddExps;
-      this.chick.eggExps = this.chick.exp + this.currFood.exp;
+      this.chick.exp = this.chick.exp + this.currFood.exp;
       // 弹出鸡蛋加成
       this.$refs.paper.popAdd(this.chick.eggAddExps+'%');
       // 生成鸡蛋个数计算
@@ -680,7 +682,7 @@ export default {
     },
     // 生成鸡蛋个数计算
     settleEgg(ep){
-      if (ep > 100) {
+      if (ep >= 100) {
         let eggNum = parseInt(ep/100);
         this.chick.eggNum += eggNum;
         this.chick.eggProgress = ep - eggNum * 100;
@@ -688,9 +690,9 @@ export default {
     },
     // 小鸡升级计算
     settleLevel() {
-      if (this.chick.eggExps >= this.chick.upgradeExp) {
+      if (this.chick.exp >= this.chick.upgradeExp) {
         this.chick.level += 1;
-        this.chick.exp = this.chick.eggExps - this.chick.upgradeExp;
+        this.chick.exp = this.chick.exp - this.chick.upgradeExp;
         this.chick.upgradeExp = parseInt(this.chick.upgradeExp * 2); // 提高升级所需经验
         this.$store.dispatch('reqUpdateChick',this.chick);
         this.$confirm('恭喜你升级了,'+this.chick.level+'级!', '提示', {

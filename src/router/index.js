@@ -18,6 +18,7 @@ const routes = [
     name: 'Login',
     component: () => import('../views/Login.vue'),
     meta: {
+      index: 1,
       requireAuth: false
     }
   },
@@ -26,6 +27,7 @@ const routes = [
     name: 'Register',
     component: () => import('../views/Register.vue'),
     meta: {
+      index: 2,
       requireAuth: false
     }
   },
@@ -35,6 +37,7 @@ const routes = [
     component: () => import('../views/Index.vue'),
     // 某些页面规定必须登录后才能查看 ，可以在router中配置meta，将需要登录的requireAuth设为true，
     meta: {
+      index: 2,
       requireAuth: true
     }
   },
@@ -43,6 +46,7 @@ const routes = [
     name: 'Log',
     component: () => import('../views/Log.vue'),
     meta: {
+      index: 3,
       requireAuth: true
     }
   }
