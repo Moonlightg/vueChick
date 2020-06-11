@@ -29,6 +29,11 @@ npm run lint
 | api/getChick   |get|获取用户小鸡状态|
 | api/getGoods   |get|获取默认商品列表|
 | api/getUserGoods|get|获取当前用户商品列表|
+| api/getUserFoods|get|获取用户背包食品列表|
+| api/getUserSkins|get|获取小鸡皮肤数据|
+| api/infoUserSkins|post|初始化当前用户小鸡皮肤数据|
+| api/postBdySkin|post|购买小鸡皮肤|
+| api/postUseSkin|post|使用小鸡皮肤|
 | api/unlock|post|解锁商品|
 | api/closingGood|post|购买商品|
 | api/feeding|post|投喂食物|
@@ -36,3 +41,6 @@ npm run lint
 | api/postReceiveTask|post|领取任务奖励|
 | api/addTaskCount|post|增加任务进度次数|
 | api/postEgg|post|收获鸡蛋(物品)|
+| api/postEggNum|post|收获鸡蛋(总产量),更新小鸡信息|
+| api/addLog|post|添加动态日志|
+| api/getLog|get|获取动态日志|
