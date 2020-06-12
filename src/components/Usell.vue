@@ -1,13 +1,14 @@
 <template>
   <el-dialog
-    title="购买商品"
-    :visible.sync="purchaseDialog"
+    title="出售物品"
+    :visible.sync="sellDialog"
     width="80%"
     center
     :before-close="handleClose">
     <div class="shopping-box">
-      <p class="good-title">{{currGood.name}}</p>
-      <p>单价：${{currGood.price}}/个</p>
+      <p class="good-title">{{currFood.name}}</p>
+      <P>库存拥有:{{currFood.num}}</P>
+      <p>价值：<i class="el-icon-s-help"></i>{{currFood.price}}/个</p>
       <div class="num-form">
         <div class="shop-btn" @click="shopReduce"><i class="el-icon-remove-outline"></i></div>
         <div class="shop-input">
@@ -15,10 +16,10 @@
         </div>
         <div class="shop-btn" @click="shopAdd"><i class="el-icon-circle-plus-outline"></i></div>
       </div>
-      <p>总价：${{currGood.price * shoppingNum}}</p>
+      <p>出售总价：<i class="el-icon-s-help"></i>{{currFood.price * shoppingNum}}</p>
     </div>
     <span slot="footer" class="dialog-footer">
-      <el-button type="danger" @click="closingGood">购买</el-button>
+      <el-button type="danger" @click="gosell">出售</el-button>
     </span>
   </el-dialog>
 </template>
@@ -28,10 +29,10 @@
 import {mapGetters} from "vuex";
 export default {
   props: {
-    purchaseDialog: {
+    sellDialog: {
       type: Boolean
     },
-    currGood: {
+    currFood: {
       type: Object
     }
   },
@@ -50,7 +51,7 @@ export default {
     shopReduce: function() {
       if (this.shoppingNum === 1) {
         this.$message({
-          message: "最少要购买一个",
+          message: "不能出售少于0个",
           type: 'error'
         });
         return;
@@ -58,9 +59,17 @@ export default {
       this.shoppingNum--;
     },
     shopAdd: function() {
-      this.shoppingNum++;
+      if ( this.shoppingNum < this.currFood.num) {
+        this.shoppingNum++;
+      } else {
+        this.$message({
+          message: "没有更多了",
+          type: 'error'
+        });
+        return;
+      }
     },
-    closingGood: function() {
+    gosell: function() {
       if (this.shoppingNum == 0) {
         this.$message({
           message: "请输入购买数量",

@@ -301,12 +301,19 @@
       :currGood="currGood"
       @closeDialog="closeUpurchase" v-if="purchaseDialog"></Upurchase>
 
+    <!-- 出售 -->
+    <Usell 
+      :sellDialog="sellDialog" 
+      :currFood="currFood"
+      @closeDialog="closeUsell" v-if="sellDialog"></Usell>
+
     <!-- 物品详情 -->
     <Ugooddetails
       :goodDialog="goodDialog"
       :currFood="currFood"
       @countdown="setCountdown(arguments)"
-      @closeDialog="closeUgood" v-if="goodDialog"></Ugooddetails>
+      @closeDialog="closeUgood"
+      @showSell="showSell"  v-if="goodDialog"></Ugooddetails>
 
     <!-- 皮肤详情 -->
     <Uskindetails
@@ -336,6 +343,7 @@ import Cleaf from '../components/Cleaf.vue'         // 叶子
 import Ctrough from '../components/Ctrough.vue'     // 鸡饭碗
 import Upersonal from '../components/Upersonal.vue' // 个人中心
 import Upurchase from '../components/Upurchase.vue'   // 购买
+import Usell from '../components/Usell.vue'           // 出售
 import Uskindetails from '../components/Uskindetails.vue' // 皮肤详情
 import Ugooddetails from '../components/Ugooddetails.vue' // 物品详情
 import Utasks from '../components/Utasks.vue' // 物品详情
@@ -356,6 +364,7 @@ export default {
     return {
       dialogStatus: false,   // 个人中心弹出窗状态
       purchaseDialog: false, // 购买单个商品弹出窗状态
+      sellDialog: false, // 出售物品
       skinDialog: false, // 皮肤详情弹窗
       goodDialog: false, // 物品详情弹窗
       taskDialog: false, // 任务列表弹窗
@@ -407,6 +416,7 @@ export default {
     Ctrough,
     Upersonal,
     Upurchase,
+    Usell,
     Uskindetails,
     Ugooddetails,
     Utasks,
@@ -544,6 +554,7 @@ export default {
     opendialog() { this.dialogStatus = true},
     closeHandle() { this.dialogStatus = false},
     closeUpurchase() { this.purchaseDialog = false},
+    closeUsell() { this.sellDialog = false},
     closeUskin() { this.skinDialog = false},
     closeUgood() { this.goodDialog = false},
     closeUtask() { this.taskDialog = false},
@@ -609,6 +620,10 @@ export default {
       console.log(name);
       this.$store.dispatch('setCurrGood', name);
       this.purchaseDialog = true;
+    },
+    // 出售物品
+    showSell() {
+      this.sellDialog = true;
     },
     // 设置倒计时
     setCountdown(data) {

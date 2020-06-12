@@ -86,6 +86,7 @@ export default {
             message: res.data.msg,
             type: 'error'
           });
+          this.loading = false;
           console.log(res.data.msg)
         }
       });

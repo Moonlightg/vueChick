@@ -92,7 +92,9 @@ export default {
       }
     },
     sell() {
+      //this.$store.dispatch('sellGood',this.currFood.name);
       console.log("出售:"+this.currFood.name);
+      this.$emit('showSell')
     }
   }
 }
