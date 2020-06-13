@@ -12,6 +12,7 @@ import {
   postUseSkin,
   postUnlock,
   postClosingGood,
+  postSellFood,
   postFeeding,
   postTasks,
   postReceiveTask,
@@ -27,6 +28,7 @@ import {
   SET_LOG,
   DEDUCT_MONEY,
   UPDATE_MONEY,
+  ADD_MONEY,
   UPDATE_GEM,
   UPDATE_GOODS_UNLOCK,
   // UPDATE_CHICK,
@@ -185,6 +187,20 @@ export default {
       message: '购买成功',
       type: 'success'
     });
+  },
+  async reqSellFood(context, value) {
+    let obj = {
+      type: value.moneyType,
+      price: value.money
+    }
+    const result = await postSellFood(value);
+    console.log(result);
+    if (result.code == 0) {
+      context.commit(SET_CURR_FOOD, result.data);
+      context.commit(UPDATE_USER_FOODS, result.data);
+      console.log(obj);
+      context.commit(ADD_MONEY, obj);
+    }
   },
   // 投喂食物
   async reqFeeding(context, value) {

@@ -4,6 +4,7 @@ import {
   SET_LOG,
   DEDUCT_MONEY,
   UPDATE_MONEY,
+  ADD_MONEY,
   UPDATE_GEM,
   UPDATE_GOODS_UNLOCK,
   // UPDATE_CHICK,
@@ -46,7 +47,13 @@ export default {
     } else {
       state.userinfo.money = state.userinfo.money - value.price;
     }
-    
+  },
+  [ADD_MONEY](state,value) {
+    if (value.type == 1) {
+      state.userinfo.gem = state.userinfo.gem + value.price;
+    } else {
+      state.userinfo.money = state.userinfo.money + value.price;
+    }
   },
   [UPDATE_MONEY](state,newMoney) {
     state.userinfo.money = newMoney;

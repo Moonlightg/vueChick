@@ -12,11 +12,11 @@
       <div class="num-form">
         <div class="shop-btn" @click="shopReduce"><i class="el-icon-remove-outline"></i></div>
         <div class="shop-input">
-          <el-input v-model="shoppingNum" placeholder="数量"></el-input>
+          <el-input v-model="foodNum" placeholder="数量"></el-input>
         </div>
         <div class="shop-btn" @click="shopAdd"><i class="el-icon-circle-plus-outline"></i></div>
       </div>
-      <p>出售总价：<i class="el-icon-s-help"></i>{{currFood.price * shoppingNum}}</p>
+      <p>出售总价：<i class="el-icon-s-help"></i>{{currFood.price * foodNum}}</p>
     </div>
     <span slot="footer" class="dialog-footer">
       <el-button type="danger" @click="gosell">出售</el-button>
@@ -38,7 +38,7 @@ export default {
   },
   data () {
     return {
-      shoppingNum: 1
+      foodNum: 1
     }
   },
   computed: {
@@ -49,18 +49,18 @@ export default {
       this.$emit('closeDialog') // 取消和 x 按钮的事件，防止重复操作createDialog变量
     },
     shopReduce: function() {
-      if (this.shoppingNum === 1) {
+      if (this.foodNum === 1) {
         this.$message({
           message: "不能出售少于0个",
           type: 'error'
         });
         return;
       }
-      this.shoppingNum--;
+      this.foodNum--;
     },
     shopAdd: function() {
-      if ( this.shoppingNum < this.currFood.num) {
-        this.shoppingNum++;
+      if ( this.foodNum < this.currFood.num) {
+        this.foodNum++;
       } else {
         this.$message({
           message: "没有更多了",
@@ -70,25 +70,20 @@ export default {
       }
     },
     gosell: function() {
-      if (this.shoppingNum == 0) {
+      if (this.foodNum == 0) {
         this.$message({
-          message: "请输入购买数量",
-          type: 'error'
-        });
-      } else if (this.userinfo.money < this.currGood.price * this.shoppingNum) {
-        this.$message({
-          message: "金币不足",
+          message: "请输入出售数量",
           type: 'error'
         });
       } else {
         const obj = {
-          goodName: this.currGood.name, // 购买商品名称
-          goodNum: this.shoppingNum, // 购买数量
-          money: this.userinfo.money - this.currGood.price * this.shoppingNum // 购买后金额计算
+          name: this.currFood.name, // 出售物品名称
+          num: this.foodNum, // 出售数量数量
+          money: this.currFood.price * this.foodNum, // 出售后金额计算
+          moneyType: 2 // 金钱类型
         };
-        this.$store.dispatch('reqClosingGood',obj);
-        this.$store.dispatch("addLog", {log_title: '购买了'+obj.goodName+'*'+obj.goodNum});
-        this.shoppingNum = 1;
+        this.$store.dispatch('reqSellFood',obj);
+        this.$store.dispatch("addLog", {log_title: '出售了'+obj.goodName+'*'+obj.goodNum+",获得了宝石:"+this.currFood.price * this.foodNum});
         this.handleClose();
       }
     }
