@@ -83,7 +83,7 @@ export default {
           moneyType: 2 // 金钱类型
         };
         this.$store.dispatch('reqSellFood',obj);
-        this.$store.dispatch("addLog", {log_title: '出售了'+obj.goodName+'*'+obj.goodNum+",获得了宝石:"+this.currFood.price * this.foodNum});
+        this.$store.dispatch("addLog", {log_title: '出售了'+obj.name+'*'+obj.num+",获得了金币:"+this.currFood.price * this.foodNum});
         this.handleClose();
       }
     }

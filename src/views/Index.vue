@@ -259,7 +259,7 @@
                 <ul class="food-list" v-if="userFoodsList2.length != 0 ">
                   <li v-for="good in userFoodsList2"
                     :key="good.id"
-                    @click="showGood(good)">
+                    @click="showGood(good)" v-show="good.num != 0">
                     <div class="food-item">
                       <div class="food-img">
                         <img :src="getImgUrl(good.img)">
@@ -554,7 +554,10 @@ export default {
     opendialog() { this.dialogStatus = true},
     closeHandle() { this.dialogStatus = false},
     closeUpurchase() { this.purchaseDialog = false},
-    closeUsell() { this.sellDialog = false},
+    closeUsell() { 
+      this.sellDialog = false,
+      this.goodDialog = false;
+    },
     closeUskin() { this.skinDialog = false},
     closeUgood() { this.goodDialog = false},
     closeUtask() { this.taskDialog = false},
