@@ -29,31 +29,10 @@
       <li @click="showPopup(study)" class="n-green"><span class="nav-icon"><i class="el-icon-collection"></i></span><span class="nav-name">学习</span></li>
     </ul>
     <div class="content">
-      <div class="bg-content">
-        <!-- 太阳光 -->
-        <Csunlight></Csunlight>
-        <!-- 山峰 -->
-        <Cpeak></Cpeak>
-        <!-- 白云 -->
-        <Cclouds></Cclouds>
-        <div class="land-wrap">
-          <!-- 草地 -->
-          <Cgrass></Cgrass>
-          <!-- 房子 -->
-          <Chouse></Chouse>
-          <!-- 护栏 -->
-          <Cfence></Cfence>
-          <!-- 蜜蜂鲜花 -->
-          <Cbee></Cbee>
-          
-        </div>
-        <!-- 叶子 -->
-        <Cleaf></Cleaf>
-        <!-- 鸡饭碗 -->
-        <Ctrough></Ctrough>
-        <!-- 弹窗遮罩层 -->
-        <div class="popup-mask" v-show="skinBox" @click="hidePopup"></div>
-      </div>
+      <!-- 白天背景 -->
+      <scene-day v-if="hoursType == 0 || hoursType == 1"></scene-day>
+      <!-- 晚上背景 -->
+      <scene-night v-if="hoursType == 2"></scene-night>
       <div class="chick-content">
         <!-- chick -->
         <div class="chick" :class="{noeat:!chick.eat}">
@@ -127,6 +106,8 @@
           :eggprogress="chick.eggProgress"  
           ref="paper"></Cegg>
       </div>
+      <!-- 弹窗遮罩层 -->
+      <div class="popup-mask" v-show="skinBox" @click="hidePopup"></div>
     </div>
     
     <!-- 功能弹窗面板 -->
@@ -336,23 +317,16 @@
 <script>
 import storage from '../plugins/storage'
 // 场景组件
-import Csunlight from '../components/Csunlight.vue' // 太阳光
-import Cpeak from '../components/Cpeak.vue'         // 山峰
-import Cclouds from '../components/Cclouds.vue'     // 白云
-import Cgrass from '../components/Cgrass.vue'       // 草地
-import Chouse from '../components/Chouse.vue'       // 房子
-import Cfence from '../components/Cfence.vue'       // 护栏
-import Cbee from '../components/Cbee.vue'           // 蜜蜂鲜花
-import Cegg from '../components/Cegg.vue'           // 鸡蛋
-import Cleaf from '../components/Cleaf.vue'         // 叶子
-import Ctrough from '../components/Ctrough.vue'     // 鸡饭碗
-import Upersonal from '../components/Upersonal.vue' // 个人中心
-import Upurchase from '../components/Upurchase.vue'   // 购买
-import Usell from '../components/Usell.vue'           // 出售
-import Uskindetails from '../components/Uskindetails.vue' // 皮肤详情
-import Ugooddetails from '../components/Ugooddetails.vue' // 物品详情
-import Utasks from '../components/Utasks.vue' // 物品详情
-import Nodata from '../components/Nodata.vue' // 暂无数据
+import Cegg from '../components/Cegg.vue'                   // 鸡蛋
+import SceneDay from '../components/scene/SceneDay.vue'     // 白天背景
+import SceneNight from '../components/scene/SceneNight.vue' // 晚上背景
+import Upersonal from '../components/Upersonal.vue'         // 个人中心
+import Upurchase from '../components/Upurchase.vue'         // 购买
+import Usell from '../components/Usell.vue'                 // 出售
+import Uskindetails from '../components/Uskindetails.vue'   // 皮肤详情
+import Ugooddetails from '../components/Ugooddetails.vue'   // 物品详情
+import Utasks from '../components/Utasks.vue'               // 物品详情
+import Nodata from '../components/Nodata.vue'               // 暂无数据
 
 // 皮肤组件
 import Clothesdefault from '../components/chickskin/Clothesdefault.vue'
@@ -409,16 +383,9 @@ export default {
     ])
   },
   components: {
-    Csunlight,
-    Cpeak,
-    Cclouds,
-    Cgrass,
-    Chouse,
-    Cfence,
-    Cbee,
     Cegg,
-    Cleaf,
-    Ctrough,
+    SceneDay,
+    SceneNight,
     Upersonal,
     Upurchase,
     Usell,

@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import Cbee from '../components/Cbee.vue'           // 蜜蜂鲜花
+import Cbee from '../components/scene/bg/Cbee.vue'           // 蜜蜂鲜花
 export default {
   name: 'Login',
   data() {

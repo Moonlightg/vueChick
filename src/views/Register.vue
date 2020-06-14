@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import Cbee from '../components/Cbee.vue'
+import Cbee from '../components/scene/bg/Cbee.vue'
 export default {
   name: 'Register',
   data() {
