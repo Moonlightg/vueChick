@@ -234,10 +234,26 @@ ul,li{ padding: 0;margin: 0; }
   height: 100%;
   position: absolute;
   bottom: 0;
+  left: 0;
+  overflow: hidden;
+  transition: all .4s;
+}
+.bg-content {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
   background-image:-webkit-linear-gradient(to bottom, #75cefc, #fff); 
   background-image:linear-gradient(to bottom,#75cefc,#fff);
   overflow: hidden;
-  transition: all .4s;
+}
+.chick-content {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
 }
 /*太阳光 sunlight*/
 .sunlight{
@@ -372,7 +388,7 @@ ul,li{ padding: 0;margin: 0; }
 /*鸡蛋*/
 .egg-wrapper{
   position: absolute;
-  bottom: 43%;
+  bottom: 17%;
   left: 10%;
   width: 5rem;
   height: 5rem;

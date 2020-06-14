@@ -3,7 +3,7 @@
     <!-- 个人信息简介 -->
     <div class="user-box" @click="opendialog">
       <div class="user-logo">
-        <div class="user-level">{{userinfo.level}}</div>
+        <!-- <div class="user-level">{{userinfo.level}}</div> -->
         <span class="portrait-item portrait0"></span>
       </div>
       <div class="user-info">
@@ -29,99 +29,104 @@
       <li @click="showPopup(study)" class="n-green"><span class="nav-icon"><i class="el-icon-collection"></i></span><span class="nav-name">学习</span></li>
     </ul>
     <div class="content">
-      <!-- 太阳光 -->
-      <Csunlight></Csunlight>
-      <!-- 山峰 -->
-      <Cpeak></Cpeak>
-      <!-- 白云 -->
-      <Cclouds></Cclouds>
-      <div class="land-wrap">
-        <!-- 草地 -->
-        <Cgrass></Cgrass>
-        <!-- 房子 -->
-        <Chouse></Chouse>
-        <!-- 护栏 -->
-        <Cfence></Cfence>
-        <!-- 蜜蜂鲜花 -->
-        <Cbee></Cbee>
+      <div class="bg-content">
+        <!-- 太阳光 -->
+        <Csunlight></Csunlight>
+        <!-- 山峰 -->
+        <Cpeak></Cpeak>
+        <!-- 白云 -->
+        <Cclouds></Cclouds>
+        <div class="land-wrap">
+          <!-- 草地 -->
+          <Cgrass></Cgrass>
+          <!-- 房子 -->
+          <Chouse></Chouse>
+          <!-- 护栏 -->
+          <Cfence></Cfence>
+          <!-- 蜜蜂鲜花 -->
+          <Cbee></Cbee>
+          
+        </div>
+        <!-- 叶子 -->
+        <Cleaf></Cleaf>
+        <!-- 鸡饭碗 -->
+        <Ctrough></Ctrough>
+        <!-- 弹窗遮罩层 -->
+        <div class="popup-mask" v-show="skinBox" @click="hidePopup"></div>
+      </div>
+      <div class="chick-content">
+        <!-- chick -->
+        <div class="chick" :class="{noeat:!chick.eat}">
+          <!-- 进食倒计 -->
+          <div class="countdown-box">
+            <p class="countdown-text" :class="{active : !chick.eat }">{{textContent}}</p>
+            <!-- 进食进度条 -->
+            <div class="progress" v-if="progressValue != 0 && progressValue < 100">
+              <div class="progress-content" :style="'width:' + progressValue + '%' "></div>
+            </div>
+          </div>
+          <!-- 装扮-帽子 -->
+          <div class="skin-hat">
+            <keep-alive>
+              <component
+                :is="chick.skinHat"></component>
+            </keep-alive>
+          </div>
+          <div class="chick-head"></div>
+          <div class="chick-body">
+            <!-- 装扮-衣服 -->
+            <keep-alive>
+              <component
+                :is="chick.skinClothes"></component>
+            </keep-alive>
+          </div>
+          <div class="eye">
+            <span></span>
+            <span></span>
+          </div>
+          <div class="blusher">
+            <span></span>
+            <span></span>
+          </div>
+          <div class="face"></div>
+          <div class="wing-left"></div>
+          <div class="wing-left2"></div>
+          <div class="wing-content">
+            <span></span>
+          </div>
+          <div class="wing-right">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <div class="food">
+              <p></p>
+              <div class="dot-box">
+                <span></span>
+                <span></span>
+              </div>
+            </div>
+          </div>
+          <div class="mouth">
+            <span></span>
+            <span></span>
+            <p></p>
+          </div>
+          <div class="foot">
+            <span></span>
+            <span></span>
+          </div>
+        </div>
         <!-- 鸡蛋 -->
         <Cegg 
           :eggnum="chick.eggNum" 
           :eggprogress="chick.eggProgress"  
           ref="paper"></Cegg>
       </div>
-      <!-- 叶子 -->
-      <Cleaf></Cleaf>
-      <!-- 鸡饭碗 -->
-      <Ctrough></Ctrough>
-      <!-- chick -->
-      <div class="chick" :class="{noeat:!chick.eat}">
-        <!-- 进食倒计 -->
-        <div class="countdown-box">
-          <p class="countdown-text" :class="{active : !chick.eat }">{{textContent}}</p>
-          <!-- 进食进度条 -->
-          <div class="progress" v-if="progressValue != 0 && progressValue < 100">
-            <div class="progress-content" :style="'width:' + progressValue + '%' "></div>
-          </div>
-        </div>
-        <!-- 装扮-帽子 -->
-        <div class="skin-hat">
-          <keep-alive>
-            <component
-              :is="chick.skinHat"></component>
-          </keep-alive>
-        </div>
-        <div class="chick-head"></div>
-        <div class="chick-body">
-          <!-- 装扮-衣服 -->
-          <keep-alive>
-            <component
-              :is="chick.skinClothes"></component>
-          </keep-alive>
-        </div>
-        <div class="eye">
-          <span></span>
-          <span></span>
-        </div>
-        <div class="blusher">
-          <span></span>
-          <span></span>
-        </div>
-        <div class="face"></div>
-        <div class="wing-left"></div>
-        <div class="wing-left2"></div>
-        <div class="wing-content">
-          <span></span>
-        </div>
-        <div class="wing-right">
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
-          <div class="food">
-            <p></p>
-            <div class="dot-box">
-              <span></span>
-              <span></span>
-            </div>
-          </div>
-        </div>
-        <div class="mouth">
-          <span></span>
-          <span></span>
-          <p></p>
-        </div>
-        <div class="foot">
-          <span></span>
-          <span></span>
-        </div>
-      </div>
-      <!-- 弹窗遮罩层 -->
-      <div class="popup-mask" v-show="skinBox" @click="hidePopup"></div>
     </div>
     
     <!-- 功能弹窗面板 -->
