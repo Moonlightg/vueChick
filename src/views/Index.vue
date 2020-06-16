@@ -1,7 +1,7 @@
 <template>
   <div class="container" :class="{ beingskin: skinBox}" style="opacity: 1">
     <!-- 个人信息简介 -->
-    <div class="user-box" @click="opendialog">
+    <div class="user-box" @click="opendialog" style="opacity: 0">
       <div class="user-logo">
         <!-- <div class="user-level">{{userinfo.level}}</div> -->
         <span class="portrait-item portrait0"></span>
@@ -17,11 +17,11 @@
       </div>
     </div>
     <!-- 功能菜单 left -->
-    <ul class="nav-list nav-l">
+    <ul class="nav-list nav-l" style="opacity: 0">
       <li class="n-violet" @click="goLog()"><span class="nav-icon"><i class="el-icon-bell"></i></span><span class="nav-name">动态</span></li>
     </ul>
     <!-- 功能菜单 -->
-    <ul class="nav-list">
+    <ul class="nav-list" style="opacity: 0">
       <li @click="showPopup(skin)"><span class="nav-icon"><i class="el-icon-brush"></i></span><span class="nav-name">换装</span></li>
       <li @click="showPopup(shop)"><span class="nav-icon"><i class="el-icon-shopping-bag-1"></i></span><span class="nav-name">商店</span></li>
       <li @click="showPopup(bag)"><span class="nav-icon"><i class="el-icon-suitcase"></i></span><span class="nav-name">背包</span></li>
@@ -33,7 +33,7 @@
       <scene-day v-if="hoursType == 0 || hoursType == 1"></scene-day>
       <!-- 晚上背景 -->
       <scene-night v-if="hoursType == 2"></scene-night>
-      <div class="chick-content">
+      <div class="chick-content" style="opacity: 1">
         <!-- chick -->
         <div class="chick" :class="{noeat:!chick.eat}">
           <!-- 进食倒计 -->

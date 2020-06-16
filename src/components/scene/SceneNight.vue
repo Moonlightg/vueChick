@@ -3,7 +3,7 @@
     <canvas id="myCanvas"></canvas>
     <!-- 山峰 -->
     <!-- <Cpeak></Cpeak> -->
-    <div class="land-wrap">
+    <div class="land-wrap" style="opacity: 1">
       <!-- 草地 -->
       <Cgrass></Cgrass>
       <!-- 房子 -->
@@ -11,10 +11,12 @@
       <!-- 护栏 -->
       <Cfence></Cfence>
     </div>
+    <div style="opacity: 1">
     <!-- 叶子 -->
     <Cleaf></Cleaf>
     <!-- 鸡饭碗 -->
     <Ctrough></Ctrough>
+    </div>
   </div>
 </template>
 <script>
@@ -46,7 +48,7 @@ export default {
     getCanvas(){
       var canvas = document.getElementById("myCanvas");
       canvas.width = document.documentElement.clientWidth;
-      canvas.height = document.documentElement.clientHeight/2;
+      canvas.height = document.documentElement.clientHeight*0.6;
       var ctx = canvas.getContext("2d");
 
       ctx.beginPath(); // 一个图形开始
@@ -62,8 +64,16 @@ export default {
       ctx.fill();
       ctx.closePath();
 
-      this.canvasMonth(ctx,0,canvas.height,100,canvas.height,"#836da1","#836da1");
-      this.canvasArc(ctx,25,canvas.height-100,25,0,Math.PI,true,"#836da1","#836da1");
+      this.drawCloud(ctx,canvas.width,canvas.height,"#60527d");
+      this.canvasArc(ctx,25,canvas.height-200,25,0,Math.PI,true,"#816891","#816891"); // 半圆
+      this.roundRect(ctx, 0, canvas.height-130, 50, 150, 40,2,"#816791","#816791");     // 圆角矩形
+      this.roundRect(ctx, 40, canvas.height-100, 40, 120, 40,2,"#816791","#816791");    // 圆角矩形
+      this.roundRect(ctx, -15, canvas.height-100, 30, 120, 40,2,"#776090","#776090");      // 圆角矩形
+      this.roundRect(ctx, 0, canvas.height-40, 30, 60, 40,2,"#60527d","#60527d");       // 圆角矩形
+      this.roundRect(ctx, 25, canvas.height-50, 30, 70, 40,2,"#60527d","#60527d");      // 圆角矩形
+      this.canvasMonth(ctx,50,canvas.height,canvas.width,canvas.height,2,"#a17ba9","#2d2664"); // 梯形
+      //this.roundRect(ctx, 100, canvas.height-50, 40, 50, 40,"#836da1","#836da1");
+      
     },
     /**
      * canvas状态绘制机制  多边形  矩形
@@ -79,17 +89,32 @@ export default {
      * @param strokeStyle  线条颜色  类型String
      * @param fillStyle 封闭图形颜色  类型String
      */
-    canvasMonth(context,moveToX,moveToY,lineToX,lineToY,strokeStyle,fillStyle){
+    canvasMonth(context,moveToX,moveToY,lineToX,lineToY,lineWidth,strokeStyle,fillStyle){
       context.beginPath(); //清除上一次的绘制参数 开始绘制
       context.moveTo(moveToX,moveToY); //线条起点moveToX,moveToY
-      context.lineTo(moveToX+lineToX*2,moveToY);
-      context.lineTo(moveToX+lineToX,moveToY-lineToX);
-      context.lineTo(moveToX,moveToY-lineToX);
+      context.lineTo(moveToX+100,moveToY-70);
+      context.lineTo(lineToX,moveToY-70);
+      context.lineTo(lineToX,moveToY);
+      // context.lineTo(moveToX+lineToX*2,moveToY-100);
+      // context.lineTo(moveToX+lineToX,moveToY-lineToX);
+      // context.lineTo(moveToX,moveToY-lineToX);
       // context.lineTo(moveToX,moveToY+lineToY);
       context.closePath();//封闭多边形结束方法
-      // context.lineWidth=lineWidth; //线条宽度
-      context.fillStyle=fillStyle; //多边形填充颜色
+      context.lineWidth=lineWidth; //线条宽度
+      // context.fillStyle=fillStyle; //多边形填充颜色
       context.strokeStyle=strokeStyle;//线条颜色
+      context.shadowColor = strokeStyle; // 设置或返回用于阴影的颜色
+      context.shadowBlur = 4;            // 设置或返回用于阴影的模糊级别
+      context.shadowOffsetX = 0;         // 设置或返回阴影距形状的水平距离
+      context.shadowOffsetY = 0          // 设置或返回阴影距形状的垂直距离 
+
+      var gradient = context.createLinearGradient((lineWidth-moveToX)/2.5, lineToX-70, (lineWidth-moveToX)/2, lineToX);
+      //添加多种颜色
+      gradient.addColorStop(1, "#725d8f");
+      gradient.addColorStop(0, fillStyle);
+        
+      //填充渐变色
+      context.fillStyle = gradient;
       context.fill(); //多边形填充
       context.stroke(); //结束绘制
       context.closePath();
@@ -114,6 +139,53 @@ export default {
       context.fill();
       context.stroke();
       context.closePath();
+    },
+
+    //绘制圆角矩形
+    roundRect(ctx, x, y, w, h, r,lineWidth,strokeStyle,fillStyle) {
+        if (w < 2 * r) {r = w / 2;}
+        if (h < 2 * r){ r = h / 2;}
+        ctx.beginPath();
+        ctx.strokeStyle=strokeStyle;
+        ctx.moveTo(x+r, y);
+        ctx.arcTo(x+w, y, x+w, y+h, r);
+        ctx.arcTo(x+w, y+h, x, y+h, r);
+        ctx.arcTo(x, y+h, x, y, r);
+        ctx.arcTo(x, y, x+w, y, r);
+        ctx.closePath();
+        ctx.lineWidth=lineWidth; //线条宽度
+        ctx.fillStyle=fillStyle;
+        ctx.fill();
+        ctx.stroke();
+        ctx.closePath();
+    },
+    getRandom(seek) {
+      return parseInt(Math.random() * seek + 1);
+    },
+    getTranslateX(r, radious){
+      return parseInt(Math.abs(2 * r * Math.sin(100 * radious / 180)));
+    },
+    // 函数画山峰背景
+    drawCloud(ctx,w,h,fillStyle) {
+      let _this = this;
+      console.log(h);
+      ctx.moveTo(0, 80);
+      //let i = 0;
+      let maxWidth = w;
+      let x = 0, y = h-100;
+      //一弧度=180/pi
+      ctx.beginPath();
+      while (x <= maxWidth) {
+        let r = _this.getRandom(35);
+        let radious = _this.getRandom(360) / Math.PI;
+        let nextX = _this.getTranslateX(r, radious);
+        ctx.arc(x + r, y, r, 0, radious, false);
+        x += nextX;
+      }
+      ctx.closePath();
+      ctx.fillStyle = fillStyle;
+      ctx.fillRect(0, h-100, maxWidth, 100);
+      ctx.fill();
     }
   }
 }
