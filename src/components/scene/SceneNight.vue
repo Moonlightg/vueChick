@@ -51,27 +51,35 @@ export default {
       canvas.height = document.documentElement.clientHeight*0.6;
       var ctx = canvas.getContext("2d");
 
-      ctx.beginPath(); // 一个图形开始
-      ctx.fillStyle="#FF0000";
-      ctx.fillRect(0,0,150,75);
-      ctx.closePath(); // 一个图形结束
+      // ctx.beginPath(); // 一个图形开始
+      // ctx.fillStyle="#FF0000";
+      // ctx.fillRect(0,0,150,75);
+      // ctx.closePath(); // 一个图形结束
 
-      ctx.beginPath()
-      ctx.rect(0, canvas.height-175, 150, 75);
-      ctx.strokeStyle = '#2DE0A5';
-      ctx.stroke(); // 描边
-      ctx.fillStyle = 'rgba(45, 224, 165, 0.3)';
-      ctx.fill();
-      ctx.closePath();
+      // ctx.beginPath()
+      // ctx.rect(0, canvas.height-175, 150, 75);
+      // ctx.strokeStyle = '#2DE0A5';
+      // ctx.stroke(); // 描边
+      // ctx.fillStyle = 'rgba(45, 224, 165, 0.3)';
+      // ctx.fill();
+      // ctx.closePath();
 
-      this.drawCloud(ctx,canvas.width,canvas.height,"#60527d");
-      this.canvasArc(ctx,25,canvas.height-200,25,0,Math.PI,true,"#816891","#816891"); // 半圆
+      this.drawCloud(ctx,canvas.width,canvas.height,"#60527d");                         // 函数绘制连续山峰
+      // this.canvasArc(ctx,25,canvas.height-200,25,0,Math.PI,true,"#816891","#816891");   // 半圆
       this.roundRect(ctx, 0, canvas.height-130, 50, 150, 40,2,"#816791","#816791");     // 圆角矩形
       this.roundRect(ctx, 40, canvas.height-100, 40, 120, 40,2,"#816791","#816791");    // 圆角矩形
-      this.roundRect(ctx, -15, canvas.height-100, 30, 120, 40,2,"#776090","#776090");      // 圆角矩形
+      this.roundRect(ctx, -15, canvas.height-100, 30, 120, 40,2,"#776090","#776090");   // 圆角矩形
       this.roundRect(ctx, 0, canvas.height-40, 30, 60, 40,2,"#60527d","#60527d");       // 圆角矩形
       this.roundRect(ctx, 25, canvas.height-50, 30, 70, 40,2,"#60527d","#60527d");      // 圆角矩形
-      this.canvasMonth(ctx,50,canvas.height,canvas.width,canvas.height,2,"#a17ba9","#2d2664"); // 梯形
+      this.peakA(ctx,canvas.height,canvas.width,2,"#856fa3","#856fa3",false); // 小山
+      this.peakB(ctx,canvas.height,canvas.width,2,"#272a57","#272a57",false); // 小山2
+      this.peakC(ctx,canvas.height,canvas.width,2,"#433e75","#433e75",false); // 小山3
+      this.roundRect(ctx, 200, canvas.height-100, 40, 70, 40,2,"#383b6a","#383b6a");    // 圆角矩形
+      this.roundRect(ctx, 175, canvas.height-90, 40, 70, 40,2,"#383b6a","#383b6a");     // 圆角矩形
+      this.roundRect(ctx, canvas.width-20, canvas.height-120, 40, 70, 40,2,"#383b6a","#383b6a");     // 圆角矩形
+      this.canvasMonth(ctx,50,canvas.height,canvas.width,canvas.height,2,"#a17ba9","#2d2664",true); // 梯形
+      
+      //this.drawLine(ctx,150,canvas.height-70,190,canvas.height-150,240,canvas.height-200); // 绘制贝塞尔曲线
       //this.roundRect(ctx, 100, canvas.height-50, 40, 50, 40,"#836da1","#836da1");
       
     },
@@ -88,18 +96,19 @@ export default {
      * @param lineWidth  线条宽度  类型number
      * @param strokeStyle  线条颜色  类型String
      * @param fillStyle 封闭图形颜色  类型String
+     * @param isCreate 是否渐填充
      */
-    canvasMonth(context,moveToX,moveToY,lineToX,lineToY,lineWidth,strokeStyle,fillStyle){
+    canvasMonth(context,moveToX,moveToY,lineToX,lineToY,lineWidth,strokeStyle,fillStyle,isCreate){
       context.beginPath(); //清除上一次的绘制参数 开始绘制
       context.moveTo(moveToX,moveToY); //线条起点moveToX,moveToY
-      context.lineTo(moveToX+100,moveToY-70);
+      context.lineTo(moveToX+60,moveToY-70);
       context.lineTo(lineToX,moveToY-70);
       context.lineTo(lineToX,moveToY);
       // context.lineTo(moveToX+lineToX*2,moveToY-100);
       // context.lineTo(moveToX+lineToX,moveToY-lineToX);
       // context.lineTo(moveToX,moveToY-lineToX);
       // context.lineTo(moveToX,moveToY+lineToY);
-      context.closePath();//封闭多边形结束方法
+      
       context.lineWidth=lineWidth; //线条宽度
       // context.fillStyle=fillStyle; //多边形填充颜色
       context.strokeStyle=strokeStyle;//线条颜色
@@ -107,14 +116,18 @@ export default {
       context.shadowBlur = 4;            // 设置或返回用于阴影的模糊级别
       context.shadowOffsetX = 0;         // 设置或返回阴影距形状的水平距离
       context.shadowOffsetY = 0          // 设置或返回阴影距形状的垂直距离 
+      context.closePath();//封闭多边形结束方法
 
-      var gradient = context.createLinearGradient((lineWidth-moveToX)/2.5, lineToX-70, (lineWidth-moveToX)/2, lineToX);
-      //添加多种颜色
-      gradient.addColorStop(1, "#725d8f");
-      gradient.addColorStop(0, fillStyle);
-        
-      //填充渐变色
-      context.fillStyle = gradient;
+      if (isCreate) {
+        var gradient = context.createLinearGradient((lineWidth-moveToX)/2.5, lineToX-70, (lineWidth-moveToX)/2, lineToX);
+        //添加多种颜色
+        gradient.addColorStop(1, "#725d8f");
+        gradient.addColorStop(0, fillStyle);
+        //填充渐变色
+        context.fillStyle = gradient;
+      } else {
+        context.fillStyle = fillStyle;
+      }
       context.fill(); //多边形填充
       context.stroke(); //结束绘制
       context.closePath();
@@ -186,6 +199,100 @@ export default {
       ctx.fillStyle = fillStyle;
       ctx.fillRect(0, h-100, maxWidth, 100);
       ctx.fill();
+    },
+    // 画贝塞尔曲线
+    drawLine(ctx,x,y, controlX, controlY, endX, endY) {
+      ctx.beginPath();
+      ctx.moveTo(x, y);
+      ctx.quadraticCurveTo(controlX, controlY, endX, endY);
+      ctx.fillStyle = "#red";
+      ctx.fill();
+      ctx.stroke();
+      ctx.closePath();
+    },
+    // 小山 - 自定义路径
+    peakA(context,h,w,lineWidth,strokeStyle,fillStyle,isCreate) {
+      context.beginPath(); //清除上一次的绘制参数 开始绘制
+      context.moveTo(w-180,h-70); //线条起点moveToX,moveToY
+      context.lineTo(w-180,h-100);
+      context.lineTo(w-160,h-100);
+      context.lineTo(w-120,h-140);
+      context.lineTo(w-60,h-140);
+      context.lineTo(w-20,h-110);
+      context.lineTo(w,h-110);
+      context.lineTo(w,h-70);
+      context.closePath();//封闭多边形结束方法
+      context.lineWidth=lineWidth; //线条宽度
+      context.strokeStyle=strokeStyle;//线条颜色
+      if (isCreate) {
+        var gradient = context.createLinearGradient((lineWidth-10)/2.5, 10, (lineWidth-10)/2, 10);
+        //添加多种颜色
+        gradient.addColorStop(1, "#725d8f");
+        gradient.addColorStop(0, fillStyle);
+        //填充渐变色
+        context.fillStyle = gradient;
+      } else {
+        context.fillStyle = fillStyle;
+      }
+      context.fill(); //多边形填充
+      context.stroke(); //结束绘制
+      context.closePath();
+    },
+    // 小山 - 自定义路径
+    peakB(context,h,w,lineWidth,strokeStyle,fillStyle,isCreate) {
+      context.beginPath(); //清除上一次的绘制参数 开始绘制
+      context.moveTo(w-180,h-50); //线条起点moveToX,moveToY
+      context.lineTo(w-180,h-90);
+      context.lineTo(w-155,h-90);
+      context.lineTo(w-115,h-130);
+      context.lineTo(w-65,h-130);
+      context.lineTo(w-25,h-100);
+      context.lineTo(w,h-100);
+      context.lineTo(w,h-50);
+      context.closePath();//封闭多边形结束方法
+      context.lineWidth=lineWidth; //线条宽度
+      context.strokeStyle=strokeStyle;//线条颜色
+      if (isCreate) {
+        var gradient = context.createLinearGradient((lineWidth-10)/2.5, 10, (lineWidth-10)/2, 10);
+        //添加多种颜色
+        gradient.addColorStop(1, "#725d8f");
+        gradient.addColorStop(0, fillStyle);
+        //填充渐变色
+        context.fillStyle = gradient;
+      } else {
+        context.fillStyle = fillStyle;
+      }
+      context.fill(); //多边形填充
+      context.stroke(); //结束绘制
+      context.closePath();
+    },
+    // 小山 - 自定义路径
+    peakC(context,h,w,lineWidth,strokeStyle,fillStyle,isCreate) {
+      context.beginPath(); //清除上一次的绘制参数 开始绘制
+      context.moveTo(w-180,h-45); //线条起点moveToX,moveToY
+      context.lineTo(w-180,h-85);
+      context.lineTo(w-155,h-85);
+      context.lineTo(w-115,h-125);
+      context.lineTo(w-65,h-125);
+      context.lineTo(w-25,h-95);
+      context.lineTo(w,h-95);
+      context.lineTo(w,h-45);
+      context.closePath();//封闭多边形结束方法
+      context.lineWidth=lineWidth; //线条宽度
+      context.strokeStyle=strokeStyle;//线条颜色
+      if (isCreate) {
+        var gradient = context.createLinearGradient((lineWidth-10)/2.5, 10, (lineWidth-10)/2, 10);
+        //添加多种颜色
+        gradient.addColorStop(1, "#725d8f");
+        gradient.addColorStop(0, fillStyle);
+        //填充渐变色
+        context.fillStyle = gradient;
+      } else {
+        context.fillStyle = fillStyle;
+      }
+      context.fill(); //多边形填充
+      context.stroke(); //结束绘制
+      context.closePath();
     }
   }
 }
