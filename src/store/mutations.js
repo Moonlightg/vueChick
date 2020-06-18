@@ -94,11 +94,19 @@ export default {
     console.log(state.currSkin);
   },
   [SET_CURR_GOOD](state, good) {
-    state.goodsList.forEach(obj => {
-      if (obj.name === good) {
-        state.currGood = obj
-      }
-    })
+    if (good.type == 1) {
+      state.goodsList.forEach(obj => {
+        if (obj.name === good.name) {
+          state.currGood = obj
+        }
+      })
+    } else {
+      state.goodsList2.forEach(obj => {
+        if (obj.name === good.name) {
+          state.currGood = obj
+        }
+      })
+    }
   },
   [SET_CURR_FOOD](state, food) {
     state.currFood = food;

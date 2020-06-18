@@ -195,7 +195,7 @@
                       <span class="food-num" v-if="good.num !== 0">{{good.num}}</span>
                       <div class="mask-bg shortage-tips" 
                         v-if="good.num == 0 && good.unlock == 1" 
-                        @click.stop="showShop(good.name)">
+                        @click.stop="showShop(good)">
                         <el-button type="success" size="mini">购买</el-button>
                       </div>
                       <div class="mask-bg shortage-tips" 
@@ -213,7 +213,7 @@
                 <ul class="food-list">
                   <li v-for="good in goodsList2"
                     :key="good.id"
-                    @click="showShop(good.name)">
+                    @click="showShop(good)">
                     <div class="food-item">
                       <div class="food-img">
                         <img :src="getImgUrl(good.img)">
@@ -610,9 +610,9 @@ export default {
       this.goodDialog = true;
     },
     // 购买商品
-    showShop(name) {
-      console.log(name);
-      this.$store.dispatch('setCurrGood', name);
+    showShop(good) {
+      console.log(good);
+      this.$store.dispatch('setCurrGood', good);
       this.purchaseDialog = true;
     },
     // 出售物品
