@@ -298,3 +298,71 @@ export default {
 }
 
 </script>
+<style type="text/css">
+  .bg-night .grass-1 {
+    background-color: #bb90b7;
+  }
+  .bg-night .grass-1>span:nth-child(1), 
+  .bg-night .grass-1>span:nth-child(2) {
+    background-image: linear-gradient(225deg, rgba(192, 148, 183, 0.8), #c093b8);
+  }
+  .bg-night .grass-1>span:nth-child(3) {
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#816da7), to(#9a77aa));
+    background-image: linear-gradient(180deg, #816da7, #9a77aa);
+  }
+  .bg-night .grass-1>span:nth-child(4) {
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#9675aa), to(#836ea8));
+    background-image: linear-gradient(180deg, #9675aa, #836ea8);
+  }
+  .bg-night .grass-1>span:nth-child(5) {
+    background-image: linear-gradient(225deg, #c4a3c1, #b79cbe);
+  }
+  .bg-night .grass-1>span:nth-child(5):before {
+    background-image: linear-gradient(225deg, #b58dbb, #bfa1c0);
+  }
+  .bg-night .grass-1>span:nth-child(6) {
+    background-image: linear-gradient(225deg, #c0a1c0, #be93b7);
+  }
+  .bg-night .grass-1>span:nth-child(6):before {
+    background-image: linear-gradient(225deg, #b792bc, #c2a2c1);
+  }
+  .bg-night .grass-1>span:nth-child(6):after {
+    background-image: linear-gradient(225deg, #be93b7, #bf9ebe);
+  }
+  .bg-night .trough:before,
+  .bg-night .foot:before { background-color: #8670a7;}
+  .bg-night .egg-wrapper span:nth-child(1), 
+  .bg-night .egg-wrapper span:nth-child(1):before { background-color: #cba6c2;}
+  .bg-night .triangle-box { display: none; }
+  .bg-night .egg-wrapper span:nth-child(2), 
+  .bg-night .egg-wrapper span:nth-child(2):before { background-color: #9d7aaa;}
+  .bg-night .egg-wrapper span:nth-child(3), 
+  .bg-night .egg-wrapper span:nth-child(3):before { background-color: #c29dbd;}
+  .bg-night .egg-wrapper span:nth-child(4), 
+  .bg-night .egg-wrapper span:nth-child(4):before { background-color: #9d79aa;}
+  .bg-night .leaf-box .leaf-1,
+  .bg-night .leaf-box .leaf-3 { background: #503775;}
+  .bg-night .leaf-box .leaf-2,
+  .bg-night .leaf-box .leaf-4 { background: #2c1a4a;}
+  .bg-night .house-1 { background-color: #5266aa;}
+  .bg-night .house-2 { border-bottom: 2rem solid #5266aa;}
+  .bg-night .house-2-2 { border-bottom: 2rem solid #1f306c;}
+  .bg-night .house-3-2 { border-bottom: 1.9rem solid #1f306c;}
+  .bg-night .house-2-1 { border-bottom: 2rem solid #f8ddc4;}
+  .bg-night .house-3 { border-bottom: 1.5rem solid #5266aa;}
+  .bg-night .house-3-1 { border-bottom: 2.2rem solid #f8ddc4;}
+  .bg-night .house-4,
+  .bg-night .house-5 { background-color: #0f1e4e;}
+  .bg-night .house-6 { background-color: #f8ddc4;}
+  .bg-night .house-6:before {background-color: #2a458c;}
+  .bg-night .house-7 { background: #1e2e6e;}
+  .bg-night .house-7:before, 
+  .bg-night .house-7:after {
+    background-color: #f9ddc4;
+    border: .15rem solid #5266aa;
+  }
+  .bg-night .house-8 { background: #1e2f6d;}
+  .bg-night .house-8:before { background-color: #899dde;}
+  .bg-night .house-8:after { background-color: #0e1c4e;}
+  .bg-night .house-9 { background-color: #363a72;}
+</style>

@@ -127,6 +127,15 @@ export default {
   },
   [GET_GOODS](state,{goodsList}) {
     state.goodsList = goodsList;
+    state.goodsList = [];
+    state.goodsList2 = [];
+    goodsList.forEach(item => {
+      if(item.type == 1 ) {
+        state.goodsList.push(item);
+      } else if (item.type == 2 ) {
+        state.goodsList2.push(item);
+      }
+    });
   },
   [GET_USER_GOODS](state,{userGoodsList}) {
     state.userGoodsList = userGoodsList;

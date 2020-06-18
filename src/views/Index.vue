@@ -1,7 +1,7 @@
 <template>
   <div class="container" :class="{ beingskin: skinBox}" style="opacity: 1">
     <!-- 个人信息简介 -->
-    <div class="user-box" @click="opendialog" style="opacity: 0">
+    <div class="user-box" @click="opendialog">
       <div class="user-logo">
         <!-- <div class="user-level">{{userinfo.level}}</div> -->
         <span class="portrait-item portrait0"></span>
@@ -17,18 +17,18 @@
       </div>
     </div>
     <!-- 功能菜单 left -->
-    <ul class="nav-list nav-l" style="opacity: 0">
+    <ul class="nav-list nav-l">
       <li class="n-violet" @click="goLog()"><span class="nav-icon"><i class="el-icon-bell"></i></span><span class="nav-name">动态</span></li>
     </ul>
     <!-- 功能菜单 -->
-    <ul class="nav-list" style="opacity: 0">
+    <ul class="nav-list">
       <li @click="showPopup(skin)"><span class="nav-icon"><i class="el-icon-brush"></i></span><span class="nav-name">换装</span></li>
       <li @click="showPopup(shop)"><span class="nav-icon"><i class="el-icon-shopping-bag-1"></i></span><span class="nav-name">商店</span></li>
       <li @click="showPopup(bag)"><span class="nav-icon"><i class="el-icon-suitcase"></i></span><span class="nav-name">背包</span></li>
       <li @click="showTasks()"><span class="nav-icon"><i class="el-icon-medal"></i></span><span class="nav-name">任务</span></li>
       <li @click="showPopup(study)" class="n-green"><span class="nav-icon"><i class="el-icon-collection"></i></span><span class="nav-name">学习</span></li>
     </ul>
-    <div class="content">
+    <div class="content" :class="{'bg-night':isNight}" >
       <!-- 白天背景 -->
       <scene-day v-if="hoursType == 0 || hoursType == 1"></scene-day>
       <!-- 晚上背景 -->
@@ -209,7 +209,21 @@
               </div>
             </el-tab-pane>
             <el-tab-pane label="道具" name="prop">
-              <p style="padding-top: 30px;">功能开发中...</p>
+              <div class="food-box">
+                <ul class="food-list">
+                  <li v-for="good in goodsList2"
+                    :key="good.id"
+                    @click="showShop(good.name)">
+                    <div class="food-item">
+                      <div class="food-img">
+                        <img :src="getImgUrl(good.img)">
+                      </div>
+                      <p class="food-name">{{good.name}}</p>
+                      <p class="food-name">{{good.price}}</p>
+                    </div>
+                  </li>
+                </ul>
+              </div>
             </el-tab-pane>
           </el-tabs>
         </div>
@@ -349,6 +363,7 @@ export default {
       taskDialog: false, // 任务列表弹窗
       modalAchievement: false,
       skinBox: false,
+      isNight: false,
       skin: 'skin',
       shop: 'shop',
       bag: 'bag',
@@ -371,6 +386,7 @@ export default {
       "isLogin",
       "userinfo",
       "goodsList",
+      "goodsList2",
       "userFoodsList",
       "userFoodsList2",
       "currSkin",
@@ -449,12 +465,15 @@ export default {
       if (date.getHours() >= 0 && date.getHours() < 12) {
         this.hoursType = 0;
         this.hoursTip = "上午好"
+        this.isNight = false;
       } else if (date.getHours() >= 12 && date.getHours() < 18) {
         this.hoursType = 1;
-        this.hoursTip = "下午好"
+        this.hoursTip = "下午好";
+        this.isNight = false;
       } else {
         this.hoursType = 2;
-        this.hoursTip = "晚上好"
+        this.hoursTip = "晚上好";
+        this.isNight = true;
       }
     },
     // 判断是否正在进食
