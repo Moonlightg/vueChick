@@ -23,6 +23,7 @@ import {
   UPDATE_USER_GOODS,
   UPDATE_USER_FOODS,
   UPDATE_USER_SKINS,
+  ADD_USER_FOOD,
   GET_USER_SKINS,
   INFO_TASKS,
   UPDATE_TASKS,
@@ -174,9 +175,6 @@ export default {
     storage.set('skin', state.chickSkin);
   },
   [UPDATE_USER_GOODS](state,good) {
-    // 遍历比较更新前端界面显示
-    console.log("good");
-    console.log(good);
     state.goodsList.forEach(item => {
       if(item.name === good.name) {
         item.num = good.num;
@@ -184,14 +182,15 @@ export default {
     })
   },
   [UPDATE_USER_FOODS](state,food) {
-    // 遍历比较更新前端界面显示
-    console.log("food");
-    console.log(food);
     state.userFoodsList2.forEach(item => {
       if(item.name === food.name) {
         item.num = food.num;
       }
     })
+  },
+  [ADD_USER_FOOD](state,food) {
+    state.userFoodsList2.push(food);
+    console.log(state.userFoodsList2);
   },
   [UPDATE_USER_SKINS](state,skin) {
     state.chickSkin = skin.skinList;

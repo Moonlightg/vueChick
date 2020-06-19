@@ -23,6 +23,7 @@ export const GET_USER_SKINS = 'get_user_skins';           // 小鸡皮肤数据
 export const UPDATE_USER_GOODS = 'update_user_goods';     // 更新用户商品信息
 export const UPDATE_USER_FOODS = 'update_user_foods';     // 更新用户物品列表
 export const UPDATE_USER_SKINS = 'update_user_skins';     // 更新小鸡皮肤数据
+export const ADD_USER_FOOD = 'add_user_food';             // 新增首次购买道具
 export const INFO_TASKS = 'info_tasks';                   // 初始化任务
 export const UPDATE_TASKS = 'update_tasks';               // 更新任务
 export const SET_STORE = 'set_store';                     // 缓存store

@@ -2973,11 +2973,40 @@ p + .user-mi {
   width: 25%;
   padding: .25rem;
 }
+.food-list.col-2 li {
+  width: 50%;
+}
 .food-item {
   position: relative;
   padding: .5rem;
   border-radius: 5px;
   border: 1px solid #ddd;
+}
+.food-list.col-2 .food-item {
+  display: flex;
+}
+.food-list.col-2 .food-img {
+  margin-bottom: 0;
+}
+.food-txt {
+    text-align: left;
+    justify-content: center;
+    padding-left: .5rem;
+}
+.food-txt .food-name {
+    font-size: .8rem;
+    color: #8c352f;
+}
+.food-price {
+    font-size: .875rem;
+    font-weight: bold;
+    color: #2196F3;
+    padding: 5px;
+    background: #ddf4ff;
+    border-radius: 5px;
+}
+.food-price i {
+  margin-right: 5px;
 }
 .food-img {
   height: 50px;
@@ -3010,7 +3039,7 @@ p + .user-mi {
 .food-name {
   text-align: left;
   margin-bottom: .5rem;
-  font-size: .7rem;
+  font-size: .8rem;
   font-weight: 600;
 }
 .food-num {
@@ -3390,6 +3419,9 @@ p + .user-mi {
 .flex-column {
   display: flex;
   flex-direction: column;
+}
+.flex-info {
+  flex: 1;
 }
 .box-head {
   flex: 0 0 55px;

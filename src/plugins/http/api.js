@@ -31,6 +31,8 @@ export const postUseSkin = (params) => ajax.postData('/api/postUseSkin',params);
 // 解锁商品
 export const postUnlock = (params) => ajax.postData('/api/unlock',params);
 
+// 首次购买商品 
+export const postFirstClosingGood = (params) => ajax.postData('/api/firstClosingGood',params);
 // 购买商品
 export const postClosingGood = (params) => ajax.postData('/api/closingGood',params);
 

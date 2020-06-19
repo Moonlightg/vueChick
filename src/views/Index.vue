@@ -1,5 +1,5 @@
 <template>
-  <div class="container" :class="{ beingskin: skinBox}" style="opacity: .1">
+  <div class="container" :class="{ beingskin: skinBox}" style="opacity: 1">
     <!-- 个人信息简介 -->
     <div class="user-box" @click="opendialog">
       <div class="user-logo">
@@ -210,16 +210,18 @@
             </el-tab-pane>
             <el-tab-pane label="道具" name="prop">
               <div class="food-box">
-                <ul class="food-list">
+                <ul class="food-list col-2">
                   <li v-for="good in goodsList2"
                     :key="good.id"
                     @click="showShop(good)">
-                    <div class="food-item">
+                    <div class="food-item flex">
                       <div class="food-img">
                         <img :src="getImgUrl(good.img)">
                       </div>
-                      <p class="food-name">{{good.name}}</p>
-                      <p class="food-name">{{good.price}}</p>
+                      <div class="food-txt flex-column flex-info">
+                        <p class="food-name">{{good.name}}</p>
+                        <p class="food-price"><i class="el-icon-trophy-1"></i>{{good.price}}</p>
+                      </div>
                     </div>
                   </li>
                 </ul>

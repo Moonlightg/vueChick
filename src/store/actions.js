@@ -11,6 +11,7 @@ import {
   postBdySkin,
   postUseSkin,
   postUnlock,
+  postFirstClosingGood,
   postClosingGood,
   postSellFood,
   postFeeding,
@@ -48,6 +49,7 @@ import {
   UPDATE_USER_GOODS,
   UPDATE_USER_FOODS,
   UPDATE_USER_SKINS,
+  ADD_USER_FOOD,
   INFO_TASKS,
   UPDATE_TASKS,
   SET_STORE,
@@ -178,14 +180,12 @@ export default {
   },
   // 购买商品
   async reqClosingGood(context, value) {
+    let obj = {
+      type: value.type,
+      price: value.price * value.num
+    }
     const result = await postClosingGood(value);
-    console.log(result.data);
     if (result.code == 0) {
-      // 扣除资产
-      let obj = {
-        type: value.type,
-        price: value.price * value.num
-      }
       context.commit(DEDUCT_MONEY,obj);
       // 更新vuex用户商品信息
       context.commit(UPDATE_USER_GOODS,result.data);
@@ -194,8 +194,19 @@ export default {
         type: 'success'
       });
     }
-    // 更新金币
-    //context.commit(UPDATE_MONEY, value.money);
+    // 第一次购买
+    if (result.code == 2) {
+      const result2 = await postFirstClosingGood(value);
+      console.log(result2.data);
+      if (result2.code == 0) {
+        context.commit(DEDUCT_MONEY,obj);
+        context.commit(ADD_USER_FOOD,result2.data);
+        Message({
+          message: '购买成功',
+          type: 'success'
+        });
+      }
+    }
     
   },
   async reqSellFood(context, value) {
