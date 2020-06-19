@@ -38,7 +38,8 @@ export default {
   },
   data () {
     return {
-      foodNum: 1
+      foodNum: 1,
+      tit: ''
     }
   },
   computed: {
@@ -76,14 +77,24 @@ export default {
           type: 'error'
         });
       } else {
+        if (this.currFood.type == 1) {
+          this.tit = "获得金币"
+        } else {
+          this.tit = "获得宝石"
+        }
         const obj = {
-          name: this.currFood.name, // 出售物品名称
-          num: this.foodNum, // 出售数量数量
-          money: this.currFood.price * this.foodNum, // 出售后金额计算
-          moneyType: 2 // 金钱类型
+          // name: this.currFood.name, // 出售物品名称
+          // num: this.foodNum, // 出售数量数量
+          // money: this.currFood.price * this.foodNum, // 出售后金额计算
+          // moneyType: 2 // 金钱类型
+
+          name: this.currFood.name,   // 出售物品的名称
+          type: this.currFood.type,   // 出售物品的类型
+          price: this.currFood.price, // 出售物品的价格
+          num: this.foodNum,      // 出售数量
         };
         this.$store.dispatch('reqSellFood',obj);
-        this.$store.dispatch("addLog", {log_title: '出售了'+obj.name+'*'+obj.num+",获得了金币:"+this.currFood.price * this.foodNum});
+        this.$store.dispatch("addLog", {log_title: '出售了'+obj.name+'*'+obj.num+","+this.tit+":"+obj.price * obj.num});
         this.handleClose();
       }
     }

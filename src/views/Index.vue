@@ -1,5 +1,5 @@
 <template>
-  <div class="container" :class="{ beingskin: skinBox}" style="opacity: 1">
+  <div class="container" :class="{ beingskin: skinBox}" style="opacity: .1">
     <!-- 个人信息简介 -->
     <div class="user-box" @click="opendialog">
       <div class="user-logo">

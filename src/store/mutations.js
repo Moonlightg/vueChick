@@ -43,16 +43,17 @@ export default {
   },
   [DEDUCT_MONEY](state,value) {
     if (value.type == 1) {
-      state.userinfo.gem = state.userinfo.gem - value.price;
-    } else {
       state.userinfo.money = state.userinfo.money - value.price;
+      
+    } else {
+      state.userinfo.gem = state.userinfo.gem - value.price;
     }
   },
   [ADD_MONEY](state,value) {
     if (value.type == 1) {
-      state.userinfo.gem = state.userinfo.gem + value.price;
-    } else {
       state.userinfo.money = state.userinfo.money + value.price;
+    } else {
+      state.userinfo.gem = state.userinfo.gem + value.price;
     }
   },
   [UPDATE_MONEY](state,newMoney) {

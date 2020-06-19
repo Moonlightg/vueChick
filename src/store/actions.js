@@ -179,23 +179,34 @@ export default {
   // 购买商品
   async reqClosingGood(context, value) {
     const result = await postClosingGood(value);
+    console.log(result.data);
+    if (result.code == 0) {
+      // 扣除资产
+      let obj = {
+        type: value.type,
+        price: value.price * value.num
+      }
+      context.commit(DEDUCT_MONEY,obj);
+      // 更新vuex用户商品信息
+      context.commit(UPDATE_USER_GOODS,result.data);
+      Message({
+        message: '购买成功',
+        type: 'success'
+      });
+    }
     // 更新金币
-    context.commit(UPDATE_MONEY, value.money);
-    // 更新vuex用户商品信息
-    context.commit(UPDATE_USER_GOODS,result.data);
-    Message({
-      message: '购买成功',
-      type: 'success'
-    });
+    //context.commit(UPDATE_MONEY, value.money);
+    
   },
   async reqSellFood(context, value) {
-    let obj = {
-      type: value.moneyType,
-      price: value.money
-    }
     const result = await postSellFood(value);
     console.log(result);
     if (result.code == 0) {
+      // 增加资产
+      let obj = {
+        type: value.type,
+        price: value.price * value.num
+      }
       context.commit(SET_CURR_FOOD, result.data);
       context.commit(UPDATE_USER_FOODS, result.data);
       console.log(obj);
@@ -257,7 +268,7 @@ export default {
     if (result.code == 0) {
       // 扣除宝石
       let obj = {
-        type: 1,
+        type: 2,
         price: value.price
       }
       context.commit(DEDUCT_MONEY,obj);

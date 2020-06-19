@@ -66,22 +66,39 @@ export default {
           message: "请输入购买数量",
           type: 'error'
         });
-      } else if (this.userinfo.money < this.currGood.price * this.shoppingNum) {
-        this.$message({
-          message: "金币不足",
-          type: 'error'
-        });
+        return;
+      } 
+      if (this.currGood.type == 1) {
+        if (this.userinfo.money < this.currGood.price * this.shoppingNum) {
+          this.$message({
+            message: "金币不足",
+            type: 'error'
+          });
+        } else {
+          this.reqClosingGood();
+        }
       } else {
-        const obj = {
-          goodName: this.currGood.name, // 购买商品名称
-          goodNum: this.shoppingNum, // 购买数量
-          money: this.userinfo.money - this.currGood.price * this.shoppingNum // 购买后金额计算
-        };
-        this.$store.dispatch('reqClosingGood',obj);
-        this.$store.dispatch("addLog", {log_title: '购买了'+obj.goodName+'*'+obj.goodNum});
-        this.shoppingNum = 1;
-        this.handleClose();
+        if (this.userinfo.gem < this.currGood.price * this.shoppingNum){
+          this.$message({
+            message: "宝石不足",
+            type: 'error'
+          });
+        } else {
+          this.reqClosingGood();
+        }
       }
+    },
+    reqClosingGood: function() {
+      const obj = {
+        name: this.currGood.name,   // 购买的商品名称
+        type: this.currGood.type,   // 购买的商品类型
+        price: this.currGood.price, // 购买的商品价格
+        num: this.shoppingNum,      // 购买数量
+      };
+      this.$store.dispatch('reqClosingGood',obj);
+      this.$store.dispatch("addLog", {log_title: '购买了'+obj.name+'*'+obj.num});
+      this.shoppingNum = 1;
+      this.handleClose();
     }
   }
 }
