@@ -207,14 +207,12 @@ export default {
     console.log(state.chickSkin);
   },
   [INFO_TASKS](state, value) {
-    state.tasks.isUpdate = value.isUpdate;
-    state.tasks.list = value.tasks;
+    state.tasks = value
     storage.set('tasks', state.tasks);
     console.log('保存tasks成功！');
   },
   [UPDATE_TASKS](state, value) {
-    state.tasks.isUpdate = value.isUpdate;
-    state.tasks.list = value.tasks;
+    state.tasks = value;
     storage.set('tasks', state.tasks);
     console.log('更新tasks缓存成功！');
   },

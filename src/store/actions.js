@@ -249,10 +249,10 @@ export default {
       console.log("测试下更新任务的次数");
       console.log(result2);
       if (result2.code == 0) {
-        context.commit(UPDATE_TASKS,result2.data);
-        if (result2.data.isUpdate) {
+        context.commit(UPDATE_TASKS,result2.data.data);
+        if (result2.data.tips.isOK) {
           Message({
-            message: '完成了一项投喂任务',
+            message: result2.data.tips.text,
             type: 'success'
           });
         }
