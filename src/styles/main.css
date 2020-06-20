@@ -2268,6 +2268,17 @@ top: 10px;
   background: #ffb300;
   border: 2px solid #8c3530;
 }
+.nav-list li.on:before {
+  position: absolute;
+  content: "";
+  width: 12px;
+  height: 12px;
+  background: #ff3021;
+  border-radius: 50%;
+  top: -4px;
+  right: -2px;
+  border: 2px solid #fff5f5;
+}
 .nav-list li.n-green {
   background: #8BC34A;
   border: 2px solid #639629;

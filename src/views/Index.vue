@@ -25,7 +25,7 @@
       <li @click="showPopup(skin)"><span class="nav-icon"><i class="el-icon-brush"></i></span><span class="nav-name">换装</span></li>
       <li @click="showPopup(shop)"><span class="nav-icon"><i class="el-icon-shopping-bag-1"></i></span><span class="nav-name">商店</span></li>
       <li @click="showPopup(bag)"><span class="nav-icon"><i class="el-icon-suitcase"></i></span><span class="nav-name">背包</span></li>
-      <li @click="showTasks()"><span class="nav-icon"><i class="el-icon-medal"></i></span><span class="nav-name">任务</span></li>
+      <li @click="showTasks()" :class={on:tasks.isUpdate}><span class="nav-icon"><i class="el-icon-medal"></i></span><span class="nav-name">任务</span></li>
       <li @click="showPopup(study)" class="n-green"><span class="nav-icon"><i class="el-icon-collection"></i></span><span class="nav-name">学习</span></li>
     </ul>
     <div class="content" :class="{'bg-night':isNight}" >

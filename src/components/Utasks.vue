@@ -6,7 +6,7 @@
     center
     :before-close="handleClose">
     <ul class="tasks-list">
-      <li v-for="task in tasks.tasks" :key="task.taskId" >
+      <li v-for="task in tasks.list" :key="task.taskId" >
 <!--         <p>{{task.taskId}}</p> -->
         <div class="task-item">
           <div class="task-l">

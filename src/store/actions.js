@@ -100,6 +100,7 @@ export default {
   },
   async setTasks(context) {
     const result = await postTasks();
+    console.log("测试下初始化任务");
     console.log(result);
     if (result.code === 0) {
       context.commit(INFO_TASKS,result.data);
@@ -110,6 +111,7 @@ export default {
       taskId: value.taskId
     }
     const result = await postReceiveTask(obj);
+    console.log("测试下领取任务");
     console.log(result);
     if (result.code === 0) {
       context.commit(UPDATE_TASKS,result.data.data);
@@ -246,7 +248,15 @@ export default {
       const result2 = await addTaskCount(obj);
       console.log("测试下更新任务的次数");
       console.log(result2);
-      context.commit(UPDATE_TASKS,result2.data.data);
+      if (result2.code == 0) {
+        context.commit(UPDATE_TASKS,result2.data);
+        if (result2.data.isUpdate) {
+          Message({
+            message: '完成了一项投喂任务',
+            type: 'success'
+          });
+        }
+      }
     }
     
   },
