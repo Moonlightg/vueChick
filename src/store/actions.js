@@ -195,6 +195,7 @@ export default {
         message: '购买成功',
         type: 'success'
       });
+      context.dispatch('reqAddTaskCount',{type: 2,count: 1});
     }
     // 第一次购买
     if (result.code == 2) {
@@ -207,9 +208,22 @@ export default {
           message: '购买成功',
           type: 'success'
         });
+        context.dispatch('reqAddTaskCount',{type: 2,count: 1});
       }
     }
-    
+  },
+  async reqAddTaskCount(context, value) {
+    const result = await addTaskCount(value);
+    if (result.code == 0) {
+      context.commit(UPDATE_TASKS,result.data.data);
+      if (result.data.tips.isOK) {
+        Message({
+          message: result.data.tips.text,
+          type: 'success'
+        });
+      }
+      console.log("任务增加次数成功");
+    }
   },
   async reqSellFood(context, value) {
     const result = await postSellFood(value);
@@ -241,22 +255,7 @@ export default {
         message: '投喂成功',
         type: 'success'
       });
-      var obj = {
-        type: 1,
-        count: 1
-      }
-      const result2 = await addTaskCount(obj);
-      console.log("测试下更新任务的次数");
-      console.log(result2);
-      if (result2.code == 0) {
-        context.commit(UPDATE_TASKS,result2.data.data);
-        if (result2.data.tips.isOK) {
-          Message({
-            message: result2.data.tips.text,
-            type: 'success'
-          });
-        }
-      }
+      context.dispatch('reqAddTaskCount',{type: 1,count: 1});
     }
     
   },
