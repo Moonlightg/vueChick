@@ -21,7 +21,8 @@ import {
   postEgg,
   postEggNum,
   addLog,
-  getLog
+  getLog,
+  getFriends
 } from '../plugins/http/api'
 
 import {
@@ -52,6 +53,7 @@ import {
   ADD_USER_FOOD,
   INFO_TASKS,
   UPDATE_TASKS,
+  GET_FRIENDS,
   SET_STORE,
   GET_STORE
 } from './mutation-types'
@@ -261,13 +263,10 @@ export default {
   },
   // 进食结束(请求更新数据库)
   async reqUpdateChick(context, value) {
-    console.log("需要更新的小鸡数据");
-    console.log(value);
     const result = await postChick(value);
-    console.log("更新后的小鸡数据");
-    console.log(result);
-    console.log(result.data);
-    context.commit(SET_CHICK,result.data);
+    if ( result.code == 0 ) {
+      context.commit(SET_CHICK,result.data);
+    }
   },
   // 收取鸡蛋
   async harvestegg(context, value) {
@@ -307,6 +306,14 @@ export default {
         message: '皮肤使用成功',
         type: 'success'
       });
+    }
+  },
+  async getFriends(context) {
+    const result = await getFriends();
+    console.log("获取用户列表");
+    console.log(result);
+    if (result.code == 0) {
+      context.commit(GET_FRIENDS,result.data);
     }
   }
 }

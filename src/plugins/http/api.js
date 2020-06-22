@@ -62,3 +62,6 @@ export const addLog = (params) => ajax.postData('/api/addLog',params);
 
 // 获取动态日志
 export const getLog = () => ajax.getData('/api/getLog');
+
+// 获取好友列表
+export const getFriends = () => ajax.getData('/api/getFriends');

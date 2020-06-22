@@ -3386,6 +3386,43 @@ p + .user-mi {
   font-size: .875rem;
   color: #607D8B;
 }
+/*用户列表*/
+.user-list {
+  padding: 15px 0;
+  width: 90%;
+  margin: 0 auto;
+  text-align: left;
+}
+.user-list li {
+  height: 50px;
+  display: flex;
+  align-items: center;
+}
+.user-list li + li {
+  border-top: 1px dashed #f3ddd5;
+}
+.user-info {
+  flex: 1;
+}
+.user-tit{
+  color: #5a4943;
+  line-height: 1.2;
+}
+.user-state{
+  font-size: .8rem;
+}
+.label-green {
+  color: #ffffff;
+  padding: 2px 8px;
+  background: #4CAF50;
+  border-radius: 18px;
+}
+.label-grey {
+  color: #ffffff;
+  padding: 2px 8px;
+  background: #a5a5a5;
+  border-radius: 18px;
+}
 /* card */
 .card-box {
   border: 2px solid #ca9684;

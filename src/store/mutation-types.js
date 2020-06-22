@@ -26,5 +26,6 @@ export const UPDATE_USER_SKINS = 'update_user_skins';     // 更新小鸡皮肤�
 export const ADD_USER_FOOD = 'add_user_food';             // 新增首次购买道具
 export const INFO_TASKS = 'info_tasks';                   // 初始化任务
 export const UPDATE_TASKS = 'update_tasks';               // 更新任务
+export const GET_FRIENDS = 'get_friends';                 // 获取好友列表
 export const SET_STORE = 'set_store';                     // 缓存store
 export const GET_STORE = 'get_store';                     // 读取store

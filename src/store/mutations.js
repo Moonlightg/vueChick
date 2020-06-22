@@ -27,6 +27,7 @@ import {
   GET_USER_SKINS,
   INFO_TASKS,
   UPDATE_TASKS,
+  GET_FRIENDS,
   SET_STORE,
   GET_STORE
 } from './mutation-types'
@@ -215,6 +216,10 @@ export default {
     state.tasks = value;
     storage.set('tasks', state.tasks);
     console.log('更新tasks缓存成功！');
+  },
+  [GET_FRIENDS](state, value) {
+    state.friends = value;
+    storage.set('friends',state);
   },
   // 在缓存中存储state
   [SET_STORE](state) {

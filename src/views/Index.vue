@@ -19,6 +19,7 @@
     <!-- 功能菜单 left -->
     <ul class="nav-list nav-l">
       <li class="n-violet" @click="goLog()"><span class="nav-icon"><i class="el-icon-bell"></i></span><span class="nav-name">动态</span></li>
+      <li class="n-violet" @click="goFriends()"><span class="nav-icon"><i class="el-icon-user-solid"></i></span><span class="nav-name">圈子</span></li>
     </ul>
     <!-- 功能菜单 -->
     <ul class="nav-list">
@@ -445,8 +446,8 @@ export default {
       this.$store.dispatch('setChick',getChick); 
       // 初始化小鸡皮肤
       //if (!storage.get('skin')) {
-        // 获取皮肤数据
-        this.getSkins();
+      // 获取皮肤数据
+      this.getSkins();
       //}
       // 判断小鸡是否在进食
       this.chickIsEat();
@@ -491,7 +492,7 @@ export default {
           this.chick.eat = false;
           this.chick.eatEndTime = '';
           this.textContent = "吃完了, 好饿!";
-          this.$store.dispatch('setChick',this.chick);
+          this.$store.dispatch('reqUpdateChick',this.chick);
           return;
         }
     },
@@ -720,6 +721,11 @@ export default {
     goLog() {
       this.$router.push({
         path: '/log'
+      });
+    },
+    goFriends() {
+      this.$router.push({
+        path: '/friends'
       });
     }
   }
