@@ -441,14 +441,11 @@ export default {
         });
         this.$store.dispatch('setLogin');
       }
-      // 页面加载读取小鸡缓存并初始化
+      // 鸡的缓存在登录时已经保存过了
       let getChick = storage.get('chick');
       this.$store.dispatch('setChick',getChick); 
-      // 初始化小鸡皮肤
-      //if (!storage.get('skin')) {
       // 获取皮肤数据
       this.getSkins();
-      //}
       // 判断小鸡是否在进食
       this.chickIsEat();
     },
@@ -489,10 +486,16 @@ export default {
           this.chick.eat = true;
           this.countdown(loadDate, this.chick.eatEndTime);
         } else {
-          this.chick.eat = false;
-          this.chick.eatEndTime = '';
-          this.textContent = "吃完了, 好饿!";
-          this.$store.dispatch('reqUpdateChick',this.chick);
+          // 找到最后喂食的食物
+          let _this = this;
+          _this.goodsList.forEach(item => {
+            if(item.name == _this.chick.eatFood) {
+              _this.$store.dispatch('setFeedingFood',item);
+              // 计算经验
+              _this.settleExp();
+              _this.textContent = "吃完了, 好饿!";
+            }
+          });
           return;
         }
     },
@@ -678,6 +681,7 @@ export default {
       // 进食结束时间清零
       this.chick.eatEndTime = '';
       this.chick.eat = false;
+      this.chick.eatFood = '';
       // 经验结算
       // (要重新定义当前喂食的食物,因为在喂食中操作了其他物品会重置currFood,所以用feedingFood代替);
       this.chick.eggAddExps = parseInt(this.feedingFood.exp/this.chick.eggBase); // 鸡蛋经验加成 = 食物经验/基数, 取整数
