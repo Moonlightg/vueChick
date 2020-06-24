@@ -16,9 +16,9 @@
             </div>
           </div>
           <div class="user-state">
-            <!-- <span class="label-green" v-if="item.eat">进食中</span>
-            <span class="label-grey" v-if="!item.eat">空闲</span> -->
-            <span>{{item.level}}级</span>
+            <span class="label-green" v-if="item.eat">进食中</span>
+            <span class="label-grey" v-if="!item.eat">空闲</span>
+            <!-- <span>{{item.level}}级</span> -->
           </div>
         </li>
       </ul>

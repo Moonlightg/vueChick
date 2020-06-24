@@ -4,7 +4,10 @@
     <div class="user-box" @click="opendialog">
       <div class="user-logo">
         <!-- <div class="user-level">{{userinfo.level}}</div> -->
-        <span class="portrait-item portrait0"></span>
+<!--         <span class="portrait-item portrait0"></span> -->
+<div class="user-img">
+          <img :src="getImgUrl(userinfo.img)">
+        </div>
       </div>
       <div class="user-info">
         <div class="user-name">{{userinfo.username}}</div>
@@ -114,7 +117,7 @@
     <!-- 功能弹窗面板 -->
     <div class="page-popup">
       <!-- 换装 -->
-      <div class="popup-item" v-if="isSkin">
+      <div class="popup-item" v-show="isSkin">
         <div class="popup-head border-bottom-1px">
           <span class="popup-title fl">换装</span>
           <i class="el-icon-error" @click="hidePopup"></i>
@@ -294,7 +297,7 @@
       :dialogStatus="dialogStatus" 
       @opendialog="opendialog" 
       @closeDialog="closeHandle" 
-      @signOut="loginOut"></Upersonal>
+      @signOut="loginOut" v-show="dialogStatus"></Upersonal>
 
     <!-- 商品详情 -->
 
