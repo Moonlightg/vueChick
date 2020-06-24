@@ -9,6 +9,7 @@ import {
   UPDATE_GOODS_UNLOCK,
   // UPDATE_CHICK,
   SET_TOKEN,
+  SET_USER,
   SET_USERINFO,
   SET_CURR_GOOD,
   SET_CURR_FOOD,
@@ -82,6 +83,10 @@ export default {
   [SET_TOKEN](state, token) {
     state.token = token;
     storage.set('token', token);
+  },
+  [SET_USER](state, value) {
+    state.userinfo = value;
+    storage.set('userinfo',state.userinfo);
   },
   [SET_USERINFO](state, value) {
     state.userinfo = value.user;

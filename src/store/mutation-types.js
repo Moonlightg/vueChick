@@ -7,6 +7,7 @@ export const UPDATE_GEM = 'update_gem';                   // 更新宝石
 export const UPDATE_GOODS_UNLOCK = 'update_goods_unlock'; // 更新商品解锁状态
 // export const UPDATE_CHICK = 'update_chick';       		  // 更新小鸡数据
 export const SET_TOKEN = 'set_token';                     // 保存token
+export const SET_USER = 'set_user';                       // 更新用户资料
 export const SET_USERINFO = 'set_userinfo';               // 保存用户信息
 export const SET_CURR_SKIN = 'set_user_skin';             // 当前选择皮肤
 export const SET_CURR_GOOD = 'set_curr_good';             // 当前选择商品

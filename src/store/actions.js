@@ -22,7 +22,8 @@ import {
   postEggNum,
   addLog,
   getLog,
-  getFriends
+  getFriends,
+  postProfile
 } from '../plugins/http/api'
 
 import {
@@ -35,6 +36,7 @@ import {
   UPDATE_GOODS_UNLOCK,
   // UPDATE_CHICK,
   SET_TOKEN,
+  SET_USER,
   SET_USERINFO,
   SET_CURR_SKIN,
   SET_CURR_GOOD,
@@ -73,6 +75,9 @@ export default {
   },
   setChick(context, value) {
     context.commit(SET_CHICK,value);
+  },
+  setFeedingFood(context, value) {
+    context.commit(SET_CHICK_FEEDING_FOOD, value);
   },
   setChickSkin(context, value) {
     context.commit(SET_CHICK_SKIN,value);
@@ -314,6 +319,14 @@ export default {
     console.log(result);
     if (result.code == 0) {
       context.commit(GET_FRIENDS,result.data);
+    }
+  },
+  async saveProfile(context, value) {
+    const result = await postProfile(value);
+    console.log("保存头像后返回用户信息");
+    console.log(result);
+    if (result.code == 0) {
+      context.commit(SET_USER,result.data);
     }
   }
 }

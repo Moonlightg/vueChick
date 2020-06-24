@@ -65,3 +65,6 @@ export const getLog = () => ajax.getData('/api/getLog');
 
 // 获取好友列表
 export const getFriends = () => ajax.getData('/api/getFriends');
+
+// 更换用户头像
+export const postProfile = (params) => ajax.postData('/api/postProfile',params);
