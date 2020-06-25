@@ -12,7 +12,7 @@
           <span class="btn-ms">更换</span>
         </div>
         <div class="user-txt flex-info flex-column">
-          <h3>{{userinfo.username}}<span><i class="el-icon-edit"></i>改名</span></h3>
+          <h3>{{userinfo.username}}<span @click="showSetName"><i class="el-icon-edit"></i>改名</span></h3>
           <div class="user-money">
             <div class="user-mi"><i class="el-icon-s-help"></i></div>
             <p>{{userinfo.money}}</p>
@@ -68,7 +68,24 @@
         </div>
       </div>
     </div>
+
+    <!-- 修改名字 -->
+    <div class="profile-wrap" v-show="isSetName">
+      <span class="profile-mask" @click="closeSetName"></span>
+      <div class="profile-box">
+        <span class="close-i" @click="closeSetName"><i class="el-icon-error"></i></span>
+        <div class="set-name">
+          <div class="tit">修改名字需要<i class="el-icon-s-help"></i>1000</div>
+          <el-input v-model="newName"></el-input>
+        </div>
+        <div class="profile-footer">
+          <el-button type="primary" @click="saveName">保存</el-button>
+        </div>
+      </div>
+    </div>
+
   </el-dialog>
+
 </template>
 <script>
 
@@ -82,7 +99,9 @@ export default {
   },
   data () {
     return {
+      isSetName: false,
       isProfile: false,
+      newName: '',
       currProfile: '',
       profile: [{
         id: 1000,
@@ -133,6 +152,13 @@ export default {
     handleClose() {
       this.$emit('closeDialog') // 取消和 x 按钮的事件，防止重复操作createDialog变量
     },
+    closeSetName() {
+      this.isSetName = false;
+    },
+    showSetName() {
+      this.isSetName = true;
+      this.newName = this.userinfo.username;
+    },
     signOutClose() {
       this.$emit('signOut')
     },
@@ -153,6 +179,13 @@ export default {
         img: this.currProfile
       }
       this.$store.dispatch('saveProfile', obj);
+    },
+    saveName(){
+      var obj = {
+        name: this.newName,
+        money: 1000
+      }
+      this.$store.dispatch('saveName', obj);
     }
   }
 }
@@ -232,5 +265,11 @@ export default {
   }
   .profile-item.on .success-i {
     display: block;
+  }
+  .set-name {
+    padding-top: 15px;
+  }
+  .tit {
+    margin-bottom: 15px;
   }
 </style>

@@ -68,3 +68,6 @@ export const getFriends = () => ajax.getData('/api/getFriends');
 
 // 更换用户头像
 export const postProfile = (params) => ajax.postData('/api/postProfile',params);
+
+// 修改用户名称
+export const setName = (params) => ajax.postData('/api/setName',params);

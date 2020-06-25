@@ -23,7 +23,8 @@ import {
   addLog,
   getLog,
   getFriends,
-  postProfile
+  postProfile,
+  setName
 } from '../plugins/http/api'
 
 import {
@@ -327,6 +328,18 @@ export default {
     console.log(result);
     if (result.code == 0) {
       context.commit(SET_USER,result.data);
+    }
+  },
+  async saveName(context, value) {
+    const result = await setName(value);
+    console.log("保存姓名后返回用户信息");
+    console.log(result);
+    if (result.code == 0) {
+      context.commit(SET_USER,result.data);
+      Message({
+        message: '用户名修改成功',
+        type: 'success'
+      });
     }
   }
 }
