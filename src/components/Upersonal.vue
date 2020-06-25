@@ -75,7 +75,7 @@
       <div class="profile-box">
         <span class="close-i" @click="closeSetName"><i class="el-icon-error"></i></span>
         <div class="set-name">
-          <div class="tit">修改名字需要<i class="el-icon-s-help"></i>1000</div>
+          <div class="tit">修改名字需要<i class="el-icon-s-help"></i>{{setNameMoney}}</div>
           <el-input v-model="newName"></el-input>
         </div>
         <div class="profile-footer">
@@ -102,6 +102,7 @@ export default {
       isSetName: false,
       isProfile: false,
       newName: '',
+      setNameMoney: 100,
       currProfile: '',
       profile: [{
         id: 1000,
@@ -183,9 +184,10 @@ export default {
     saveName(){
       var obj = {
         name: this.newName,
-        money: 1000
+        money: this.setNameMoney
       }
       this.$store.dispatch('saveName', obj);
+      this.isSetName = false;
     }
   }
 }

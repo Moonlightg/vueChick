@@ -316,24 +316,22 @@ export default {
   },
   async getFriends(context) {
     const result = await getFriends();
-    console.log("获取用户列表");
-    console.log(result);
     if (result.code == 0) {
       context.commit(GET_FRIENDS,result.data);
     }
   },
   async saveProfile(context, value) {
     const result = await postProfile(value);
-    console.log("保存头像后返回用户信息");
-    console.log(result);
     if (result.code == 0) {
       context.commit(SET_USER,result.data);
+      Message({
+        message: '保存成功',
+        type: 'success'
+      });
     }
   },
   async saveName(context, value) {
     const result = await setName(value);
-    console.log("保存姓名后返回用户信息");
-    console.log(result);
     if (result.code == 0) {
       context.commit(SET_USER,result.data);
       Message({
