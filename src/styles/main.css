@@ -2495,8 +2495,8 @@ top: 10px;
 }
 .hat-frog-eye:before{
     position: absolute;
-    top: 12%;
-    left: 15%;
+    top: 1px;
+    left: 1px;
     content: "";
     width: 18px;
     height: 18px;
@@ -3496,6 +3496,14 @@ p + .user-mi {
 .skin_b1 {
   background-image: -webkit-linear-gradient(to bottom, #ffede7,#f3d5ca);
   background-image: linear-gradient(to bottom,#ffede7,#f3d5ca);
+}
+.skin_b2 {
+  background-image: -webkit-linear-gradient(to bottom, #CDDC39,#8BC34A);
+  background-image: linear-gradient(to bottom,#CDDC39,#8BC34A);
+}
+.skin_b2 .box-head h1 { color: #fff; }
+.skin_b2 .user-list li + li {
+    border-top: 1px dashed #f2ff9a;
 }
 /* 返回按钮 */
 .return-link {

@@ -1,5 +1,5 @@
 <template>
-  <div class="main flex-column skin_b1">
+  <div class="main flex-column skin_b2">
     <div class="box-head">
       <div class="return-link" @click="returnIndex()"><i class="el-icon-arrow-left"></i>返回</div>
       <h1>社区鸡友</h1>
@@ -9,7 +9,7 @@
         <li v-for="item in friends" :key="item._id">
           <div class="user-info flex">
             <div class="user-img">
-              <img src="@/assets/images/skin-default.jpg">
+              <img :src="getImgUrl(item.img)">
             </div>
             <div>
               <p class="user-tit">{{item.username}}</p>
@@ -68,6 +68,9 @@ export default {
   methods: {
     initFriends() {
       this.$store.dispatch('getFriends');
+    },
+    getImgUrl(val){
+      return require("@/assets/images/"+val);
     },
     returnIndex() {
       this.$router.push({

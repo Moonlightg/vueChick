@@ -148,7 +148,7 @@ export default {
     goodsList.forEach(item => {
       if(item.type == 1 ) {
         state.goodsList.push(item);
-      } else if (item.type == 2 ) {
+      } else if (item.type >= 2) {
         state.goodsList2.push(item);
       }
     });
@@ -171,7 +171,7 @@ export default {
     userFoodsList.forEach(item => {
       if(item.type == 1 && item.num > 0) {
         state.userFoodsList.push(item);
-      } else if (item.type == 2 && item.num > 0) {
+      } else if (item.type >= 2 && item.num > 0) {
         state.userFoodsList2.push(item);
       }
     });

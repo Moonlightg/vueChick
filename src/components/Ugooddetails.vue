@@ -24,7 +24,8 @@
     </div>
     <span slot="footer" class="dialog-footer">
       <el-button type="danger" @click="feeding" v-if="currFood.type == 1">喂食</el-button>
-      <el-button type="success" @click="sell" v-if="currFood.type == 2">出售</el-button>
+      <el-button type="success" @click="use" v-if="currFood.type == 3">使用</el-button>
+      <el-button type="success" @click="sell" v-if="currFood.type == 2 || currFood.type == 3">出售</el-button>
     </span>
   </el-dialog>
 </template>
