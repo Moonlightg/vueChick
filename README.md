@@ -48,5 +48,6 @@ npm run lint
 | api/addLog|post|添加动态日志|
 | api/getLog|get|获取动态日志|
 | api/getFriends|get|获取好友列表|
+| api/setCurrUser|post|设置当前好友资料|
 | api/postProfile|post|更换用户头像|
 | api/setName|post|修改用户名称|

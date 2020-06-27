@@ -53,7 +53,8 @@ export default {
   },
   computed: {
     ...mapGetters([
-      "friends"
+      "friends",
+      "userinfo",
     ])
   },
   components: {
@@ -80,7 +81,14 @@ export default {
     },
     friendsHome(user) {
       console.log(user.username);
+
       let name = user.username;
+      if (name == this.userinfo.username) {
+        this.$router.push({
+          path: '/index'
+        });
+        return false;
+      }
       this.$router.push({
         path: '/friendsHome',
         query:{name: name}
