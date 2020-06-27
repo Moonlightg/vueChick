@@ -13,6 +13,8 @@ import {
   SET_USERINFO,
   SET_CURR_GOOD,
   SET_CURR_FOOD,
+  SET_CURR_USER,
+  SET_CURR_USER_CHICK,
   LOGIN_OUT,
   SET_CHICK,
   SET_CHICK_SKIN,
@@ -119,6 +121,12 @@ export default {
   [SET_CURR_FOOD](state, food) {
     state.currFood = food;
     storage.set('currFood',state.currFood);
+  },
+  [SET_CURR_USER](state, user) {
+    state.currUser = user;
+  },
+  [SET_CURR_USER_CHICK](state, chick) {
+    state.currUserChick = chick;
   },
   [LOGIN_OUT](state) {
     storage.removeAll(); // 清除缓存

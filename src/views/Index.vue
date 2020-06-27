@@ -3,9 +3,7 @@
     <!-- 个人信息简介 -->
     <div class="user-box" @click="opendialog">
       <div class="user-logo">
-        <!-- <div class="user-level">{{userinfo.level}}</div> -->
-<!--         <span class="portrait-item portrait0"></span> -->
-<div class="user-img">
+        <div class="user-img">
           <img :src="getImgUrl(userinfo.img)">
         </div>
       </div>
@@ -262,7 +260,7 @@
             </el-tab-pane>
             <el-tab-pane label="道具" name="prop">
               <div class="food-box">
-                <ul class="food-list" v-if="userFoodsList2.length != 0 ">
+                <ul class="food-list col-2" v-if="userFoodsList2.length != 0 ">
                   <li v-for="good in userFoodsList2"
                     :key="good.id"
                     @click="showGood(good)" v-show="good.num != 0">
@@ -270,8 +268,10 @@
                       <div class="food-img">
                         <img :src="getImgUrl(good.img)">
                       </div>
-                      <p class="food-name">{{good.name}}</p>
-                      <span class="food-num">{{good.num}}</span>
+                      <div class="food-txt flex-column flex-info">
+                        <p class="food-name">{{good.name}}</p>
+                        <p class="food-price">拥有{{good.num}}</p>
+                      </div>
                     </div>
                   </li>
                 </ul>

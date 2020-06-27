@@ -23,6 +23,7 @@ import {
   addLog,
   getLog,
   getFriends,
+  setCurrUser,
   postProfile,
   setName
 } from '../plugins/http/api'
@@ -42,6 +43,8 @@ import {
   SET_CURR_SKIN,
   SET_CURR_GOOD,
   SET_CURR_FOOD,
+  SET_CURR_USER,
+  SET_CURR_USER_CHICK,
   LOGIN_OUT,
   SET_CHICK,
   SET_CHICK_SKIN,
@@ -314,10 +317,22 @@ export default {
       });
     }
   },
+  // 获取好友列表
   async getFriends(context) {
     const result = await getFriends();
     if (result.code == 0) {
       context.commit(GET_FRIENDS,result.data);
+    }
+  },
+  // 获取好友资料
+  async setCurrUser(context,value) {
+    console.log(value);
+    const result = await setCurrUser(value);
+    console.log("获取好友资料");
+    console.log(result);
+    if (result.code == 0) {
+      context.commit(SET_CURR_USER,result.data.user);
+      context.commit(SET_CURR_USER_CHICK,result.data.chick);
     }
   },
   async saveProfile(context, value) {

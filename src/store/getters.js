@@ -14,6 +14,8 @@ export default {
   currSkin :(state) => state.currSkin,
   currGood :(state) => state.currGood,
   currFood :(state) => state.currFood,
+  currUser :(state) => state.currUser,
+  currUserChick :(state) => state.currUserChick,
   feedingFood :(state) => state.feedingFood,
   chick :(state) => state.chick,
   chickSkin :(state) => state.chickSkin,

@@ -6,12 +6,14 @@
     </div>
     <div class="box-content">
       <ul class="user-list">
-        <li v-for="item in friends" :key="item._id">
+        <li v-for="item in friends" 
+            :key="item._id"
+            @click="friendsHome(item)">
           <div class="user-info flex">
             <div class="user-img">
               <img :src="getImgUrl(item.img)">
             </div>
-            <div>
+            <div class="user-txt">
               <p class="user-tit">{{item.username}}</p>
             </div>
           </div>
@@ -35,7 +37,6 @@
     height: 40px;
     border-radius: 40px;
     overflow: hidden;
-    margin-right: 15px;
     border: 1px solid #f2ddd5;
   }
   .user-img img {
@@ -75,6 +76,14 @@ export default {
     returnIndex() {
       this.$router.push({
         path: '/index'
+      });
+    },
+    friendsHome(user) {
+      console.log(user.username);
+      let name = user.username;
+      this.$router.push({
+        path: '/friendsHome',
+        query:{name: name}
       });
     }
   }

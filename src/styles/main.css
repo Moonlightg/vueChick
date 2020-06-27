@@ -238,6 +238,18 @@ ul,li{ padding: 0;margin: 0; }
   overflow: hidden;
   transition: all .4s;
 }
+.content .box-head {
+  height: 55px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 9;
+}
+.content .box-head .user-img {
+  position: absolute;
+  right: 8px;
+}
 .bg-content,
 .bg-content-night {
   width: 100%;
@@ -3396,6 +3408,9 @@ p + .user-mi {
   height: 50px;
   display: flex;
   align-items: center;
+  padding: 10px;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.3);
 }
 .user-list li + li {
   border-top: 1px dashed #f3ddd5;
@@ -3503,7 +3518,7 @@ p + .user-mi {
 }
 .skin_b2 .box-head h1 { color: #fff; }
 .skin_b2 .user-list li + li {
-    border-top: 1px dashed #f2ff9a;
+    margin-top: 10px;
 }
 /* 返回按钮 */
 .return-link {

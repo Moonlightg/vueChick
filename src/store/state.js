@@ -14,6 +14,8 @@ export default {
   currSkin: {},   // 当前选中的皮肤
   currGood: {},   // 当前选中的商品
   currFood: {},   // 当前选中的食物
+  currUser: {},   // 当前好友资料
+  currUserChick: {}, // 当前好友小鸡资料
   feedingFood: {},// 当前喂食食物
   chick: {},      // 小鸡信息
   chickSkin: {},  // 小鸡皮肤

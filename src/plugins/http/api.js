@@ -66,6 +66,9 @@ export const getLog = () => ajax.getData('/api/getLog');
 // 获取好友列表
 export const getFriends = () => ajax.getData('/api/getFriends');
 
+// 获取当前好友资料
+export const setCurrUser = (params) => ajax.postData('/api/setCurrUser',params);
+
 // 更换用户头像
 export const postProfile = (params) => ajax.postData('/api/postProfile',params);
 
