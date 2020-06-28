@@ -319,7 +319,8 @@
       :currFood="currFood"
       @countdown="setCountdown(arguments)"
       @closeDialog="closeUgood"
-      @showSell="showSell"  v-if="goodDialog"></Ugooddetails>
+      @showSell="showSell"
+      @use="useFood(arguments)"  v-if="goodDialog"></Ugooddetails>
 
     <!-- 皮肤详情 -->
     <Uskindetails
@@ -384,7 +385,8 @@ export default {
       progressValue: 0, // 进度条
       textContent: 'Hello 嘿嘿嘿', // 进度条上方显示文字,
       hoursType: '', // 0上午,1下午,2晚上
-      hoursTip:'' // 上午好,下午好,晚上好
+      hoursTip:'', // 上午好,下午好,晚上好
+      timer: '' // 喂食定时器
     }
   },
   computed: {
@@ -635,12 +637,73 @@ export default {
       // 开始计算倒计时
       this.countdown (data[0], data[1]);
     },
+    useFood(data) {
+      let name = data[0];
+      switch(name) {
+        case '抽奖券':
+          console.log("当前是抽奖卷");
+          break;
+        case '1小时加速卡':
+          // 判断是否在进食(还在进食中就执行使用加速卡)
+          // 使用加速卡(更新小鸡喂食结束时间,更新背包物品)
+          // 使用加速卡已达到喂食结束条件则更新后直接进行喂食结束计算
+          this.useAcceleratorCard("1小时加速卡",3600000);
+          break;
+        default:
+          console.log(name);
+      }
+    },
+    // 使用加速卡道具
+    useAcceleratorCard(name,time){
+      let tit = "使用了"+name
+      if(this.chick.eat) {
+        console.log("进食中,可以使用加速卡");
+        let loadDate = new Date().getTime();
+        // 新的进食结束时间
+        let newEatEndTime = this.chick.eatEndTime - time;
+        let isEat = newEatEndTime - loadDate;
+        if (isEat>0) {
+          console.log("还在进食范围内,无需计算");
+          // 停止旧倒计时
+          clearInterval(this.timer);
+          // 设置新倒计时
+          this.countdown(loadDate, newEatEndTime);
+          // 更新小鸡进食结束时间(newEatEndTime);
+          this.chick.eatEndTime = newEatEndTime;
+          this.$store.dispatch('reqUpdateChick',this.chick);
+        } else {
+          console.log("不在进食范围内,直接结算");
+          clearInterval(this.timer);
+          this.progressValue = 0;
+          this.textContent = "吃完了, 好饿!";
+          this.settleExp();
+          this.$message({
+            message: tit,
+            type: 'success'
+          });
+        }
+        // 扣除物品(name)
+        let obj = {
+          name: name,
+          num: 1
+        }
+        this.$store.dispatch('deductionFood',obj);
+        this.goodDialog = false;
+        this.hidePopup();
+      } else {
+        this.$message({
+          message: '当前没有进食,无需使用加速卡',
+          type: 'error'
+        });
+        return false;
+      }
+    },
     countdown(startTime, endTime) {
       let self = this;
       let es = endTime - startTime;
       let delay = 100/self.feedingFood.eatTime*1000; // 计算每秒走的进度
       if (es > 0) {
-        let timer = setInterval (function() {
+        self.timer = setInterval (function() {
           let nowTime = new Date().getTime();
           let t = endTime - nowTime;
           let value = (self.feedingFood.eatTime - t)/1000 * delay; // 计算进度条
@@ -671,7 +734,7 @@ export default {
             self.textContent = format; // 显示倒计时
             //self.$store.dispatch('savegame');
           } else {
-            clearInterval(timer); // 清除定时器
+            clearInterval(self.timer); // 清除定时器
             // 喂食结束
             self.textContent = '我吃完了...';
             self.settleExp();
@@ -685,6 +748,7 @@ export default {
       this.chick.eatEndTime = '';
       this.chick.eat = false;
       this.chick.eatFood = '';
+      this.userinfo.eat = false;
       // 经验结算
       // (要重新定义当前喂食的食物,因为在喂食中操作了其他物品会重置currFood,所以用feedingFood代替);
       this.chick.eggAddExps = parseInt(this.feedingFood.exp/this.chick.eggBase); // 鸡蛋经验加成 = 食物经验/基数, 取整数
@@ -711,7 +775,7 @@ export default {
         this.chick.level += 1;
         this.chick.exp = this.chick.exp - this.chick.upgradeExp;
         this.chick.upgradeExp = parseInt(this.chick.upgradeExp * 2); // 提高升级所需经验
-        this.$store.dispatch('reqUpdateChick',this.chick);
+        this.$store.dispatch('endEat',{chick:this.chick,user:this.userinfo});
         this.$confirm('恭喜你升级了,'+this.chick.level+'级!', '提示', {
           confirmButtonText: '确定',
           showCancelButton: false,
@@ -721,7 +785,7 @@ export default {
           this.settleLevel();
         })
       } else {
-        this.$store.dispatch('reqUpdateChick',this.chick);
+        this.$store.dispatch('endEat',{chick:this.chick,user:this.userinfo});
       }
     },
     // 跳转到动态

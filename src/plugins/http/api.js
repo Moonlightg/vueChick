@@ -7,6 +7,9 @@ export const getChick = () => ajax.getData('/api/getChick');
 // 更新小鸡chick状态
 export const postChick = (params) => ajax.postData('/api/postChick',params);
 
+// 更新用户资料
+export const postUser = (params) => ajax.postData('/api/postUser',params);
+
 // 获取商品列表
 export const getGoods = () => ajax.getData('/api/getGoods');
 
@@ -71,6 +74,9 @@ export const setCurrUser = (params) => ajax.postData('/api/setCurrUser',params);
 
 // 更换用户头像
 export const postProfile = (params) => ajax.postData('/api/postProfile',params);
+
+// 扣除物品
+export const deductionFood = (params) => ajax.postData('/api/deductionFood',params);
 
 // 修改用户名称
 export const setName = (params) => ajax.postData('/api/setName',params);

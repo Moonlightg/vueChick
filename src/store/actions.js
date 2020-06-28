@@ -3,6 +3,7 @@ Message.closeAll();
 import {
   getChick,
   postChick,
+  postUser,
   getGoods,
   getUserGoods,
   getUserFoods,
@@ -25,6 +26,7 @@ import {
   getFriends,
   setCurrUser,
   postProfile,
+  deductionFood,
   setName
 } from '../plugins/http/api'
 
@@ -223,6 +225,13 @@ export default {
       }
     }
   },
+  async deductionFood(context, value) {
+    const result = await deductionFood(value);
+    console.log(result.data);
+    if (result.code == 0) {
+      context.commit(UPDATE_USER_FOODS,result.data);
+    }
+  },
   async reqAddTaskCount(context, value) {
     const result = await addTaskCount(value);
     if (result.code == 0) {
@@ -271,6 +280,15 @@ export default {
     
   },
   // 进食结束(请求更新数据库)
+  async endEat(context, value) {
+    const result = await postChick(value.chick);
+    if ( result.code == 0 ) {
+      context.commit(SET_CHICK,result.data);
+      const result2 = await postUser(value.user);
+      console.log(result2);
+    }
+  },
+  // 更新小鸡信息
   async reqUpdateChick(context, value) {
     const result = await postChick(value);
     if ( result.code == 0 ) {

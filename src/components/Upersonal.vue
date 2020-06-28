@@ -21,8 +21,8 @@
           </div>
         </div>
       </div>
-      <p><span class="card-label">注册时间:</span>{{userinfo.register_date}}</p>
-      <p><span class="card-label">最近登录:</span>{{userinfo.update_date}}</p>
+      <p><span class="card-label">注册时间:</span>{{userinfo.registerDate}}</p>
+      <p><span class="card-label">最近登录:</span>{{userinfo.updateDate}}</p>
     </div>
     <div class="card-box">
       <h3>小鸡档案</h3>

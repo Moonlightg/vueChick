@@ -98,7 +98,19 @@ export default {
       this.$emit('showSell')
     },
     use() {
-      console.log(this.currFood);
+      this.$emit('use',this.currFood.name);
+      // console.log(this.currFood);
+      // switch(this.currFood.name) {
+      //   case '抽奖券':
+      //     console.log("当前是抽奖卷");
+      //     break;
+      //   case '1小时加速卡':
+      //     console.log("当前是1小时加速卡");
+
+      //     break;
+      //   default:
+      //     console.log(this.currFood.name);
+      // } 
     }
   }
 }
