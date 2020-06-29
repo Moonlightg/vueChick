@@ -28,6 +28,7 @@ npm run lint
 | api/login   |post|登录|
 | api/getChick   |get|获取用户小鸡状态|
 | api/postChick  |post|更新用户小鸡信息|
+| api/postUser  |post|更新用户资料|
 | api/getGoods   |get|获取默认商品列表|
 | api/getUserGoods|get|获取当前用户商品列表|
 | api/getUserFoods|get|获取用户背包食品列表|
@@ -50,4 +51,5 @@ npm run lint
 | api/getFriends|get|获取好友列表|
 | api/setCurrUser|post|设置当前好友资料|
 | api/postProfile|post|更换用户头像|
+| api/deductionFood|post|扣除物品|
 | api/setName|post|修改用户名称|
