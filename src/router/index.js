@@ -67,7 +67,17 @@ const routes = [
       index: 4,
       requireAuth: true
     }
+  },
+  {
+    path: '/luckDraw',
+    name: 'LuckDraw',
+    component: () => import('../views/LuckDraw.vue'),
+    meta: {
+      index: 3,
+      requireAuth: true
+    }
   }
+  
 ]
 
 const router = new VueRouter({

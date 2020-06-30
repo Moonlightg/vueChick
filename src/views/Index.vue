@@ -1,5 +1,5 @@
 <template>
-  <div class="container" :class="{ beingskin: skinBox}" style="opacity: 1">
+  <div class="container" :class="{ beingskin: skinBox}" style="opacity: .1">
     <!-- 个人信息简介 -->
     <div class="user-box" @click="opendialog">
       <div class="user-logo">
@@ -642,6 +642,9 @@ export default {
       switch(name) {
         case '抽奖券':
           console.log("当前是抽奖卷");
+          this.$router.push({
+            path: '/luckDraw'
+          });
           break;
         case '1小时加速卡':
           // 判断是否在进食(还在进食中就执行使用加速卡)

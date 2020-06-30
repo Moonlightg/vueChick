@@ -3516,7 +3516,12 @@ p + .user-mi {
   background-image: -webkit-linear-gradient(to bottom, #CDDC39,#8BC34A);
   background-image: linear-gradient(to bottom,#CDDC39,#8BC34A);
 }
-.skin_b2 .box-head h1 { color: #fff; }
+.skin_b3 {
+  background-image: -webkit-linear-gradient(to bottom, #F44336,#d00047);
+  background-image: linear-gradient(to bottom,#F44336,#d00047);
+}
+.skin_b2 .box-head h1,
+.skin_b3 .box-head h1{ color: #fff; }
 .skin_b2 .user-list li + li {
     margin-top: 10px;
 }
