@@ -27,7 +27,8 @@ import {
   setCurrUser,
   postProfile,
   deductionFood,
-  setName
+  setName,
+  postLuckDraw
 } from '../plugins/http/api'
 
 import {
@@ -371,6 +372,15 @@ export default {
         message: '用户名修改成功',
         type: 'success'
       });
+    }
+  },
+  // 抽奖
+  async reqLuckDraw(context, value) {
+    console.log(value);
+    const result = await postLuckDraw(value);
+    console.log(result);
+    if (result.code == 2) {
+      context.commit(SET_USER,result.data);
     }
   }
 }

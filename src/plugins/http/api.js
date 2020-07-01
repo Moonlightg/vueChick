@@ -80,3 +80,6 @@ export const deductionFood = (params) => ajax.postData('/api/deductionFood',para
 
 // 修改用户名称
 export const setName = (params) => ajax.postData('/api/setName',params);
+
+// 抽奖
+export const postLuckDraw = (params) => ajax.postData('/api/postLuckDraw',params);

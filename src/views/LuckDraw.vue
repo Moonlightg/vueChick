@@ -19,7 +19,8 @@
               <div class="prize-pic">
                 <img :src="getImgUrl(item.img)" />
               </div>
-              <div class="prize-type">{{item.name}}</div>
+              <div class="prize-type" v-if="item.type != 0">{{item.name}}*{{item.num}}</div>
+              <div class="prize-type" v-if="item.type == 0">{{item.name}}</div>
             </div>
           </div>
         </div>
@@ -45,13 +46,13 @@ export default {
       count:'',
       prizeList: [{
         img: "dj01.png", // 奖品图片
-        name: "金币500", // 奖品名称
+        name: "金币", // 奖品名称
         num: 500, // 奖励数值(数量)
         type: 1 // 奖品类型 (0谢谢参与,1奖励金币,2奖励宝石,3奖励物品)
       },
       {
         img: "food1.png",
-        name: "小麦5个",
+        name: "小麦",
         num: 5,
         type: 3
       },
@@ -63,13 +64,13 @@ export default {
       },
       {
         img: "food2.png",
-        name: "三叶草2个",
+        name: "三叶草",
         num: 2,
         type: 3
       },
       {
         img: "food3.png",
-        name: "橄榄1个",
+        name: "橄榄",
         num: 1,
         type: 3
       },
@@ -87,7 +88,7 @@ export default {
       },
       {
         img: "dj01.png",
-        name: "宝石100",
+        name: "宝石",
         num: 100,
         type: 2
       }],
@@ -132,8 +133,7 @@ export default {
       })
     },
     initPrizeList() {
-      // 这里可以发起请求，从服务端获取奖品列表
-      // 这里使用模拟数据
+
       this.prizeList = this.formatPrizeList(this.prizeList)
     },
     // 格式化奖品列表，计算每个奖品的位置
@@ -175,7 +175,21 @@ export default {
 
       // 随机获取下标
       this.index = this.random(this.prizeList.length - 1);
-
+      console.log("获得的奖励");
+      console.log(this.index);
+      console.log(this.prizeList[this.index]);
+      let reward = this.prizeList[this.index];
+      if (reward.type == 0) {
+        console.log("谢谢参与,没有中奖,不请求服务器");
+      } else {
+        let obj = {
+          name: reward.name,
+          num: reward.num,
+          type: reward.type
+        }
+        // 获取奖励
+        this.$store.dispatch('reqLuckDraw',obj);
+      }
       // 减少剩余抽奖次数
       this.count--
   
@@ -201,8 +215,6 @@ export default {
           // 奖项的角度
           angleList[index] -
           (rotateAngle % CIRCLE_ANGLE)
-
-          
         this.rotateAngle = angle
 
         // 旋转结束后，允许再次触发
