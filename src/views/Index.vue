@@ -1,5 +1,5 @@
 <template>
-  <div class="container" :class="{ beingskin: skinBox}" style="opacity: .1">
+  <div class="container" :class="{ beingskin: skinBox}" style="opacity: 1">
     <!-- 个人信息简介 -->
     <div class="user-box" @click="opendialog">
       <div class="user-logo">
@@ -641,7 +641,6 @@ export default {
       let name = data[0];
       switch(name) {
         case '抽奖券':
-          console.log("当前是抽奖卷");
           this.$router.push({
             path: '/luckDraw'
           });
@@ -660,13 +659,11 @@ export default {
     useAcceleratorCard(name,time){
       let tit = "使用了"+name
       if(this.chick.eat) {
-        console.log("进食中,可以使用加速卡");
         let loadDate = new Date().getTime();
         // 新的进食结束时间
         let newEatEndTime = this.chick.eatEndTime - time;
         let isEat = newEatEndTime - loadDate;
         if (isEat>0) {
-          console.log("还在进食范围内,无需计算");
           // 停止旧倒计时
           clearInterval(this.timer);
           // 设置新倒计时
@@ -675,7 +672,6 @@ export default {
           this.chick.eatEndTime = newEatEndTime;
           this.$store.dispatch('reqUpdateChick',this.chick);
         } else {
-          console.log("不在进食范围内,直接结算");
           clearInterval(this.timer);
           this.progressValue = 0;
           this.textContent = "吃完了, 好饿!";

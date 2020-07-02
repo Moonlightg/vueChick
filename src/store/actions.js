@@ -226,6 +226,7 @@ export default {
       }
     }
   },
+  // 扣除背包物品或道具
   async deductionFood(context, value) {
     const result = await deductionFood(value);
     console.log(result.data);
@@ -379,8 +380,20 @@ export default {
     console.log(value);
     const result = await postLuckDraw(value);
     console.log(result);
-    if (result.code == 2) {
-      context.commit(SET_USER,result.data);
+    if (result.code == 1002) {
+      let luck = {
+        name: '抽奖券',
+        num: 1
+      }
+      const result2 = await deductionFood(luck);
+      console.log(result2);
+      if (result2.code == 0) {
+        context.commit(UPDATE_USER_FOODS,result.data);
+      }
+      //context.commit(SET_USER,result.data);
+    }
+    if (result.code == 1003 ) {
+      context.commit(ADD_MONEY,result.data);
     }
   }
 }

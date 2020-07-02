@@ -133,7 +133,6 @@ export default {
       })
     },
     initPrizeList() {
-
       this.prizeList = this.formatPrizeList(this.prizeList)
     },
     // 格式化奖品列表，计算每个奖品的位置
@@ -165,10 +164,25 @@ export default {
       return list
     },
     beginRotate() {
-      // 添加次数校验
-      
-      if(this.count === 0) return
+      let luck = {
+        name: '抽奖券',
+        num: 1
+      }
+      if (this.count === 0) {
+        this.$message({
+          message: '没有多余的抽奖卷了',
+          type: 'error'
+        });
+        return;
+      }
 
+      if (this.isRotating) {
+        this.$message({
+          message: '当前抽奖还没完成,请稍等会',
+          type: 'error'
+        });
+        return;
+      }
       // 开始抽奖
       // 这里这里向服务端发起请求，得到要获得的奖
       // 可以返回下标，也可以返回奖品 id，通过查询 奖品列表，最终得到下标
@@ -181,6 +195,8 @@ export default {
       let reward = this.prizeList[this.index];
       if (reward.type == 0) {
         console.log("谢谢参与,没有中奖,不请求服务器");
+        // 扣除抽奖券
+        this.$store.dispatch('deductionFood',luck);
       } else {
         let obj = {
           name: reward.name,
@@ -189,6 +205,7 @@ export default {
         }
         // 获取奖励
         this.$store.dispatch('reqLuckDraw',obj);
+
       }
       // 减少剩余抽奖次数
       this.count--
@@ -226,6 +243,26 @@ export default {
       this.isRotating = false
       this.prize = this.prizeList[this.index]
       console.log(this.prize, this.index)
+      if ( this.prize.type != 0 ) {
+        this.$confirm('恭喜你,获得'+this.prize.name+'*'+this.prize.num, '抽奖结果', {
+          confirmButtonText: '确定',
+          showCancelButton: false,
+          type: 'success',
+          center: true
+        }).then(() => {
+          return
+        })
+      } else {
+        this.$confirm('很遗憾,这次未中奖,下次女神会眷顾您!', '抽奖结果', {
+          confirmButtonText: '确定',
+          showCancelButton: false,
+          type: 'warning',
+          center: true
+        }).then(() => {
+          return
+        })
+      }
+      
     },
     getImgUrl(val){
       return require("@/assets/images/"+val);
