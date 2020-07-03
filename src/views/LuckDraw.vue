@@ -187,6 +187,8 @@ export default {
       // 这里这里向服务端发起请求，得到要获得的奖
       // 可以返回下标，也可以返回奖品 id，通过查询 奖品列表，最终得到下标
 
+      // 减少剩余抽奖次数
+      this.count--;
       // 随机获取下标
       this.index = this.random(this.prizeList.length - 1);
       console.log("获得的奖励");
@@ -207,8 +209,7 @@ export default {
         this.$store.dispatch('reqLuckDraw',obj);
 
       }
-      // 减少剩余抽奖次数
-      this.count--
+      
   
       // 开始旋转
       this.rotating()

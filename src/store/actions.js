@@ -378,22 +378,26 @@ export default {
   // 抽奖
   async reqLuckDraw(context, value) {
     console.log(value);
+    let luck = {
+      name: '抽奖券',
+      num: 1
+    }
     const result = await postLuckDraw(value);
     console.log(result);
     if (result.code == 1002) {
-      let luck = {
-        name: '抽奖券',
-        num: 1
-      }
       const result2 = await deductionFood(luck);
       console.log(result2);
       if (result2.code == 0) {
-        context.commit(UPDATE_USER_FOODS,result.data);
+        context.commit(UPDATE_USER_FOODS,result2.data);
       }
-      //context.commit(SET_USER,result.data);
     }
     if (result.code == 1003 ) {
       context.commit(ADD_MONEY,result.data);
+      const result2 = await deductionFood(luck);
+      console.log(result2);
+      if (result2.code == 0) {
+        context.commit(UPDATE_USER_FOODS,result2.data);
+      }
     }
   }
 }
