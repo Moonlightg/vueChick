@@ -15,6 +15,7 @@
           <div class="pen-body">
             <div class="pen-eye"></div>
             <div class="pen-blusher"></div>
+            <div class="pen-mouth"></div>
           </div>
         </div>
       </div>
@@ -163,10 +164,34 @@ export default {
 .pen-blusher {
   position: absolute;
   top: 25%;
-  left: 29%;
-  width: 42%;
+  left: 15%;
+  width: 70%;
   height: 1em;
-  background: #F90;
+  background-image: radial-gradient(closest-side at 25% 30%, #ffe1ef 0.5em, transparent .5em),radial-gradient(closest-side at 75% 30%, #ffe1ef 0.5em, transparent .5em);
   z-index: 3;
+  /*background-image: radial-gradient(ellipse at 50% 60%, #F90 1.2em, transparent 1.2em);这个很像嘴巴*/
+}
+.pen-mouth {
+  position: absolute;
+  top: 28%;
+  left: 50%;
+  width: 1.2em;
+  height: 1.2em;
+  margin-left: -.6em;
+  transform: rotate(-45deg);
+  z-index: 3;
+  &::before{
+    position: absolute;
+    content: '';
+    top: 0;
+    left: 0;
+    width: 1.2em;
+    height: 1.2em;
+    border-radius: 0.2em .4em .2em .2em;
+    box-shadow: -1px 1px 0px 0px #f3a023;
+    transform: rotate3d(1, 1, 0, 59deg);
+    background: #fda909;
+    border: 1px solid #d08514;
+  }
 }
 </style>
