@@ -4,7 +4,7 @@
       <div class="return-link" @click="returnIndex()"><i class="el-icon-arrow-left"></i>返回</div>
       <h1>欢乐大抽奖</h1>
     </div>
-    <div class="box-content">
+    <div class="box-content luck-wrap">
       <p class="ld-title">可抽奖次数:{{count}}</p>
       <div class="wheel-main">
         <div class="wheel-pointer" @click="beginRotate()"></div>
@@ -45,7 +45,7 @@ export default {
     return {
       count:'',
       prizeList: [{
-        img: "dj01.png", // 奖品图片
+        img: "money.png", // 奖品图片
         name: "金币", // 奖品名称
         num: 500, // 奖励数值(数量)
         type: 1 // 奖品类型 (0谢谢参与,1奖励金币,2奖励宝石,3奖励物品)
@@ -57,7 +57,7 @@ export default {
         type: 3
       },
       {
-        img: "dj01.png",
+        img: "xxcy.png",
         name: "谢谢参与",
         num: 0,
         type: 0
@@ -75,19 +75,19 @@ export default {
         type: 3
       },
       {
-        img: "dj01.png",
+        img: "xxcy.png",
         name: "谢谢参与",
         num: 0,
         type: 0
       },
       {
-        img: "dj01.png",
+        img: "xxcy.png",
         name: "谢谢参与",
         num: 0,
         type: 0
       },
       {
-        img: "dj01.png",
+        img: "gem.png",
         name: "宝石",
         num: 100,
         type: 2
@@ -330,7 +330,7 @@ export default {
   }
 
   .prize-pic img {
-    width: 4.0625rem;
+    width: 2.5rem;
     height: 2.5rem;
     margin-top: 1.5625rem;
   }
@@ -339,5 +339,9 @@ export default {
   }
   .prize-type {
     font-size: 0.75rem;
+  }
+  .luck-wrap {
+    padding-top: 5rem;
+    overflow: hidden;
   }
 </style>

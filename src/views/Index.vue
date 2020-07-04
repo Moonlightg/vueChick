@@ -21,6 +21,7 @@
     <ul class="nav-list nav-l">
       <li class="n-violet" @click="goLog()"><span class="nav-icon"><i class="el-icon-bell"></i></span><span class="nav-name">动态</span></li>
       <li class="n-violet" @click="goFriends()"><span class="nav-icon"><i class="el-icon-user-solid"></i></span><span class="nav-name">圈子</span></li>
+      <li class="n-violet" @click="goPenguin()"><span class="nav-icon"><i class="el-icon-user-solid"></i></span><span class="nav-name">企鹅</span></li>
     </ul>
     <!-- 功能菜单 -->
     <ul class="nav-list">
@@ -796,6 +797,11 @@ export default {
     goFriends() {
       this.$router.push({
         path: '/friends'
+      });
+    },
+    goPenguin() {
+      this.$router.push({
+        path: '/penguin'
       });
     }
   }

@@ -60,6 +60,15 @@ const routes = [
     }
   },
   {
+    path: '/penguin',
+    name: 'Penguin',
+    component: () => import('../views/Penguin.vue'),
+    meta: {
+      index: 3,
+      requireAuth: true
+    }
+  },
+  {
     path: '/friendsHome',
     name: 'FriendsHome',
     component: () => import('../views/FriendsHome.vue'),
