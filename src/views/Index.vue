@@ -38,7 +38,8 @@
       <scene-night v-if="hoursType == 2"></scene-night>
       <div class="chick-content" style="opacity: 1">
         <!-- chick -->
-        <div class="chick" :class="{noeat:!chick.eat}">
+        <!-- 企鹅 -->
+        <div class="penguin" :class="{eating:chick.eat}">
           <!-- 进食倒计 -->
           <div class="countdown-box">
             <p class="countdown-text" :class="{active : !chick.eat }">{{textContent}}</p>
@@ -47,44 +48,23 @@
               <div class="progress-content" :style="'width:' + progressValue + '%' "></div>
             </div>
           </div>
-          <!-- 装扮-帽子 -->
-          <div class="skin-hat">
-            <keep-alive>
-              <component
-                :is="chick.skinHat"></component>
-            </keep-alive>
-          </div>
-          <div class="chick-head"></div>
-          <div class="chick-body">
+          <div class="pen-body">
+            <!-- 装扮-帽子 -->
+            <div class="skin-hat">
+              <keep-alive>
+                <component
+                  :is="chick.skinHat"></component>
+              </keep-alive>
+            </div>
             <!-- 装扮-衣服 -->
             <keep-alive>
               <component
                 :is="chick.skinClothes"></component>
             </keep-alive>
-          </div>
-          <div class="eye">
-            <span></span>
-            <span></span>
-          </div>
-          <div class="blusher">
-            <span></span>
-            <span></span>
-          </div>
-          <div class="face"></div>
-          <div class="wing-left"></div>
-          <div class="wing-left2"></div>
-          <div class="wing-content">
-            <span></span>
-          </div>
-          <div class="wing-right">
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
+            <div class="pen-eye"></div>
+            <div class="pen-blusher"></div>
+            <div class="pen-mouth"></div>
+            <div class="pen-mouth2"></div>
             <div class="food">
               <p></p>
               <div class="dot-box">
@@ -92,15 +72,7 @@
                 <span></span>
               </div>
             </div>
-          </div>
-          <div class="mouth">
-            <span></span>
-            <span></span>
-            <p></p>
-          </div>
-          <div class="foot">
-            <span></span>
-            <span></span>
+            <div class="pen-wing"></div>
           </div>
         </div>
         <!-- 鸡蛋 -->

@@ -2937,9 +2937,11 @@ p + .user-mi {
 /* 倒计时组件 */
 .countdown-box {
   position: absolute;
-  top: -5rem;
-  width: 100%;
+  top: -4.5rem;
+  left: 50%;
+  width: 140%;
   text-align: center;
+  transform: translateX(-50%);
   z-index: 99;
 }
 .countdown-text {
