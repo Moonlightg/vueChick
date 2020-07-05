@@ -11,11 +11,20 @@
       <scene-night v-if="hoursType == 2"></scene-night>
       <div class="chick-content" style="opacity: 1">
         <!-- 企鹅 -->
-        <div class="penguin">
+        <div class="penguin eating">
           <div class="pen-body">
             <div class="pen-eye"></div>
             <div class="pen-blusher"></div>
             <div class="pen-mouth"></div>
+            <div class="pen-mouth2"></div>
+            <div class="food">
+              <p></p>
+              <div class="dot-box">
+                <span></span>
+                <span></span>
+              </div>
+            </div>
+            <div class="pen-wing"></div>
           </div>
         </div>
       </div>
@@ -74,124 +83,3 @@ export default {
 }
 
 </script>
-<style lang="less">
-@brand_primary: #374961;
-.penguin {
-  position: absolute;
-  bottom: 17%;
-  left: 50%;
-  margin-left: -50px;
-  width: 100px;
-  height: 150px;
-  &::after,
-  &::before {
-    position: absolute;
-    content: "";
-    width: 12%;
-    height: 5px;
-    border-radius: 5px 5px 0 0;
-    background: #FFC107;
-    bottom: 0;
-    z-index: 2;
-  }
-  &::after {
-    left: 30%;
-  }
-  &::before {
-    right: 30%;
-  }
-}
-.pen-body {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: @brand_primary;
-  border-radius: ~'80% 60% 40% 40% / 90% 90% 60% 60%';
-  &::after,
-  &::before {
-    position: absolute;
-    content: "";
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-  &::before {
-    bottom: 7%;
-    width: 86%;
-    height: 86%;
-    border-radius: ~'70% 60% 40% 40% / 90% 90% 50% 50%';
-    background: #dde4ee;
-  }
-  &::after {
-    left: 49%;
-    bottom: 13%;
-    width: 73%;
-    height: 78%;
-    border-radius: ~'84% 62% 40% 40% / 90% 90% 50% 50%';
-    background: #fff;
-    z-index: 2;
-  }
-}
-.pen-eye {
-  position: absolute;
-  top: 17%;
-  left: 29%;
-  width: 42%;
-  height: 1em;
-  z-index: 3;
-  &::before, 
-  &::after {
-    position: absolute;
-    content: '';
-    top: 50%;
-    width: .5em;
-    height: .5em;
-    margin-top: -.25em;
-    border-radius: 50%;
-    background-color: #302217;
-  }
-  &::before {
-    left: 11%;
-    background-image: radial-gradient(circle at .1em .2em, #ffffff 0.1em, transparent 0.1em);
-  }
-  &::after {
-    right: 3%;
-    background-image: radial-gradient(circle at .1em .2em, #ffffff 0.1em, transparent 0.1em);
-  }
-}
-.pen-blusher {
-  position: absolute;
-  top: 25%;
-  left: 15%;
-  width: 70%;
-  height: 1em;
-  background-image: radial-gradient(closest-side at 25% 30%, #ffe1ef 0.5em, transparent .5em),radial-gradient(closest-side at 75% 30%, #ffe1ef 0.5em, transparent .5em);
-  z-index: 3;
-  /*background-image: radial-gradient(ellipse at 50% 60%, #F90 1.2em, transparent 1.2em);这个很像嘴巴*/
-}
-.pen-mouth {
-  position: absolute;
-  top: 28%;
-  left: 50%;
-  width: 1.2em;
-  height: 1.2em;
-  margin-left: -.6em;
-  transform: rotate(-45deg);
-  z-index: 3;
-  &::before{
-    position: absolute;
-    content: '';
-    top: 0;
-    left: 0;
-    width: 1.2em;
-    height: 1.2em;
-    border-radius: 0.2em .4em .2em .2em;
-    box-shadow: -1px 1px 0px 0px #f3a023;
-    transform: rotate3d(1, 1, 0, 59deg);
-    background: #fda909;
-    border: 1px solid #d08514;
-  }
-}
-</style>
