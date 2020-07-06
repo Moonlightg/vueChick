@@ -9,24 +9,11 @@
       <scene-day v-if="hoursType == 0 || hoursType == 1"></scene-day>
       <!-- 晚上背景 -->
       <scene-night v-if="hoursType == 2"></scene-night>
-      <div class="chick-content" style="opacity: 1">
-        <!-- 企鹅 -->
-        <div class="penguin eating">
-          <div class="pen-body">
-            <div class="pen-eye"></div>
-            <div class="pen-blusher"></div>
-            <div class="pen-mouth"></div>
-            <div class="pen-mouth2"></div>
-            <div class="food">
-              <p></p>
-              <div class="dot-box">
-                <span></span>
-                <span></span>
-              </div>
-            </div>
-            <div class="pen-wing"></div>
-          </div>
-        </div>
+      <div class="chick-content penguin-list" style="opacity: 1">
+        <!-- 正常的企鹅 -->
+        <penguin-default></penguin-default>
+        <!-- 进食的企鹅 -->
+        <penguin-eating></penguin-eating>
       </div>
     </div>
   </div>
@@ -34,6 +21,9 @@
 <script>
 import SceneDay from '../components/scene/SceneDay.vue'     // 白天背景
 import SceneNight from '../components/scene/SceneNight.vue' // 晚上背景
+
+import PenguinDefault from '../components/penguin/PenguinDefault.vue' // 默认状态的企鹅
+import PenguinEating from '../components/penguin/PenguinEating.vue' // 进食状态的企鹅
 
 import {mapGetters} from "vuex";
 export default {
@@ -53,6 +43,8 @@ export default {
   components: {
     SceneDay,
     SceneNight,
+    PenguinDefault,
+    PenguinEating
   },
   mounted: function() {
     var _this = this;
@@ -63,7 +55,7 @@ export default {
   methods: {
     returnIndex() {
       this.$router.push({
-        path: '/friends'
+        path: '/index'
       });
     },
     getMycount() {
@@ -83,3 +75,11 @@ export default {
 }
 
 </script>
+<style lang="less">
+  .penguin-list .penguin{
+    left: 60px;
+    &.eating {
+      left: 50%;
+    }
+  }
+</style>
