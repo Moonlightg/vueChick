@@ -6,7 +6,7 @@
     element-loading-background="rgba(0, 0, 0, 0.8)">
     <div class="login-head">
       <Cbee></Cbee>
-      <p>VueChick</p>
+      <p>Penguin Manor</p>
     </div>
     <div class="login-form">
       <div style="margin: 20px 0;"></div>
