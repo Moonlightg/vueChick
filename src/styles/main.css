@@ -2797,7 +2797,7 @@ top: 10px;
   position: fixed;
   top: .5rem;
   left: .5rem;
-  z-index: 30;
+  z-index: 100;
   display: flex;
   align-items: center;
   padding: .25rem .75rem .25rem .25rem;
