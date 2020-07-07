@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container" style="opacity: 1">
     <div class="content" :class="{'bg-night':isNight}" >
       <div class="box-head">
         <div class="return-link" @click="returnIndex()"><i class="el-icon-arrow-left"></i>返回</div>
@@ -14,6 +14,8 @@
         <penguin-default></penguin-default>
         <!-- 进食的企鹅 -->
         <penguin-eating></penguin-eating>
+        <!-- 开心的企鹅 -->
+        <penguin-happy></penguin-happy>
       </div>
     </div>
   </div>
@@ -24,6 +26,7 @@ import SceneNight from '../components/scene/SceneNight.vue' // 晚上背景
 
 import PenguinDefault from '../components/penguin/PenguinDefault.vue' // 默认状态的企鹅
 import PenguinEating from '../components/penguin/PenguinEating.vue' // 进食状态的企鹅
+import PenguinHappy from '../components/penguin/PenguinHappy.vue' // 开心状态的企鹅
 
 import {mapGetters} from "vuex";
 export default {
@@ -44,7 +47,8 @@ export default {
     SceneDay,
     SceneNight,
     PenguinDefault,
-    PenguinEating
+    PenguinEating,
+    PenguinHappy
   },
   mounted: function() {
     var _this = this;
@@ -80,6 +84,9 @@ export default {
     left: 60px;
     &.eating {
       left: 50%;
+    }
+    &.penguin-happy {
+      left: 83%;
     }
   }
 </style>

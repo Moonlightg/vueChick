@@ -57,10 +57,12 @@
               </keep-alive>
             </div>
             <!-- 装扮-衣服 -->
-            <keep-alive>
-              <component
-                :is="chick.skinClothes"></component>
-            </keep-alive>
+            <div class="skin-clothes">
+              <keep-alive>
+                <component
+                  :is="chick.skinClothes"></component>
+              </keep-alive>
+            </div>
             <div class="pen-eye"></div>
             <div class="pen-blusher"></div>
             <div class="pen-mouth"></div>
