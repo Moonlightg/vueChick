@@ -5,7 +5,7 @@ import filters from '../utils/filters.js'
 import App from './App.vue'
 import './plugins/axios'
 import './styles/main.css'
-import './styles/base.less'
+import './styles/base-index.less'
 import router from './router'
 import store from './store'
 import { Icon, Button, Dialog, Select, Input, Loading, MessageBox, Message, Tabs, TabPane} from 'element-ui';

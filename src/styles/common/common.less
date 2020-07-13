@@ -1,0 +1,40 @@
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, textarea, p, span, blockquote, th, td, hr, button, article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+   margin: 0;
+   padding: 0;
+   list-style: none;
+   -webkit-text-size-adjust: none;
+   -moz-box-sizing: border-box;
+   -ms-box-sizing: border-box;
+   box-sizing: border-box;
+   word-wrap: break-word;
+}
+html,body{
+	font-size: 14px;
+	height: 100%;
+  background: #f5f6f7;
+}
+body{
+  font-family: @font-family;
+  letter-spacing: 0;
+}
+ins, a {
+  text-decoration: none;
+  transition: color .1s ease;
+  -webkit-transition: color .1s ease;
+  color: @a_link;
+}
+a:link,a:visited{
+ text-decoration:none;
+}
+.border_radius(@radius:5px){
+  -webkit-border-radius: @radius;
+  -moz-border-radius: @radius;
+  border-radius: @radius;
+}
+.clearfix:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}

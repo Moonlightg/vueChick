@@ -17,11 +17,13 @@
         </div>
       </div>
     </div>
+
     <!-- 功能菜单 left -->
     <ul class="nav-list nav-l">
       <li class="n-violet" @click="goLog()"><span class="nav-icon"><i class="el-icon-bell"></i></span><span class="nav-name">动态</span></li>
       <li class="n-violet" @click="goFriends()"><span class="nav-icon"><i class="el-icon-user-solid"></i></span><span class="nav-name">圈子</span></li>
       <li class="n-violet" @click="goPenguin()"><span class="nav-icon"><i class="el-icon-s-opportunity"></i></span><span class="nav-name">企鹅</span></li>
+      <li class="n-violet"><span class="nav-icon"><i class="el-icon-s-data"></i></span><span class="nav-name">农场</span></li>
     </ul>
     <!-- 功能菜单 -->
     <ul class="nav-list">
@@ -31,11 +33,11 @@
       <li @click="showTasks()" :class={on:tasks.isUpdate}><span class="nav-icon"><i class="el-icon-medal"></i></span><span class="nav-name">任务</span></li>
       <li @click="showPopup(study)" class="n-green"><span class="nav-icon"><i class="el-icon-collection"></i></span><span class="nav-name">学习</span></li>
     </ul>
-    <div class="content" :class="{'bg-night':isNight}" >
+    <div class="content" :class="{'bg-night':!isNight}" >
       <!-- 白天背景 -->
-      <scene-day v-if="hoursType == 0 || hoursType == 1"></scene-day>
+      <scene-day v-if="hoursType == 2"></scene-day>
       <!-- 晚上背景 -->
-      <scene-night v-if="hoursType == 2"></scene-night>
+      <scene-night v-if="hoursType == 0 || hoursType == 1"></scene-night>
       <div class="chick-content" style="opacity: 1">
         <!-- chick -->
         <!-- 企鹅 -->

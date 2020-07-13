@@ -346,7 +346,6 @@ ul,li{ padding: 0;margin: 0; }
   bottom: 0;
   background-image:-webkit-linear-gradient(180deg, #38862c, #b7f03b); 
   background-image:linear-gradient(180deg, #38862c, #b7f03b);
-
 }
 .grass-1>span:nth-child(4){
   height: 30%;
