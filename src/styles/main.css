@@ -2472,7 +2472,6 @@ top: 10px;
   width: 100%;
   height: 100%;
   border-radius: 80% 60% 40% 40% / 90% 90% 60% 60%;
-  overflow: hidden;
   z-index: 3;
 }
 /* --- 青蛙帽子 --- */
@@ -2551,6 +2550,15 @@ top: 10px;
   transform: rotate(38deg);
 }
 /*---- 青蛙上衣 ---*/
+.jacket-skin {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 80% 60% 40% 40% / 90% 90% 60% 60%;
+  overflow: hidden;
+}
 .jacket-frog {
   position: absolute;
   bottom: -6px;

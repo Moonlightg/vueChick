@@ -1,11 +1,13 @@
 <template>
-  <div class="jacket-frog">
+  <div class="jacket-skin"> 
+    <div class="jacket-frog">
       <span></span>
       <span></span>
       <span></span>
       <span></span>
       <span></span>
     </div>
+  </div>
 </template>
 
 <script>
