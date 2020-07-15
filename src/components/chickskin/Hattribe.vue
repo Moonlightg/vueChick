@@ -1,15 +1,14 @@
 <template>
-  <div class="hat-frog">
-    <span class="hat-frog-eye el"></span>
-    <span class="hat-frog-eye er"></span>
-    <span class="sun-cured"></span>
+  <div class="hat-tribe">
+    <span></span>
+    <span></span>  
   </div>
 </template>
 
 <script>
 
 export default {
-  name: 'hatForg',
+  name: 'hatTribe',
   data() {
     return {
     }

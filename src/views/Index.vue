@@ -33,11 +33,11 @@
       <li @click="showTasks()" :class={on:tasks.isUpdate}><span class="nav-icon"><i class="el-icon-medal"></i></span><span class="nav-name">任务</span></li>
       <li @click="showPopup(study)" class="n-green"><span class="nav-icon"><i class="el-icon-collection"></i></span><span class="nav-name">学习</span></li>
     </ul>
-    <div class="content" :class="{'bg-night':!isNight}" >
+    <div class="content" :class="{'bg-night':isNight}" >
       <!-- 白天背景 -->
-      <scene-day v-if="hoursType == 2"></scene-day>
+      <scene-day v-if="hoursType == 0 || hoursType == 1"></scene-day>
       <!-- 晚上背景 -->
-      <scene-night v-if="hoursType == 0 || hoursType == 1"></scene-night>
+      <scene-night v-if="hoursType == 2" ></scene-night>
       <div class="chick-content" style="opacity: 1">
         <!-- chick -->
         <!-- 企鹅 -->
@@ -55,7 +55,7 @@
             <div class="skin-hat">
               <keep-alive>
                 <component
-                  :is="chick.skinHat"></component>
+                  :is="Hat"></component>
               </keep-alive>
             </div>
             <!-- 装扮-衣服 -->
@@ -331,6 +331,7 @@ import Clothesdefault from '../components/chickskin/Clothesdefault.vue'
 import Clothesforg from '../components/chickskin/Clothesforg.vue'
 import Hatdefault from '../components/chickskin/Hatdefault.vue'
 import Hatforg from '../components/chickskin/Hatforg.vue'
+import Hattribe from '../components/chickskin/Hattribe.vue'
 
 
 import {mapGetters} from "vuex";
@@ -363,7 +364,8 @@ export default {
       textContent: 'Hello 嘿嘿嘿', // 进度条上方显示文字,
       hoursType: '', // 0上午,1下午,2晚上
       hoursTip:'', // 上午好,下午好,晚上好
-      timer: '' // 喂食定时器
+      timer: '', // 喂食定时器
+      Hat: 'Hattribe'
     }
   },
   computed: {
@@ -397,7 +399,8 @@ export default {
     Clothesforg,
     Clothesdefault,
     Hatforg,
-    Hatdefault
+    Hatdefault,
+    Hattribe
   },
   mounted: function() {
     var _this = this;

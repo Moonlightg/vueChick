@@ -2463,7 +2463,7 @@ top: 10px;
   width: 4rem;
   height: 3rem;
   margin-left: -2.5rem;
-  z-index: 10;
+  z-index: 100;
 }
 .skin-clothes {
   position: absolute;
@@ -2654,6 +2654,51 @@ top: 10px;
   right: 5px;
   transform: rotate(27deg);
   width: 10px;
+}
+/* 部落套装 */
+/* 部落帽子 */
+.hat-tribe {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+.hat-tribe span:first-child {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1rem;
+  background: #db4433;
+  border-radius: 3px;
+  z-index: 9;
+}
+.hat-tribe span:first-child::before,
+.hat-tribe span:first-child::after{
+  position: absolute;
+  bottom: -.25rem;
+  content: "";
+  width: .7rem;
+  height: 1.5rem;
+  background: #fdd505;
+  border-radius: 50%;
+}
+.hat-tribe span:first-child::before {
+  left: -.2rem;
+}
+.hat-tribe span:first-child::after {
+  right: 0;
+}
+.hat-tribe span:nth-child(2){
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 1rem;
+    height: 3.5rem;
+    margin-left: -.6rem;
+    background: #d15533;
+    border-radius: 2rem;
 }
 
 /* 换装选择列表 */ 
