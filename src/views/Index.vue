@@ -55,7 +55,7 @@
             <div class="skin-hat">
               <keep-alive>
                 <component
-                  :is="Hat"></component>
+                  :is="chick.skinHat"></component>
               </keep-alive>
             </div>
             <!-- 装扮-衣服 -->
