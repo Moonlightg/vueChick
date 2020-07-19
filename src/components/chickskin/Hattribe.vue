@@ -1,7 +1,9 @@
 <template>
   <div class="hat-tribe">
     <span></span>
-    <span></span>  
+    <span></span>
+    <span></span>
+    <span></span>   
   </div>
 </template>
 
