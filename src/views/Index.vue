@@ -329,9 +329,11 @@ import Nodata from '../components/Nodata.vue'               // 暂无数据
 // 皮肤组件
 import Clothesdefault from '../components/chickskin/Clothesdefault.vue'
 import Clothesforg from '../components/chickskin/Clothesforg.vue'
+import Clothestribe from '../components/chickskin/Clothestribe.vue'
 import Hatdefault from '../components/chickskin/Hatdefault.vue'
 import Hatforg from '../components/chickskin/Hatforg.vue'
 import Hattribe from '../components/chickskin/Hattribe.vue'
+
 
 
 import {mapGetters} from "vuex";
@@ -365,7 +367,6 @@ export default {
       hoursType: '', // 0上午,1下午,2晚上
       hoursTip:'', // 上午好,下午好,晚上好
       timer: '', // 喂食定时器
-      Hat: 'Hattribe'
     }
   },
   computed: {
@@ -398,6 +399,7 @@ export default {
     Nodata,
     Clothesforg,
     Clothesdefault,
+    Clothestribe,
     Hatforg,
     Hatdefault,
     Hattribe

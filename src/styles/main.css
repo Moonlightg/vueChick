@@ -2741,6 +2741,53 @@ top: 10px;
     border-radius: 2rem;
     transform: rotate(13deg);
 }
+/* 部落上衣 */
+.clothes-tribe {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 80% 60% 40% 40% / 90% 90% 60% 60%;
+  z-index: 3;
+  overflow: hidden;
+}
+.ct-box {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 27%;
+  background: #e57d62;
+  box-shadow: 0 -0.8rem 0 #f1ba5f;
+}
+.ct-box span {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 110%;
+  height: .3rem;
+  background: #cc5e45;
+  -webkit-transform: rotate(-12deg);
+  transform: rotate(-12deg);
+}
+.ct-box span:after,
+.ct-box span:before {
+  position: absolute;
+  left: 0;
+  content: "";
+  width: 100%;
+  height: 100%;
+  background: #cc5e45;
+}
+.ct-box span:before {
+  top: -1rem;
+  transform: rotate(16deg);
+}
+.ct-box span:after {
+  top: .8rem;
+  transform: rotate(11deg);
+}
 /* 换装选择列表 */ 
 .opt-list {
   display: flex;
