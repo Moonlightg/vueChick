@@ -2788,6 +2788,15 @@ top: 10px;
   top: .8rem;
   transform: rotate(11deg);
 }
+/* 小画家帽子 */
+.hat-painter {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: #ea7146;
+}
 /* 换装选择列表 */ 
 .opt-list {
   display: flex;

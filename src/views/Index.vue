@@ -55,7 +55,7 @@
             <div class="skin-hat">
               <keep-alive>
                 <component
-                  :is="chick.skinHat"></component>
+                  :is="Hat"></component>
               </keep-alive>
             </div>
             <!-- 装扮-衣服 -->
@@ -333,6 +333,7 @@ import Clothestribe from '../components/chickskin/Clothestribe.vue'
 import Hatdefault from '../components/chickskin/Hatdefault.vue'
 import Hatforg from '../components/chickskin/Hatforg.vue'
 import Hattribe from '../components/chickskin/Hattribe.vue'
+import Hatpainter from '../components/chickskin/Hatpainter.vue'
 
 
 
@@ -367,6 +368,7 @@ export default {
       hoursType: '', // 0上午,1下午,2晚上
       hoursTip:'', // 上午好,下午好,晚上好
       timer: '', // 喂食定时器
+      Hat: 'Hatpainter'
     }
   },
   computed: {
@@ -402,7 +404,8 @@ export default {
     Clothestribe,
     Hatforg,
     Hatdefault,
-    Hattribe
+    Hattribe,
+    Hatpainter
   },
   mounted: function() {
     var _this = this;
