@@ -2802,8 +2802,20 @@ top: 10px;
   left: 0;
   width: 100%;
   height: 57%;
-  background-image: linear-gradient(0deg, rgba(224, 0, 52, 0.8), #ff8178);
-  border-radius: 80% 60% 40% 40% / 90% 90% 60% 60%;
+  box-shadow: 6px 0px 0px 0px #e85a5d;
+  background-image: linear-gradient(0deg, rgba(224, 0, 52, 1), #ff8178);
+  border-radius: 80% 60% 40% 40% / 90% 75% 70% 60%;
+}
+.hat-painter>span:first-child:before {
+    position: absolute;
+    top: -.6em;
+    left: 50%;
+    content: "";
+    width: .8em;
+    height: .8em;
+    background: #ef4953;
+    border-radius: 50%;
+    border: 2px solid #fb7671;
 }
 /* 换装选择列表 */ 
 .opt-list {
