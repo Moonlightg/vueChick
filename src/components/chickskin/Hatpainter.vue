@@ -1,9 +1,6 @@
 <template>
   <div class="hat-painter">
     <span></span>
-    <span></span>
-    <span></span>
-    <span></span>   
   </div>
 </template>
 
