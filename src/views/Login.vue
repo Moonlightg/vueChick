@@ -73,7 +73,7 @@ export default {
           // 保存用户信息
           this.$store.dispatch("setUserInfo", res.data);
           // 添加日志
-          this.$store.dispatch("addLog", {log_title: '登录成功'});
+          this.$store.dispatch("addLog", {log_type: 1,log_title: '登录成功'});
           // 跳转路由
           setTimeout(() => {
             this.$router.push({

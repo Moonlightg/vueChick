@@ -7,6 +7,7 @@
     <div class="box-content">
       <ul class="log-list">
         <li v-for="item in log" :key="item._id">
+          <p class="log-type">{{item.log_type}}</p>
           <p class="log-tit">{{item.log_title}}</p>
           <p class="log-time">{{item.log_date}}</p>
         </li>

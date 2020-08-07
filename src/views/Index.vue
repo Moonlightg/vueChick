@@ -1,5 +1,5 @@
 <template>
-  <div class="container" :class="{ beingskin: skinBox}" style="opacity: 1">
+  <div class="container" :class="{ beingskin: skinBox}" style="opacity: 0.01">
     <!-- 个人信息简介 -->
     <div class="user-box" @click="opendialog">
       <div class="user-logo">
@@ -55,7 +55,7 @@
             <div class="skin-hat">
               <keep-alive>
                 <component
-                  :is="Hat"></component>
+                  :is="chick.skinHat"></component>
               </keep-alive>
             </div>
             <!-- 装扮-衣服 -->
@@ -502,7 +502,7 @@ export default {
     loginOut() {
       // 清除用户数据
       this.$store.dispatch("loginOut");
-      this.$store.dispatch("addLog", {log_title: '退出登录!'});
+      this.$store.dispatch("addLog", {log_type: 2, log_title: '退出登录!'});
       // 退出登录跳转到登录界面
       this.$router.push({
         path: '/login'
@@ -587,7 +587,7 @@ export default {
         } else {
           // 解锁商品
           _this.$store.dispatch('reqUnlock',good);
-          _this.$store.dispatch("addLog", {log_title: '解锁了'+good.name});
+          _this.$store.dispatch("addLog", {log_type: 2, log_title: '解锁了'+good.name});
         }
       }).catch(() => {
         console.log("取消解锁");         
