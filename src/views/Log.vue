@@ -7,7 +7,11 @@
     <div class="box-content">
       <ul class="log-list">
         <li v-for="item in log" :key="item._id">
-          <p class="log-type">{{item.log_type}}</p>
+          <p class="log-type" v-if="item.log_type == 0">{{item.log_type}}</p>
+          <p class="log-type" v-if="item.log_type == 1">{{item.log_type}}</p>
+          <p class="log-type" v-if="item.log_type == 2">{{item.log_type}}</p>
+          <p class="log-type" v-if="item.log_type == 3">{{item.log_type}}</p>
+          <p class="log-type" v-if="item.log_type == 4">{{item.log_type}}</p>
           <p class="log-tit">{{item.log_title}}</p>
           <p class="log-time">{{item.log_date}}</p>
         </li>
