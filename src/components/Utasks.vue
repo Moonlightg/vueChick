@@ -50,7 +50,7 @@ export default {
     },
     receiveTask(val) {
       this.$store.dispatch('receiveTask',val);
-      this.$store.dispatch("addLog", {log_title: '领取了"'+val.taskTitle+'"任务,奖励金币:'+val.rewardMoney+';宝石:'+val.rewardGem});
+      this.$store.dispatch("addLog", {log_type: 5,log_title: '领取了"'+val.taskTitle+'"任务,奖励金币:'+val.rewardMoney+';宝石:'+val.rewardGem});
     }
   }
 }

@@ -96,7 +96,7 @@ export default {
         num: this.shoppingNum,      // 购买数量
       };
       this.$store.dispatch('reqClosingGood',obj);
-      this.$store.dispatch("addLog", {log_title: '购买了'+obj.name+'*'+obj.num});
+      this.$store.dispatch("addLog", {log_type: 4,log_title: '购买了'+obj.name+'*'+obj.num});
       this.shoppingNum = 1;
       this.handleClose();
     }

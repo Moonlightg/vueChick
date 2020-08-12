@@ -1,5 +1,5 @@
 <template>
-  <div class="container" :class="{ beingskin: skinBox}" style="opacity: 1">
+  <div class="container" :class="{ beingskin: skinBox}" style="opacity: .1">
     <!-- 个人信息简介 -->
     <div class="user-box" @click="opendialog">
       <div class="user-logo">
@@ -501,8 +501,8 @@ export default {
     // 退出登录
     loginOut() {
       // 清除用户数据
-      this.$store.dispatch("loginOut");
       this.$store.dispatch("addLog", {log_type: 2,log_title: '退出登录!'});
+      this.$store.dispatch("loginOut");
       // 退出登录跳转到登录界面
       this.$router.push({
         path: '/login'

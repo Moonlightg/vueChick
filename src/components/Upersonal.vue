@@ -27,6 +27,7 @@
     <div class="card-box">
       <h3>小鸡档案</h3>
       <p><span class="card-label">等级:</span>{{chick.level}}</p>
+      <p><span class="card-label">学历:</span>学前</p>
       <p><span class="card-label">当前经验:</span>{{chick.exp}}</p>
       <p><span class="card-label">升级经验:</span>{{chick.upgradeExp}}</p>
       <p><span class="card-label">进食状态:</span><span v-if="chick.eat">进食中...</span><span v-if="!chick.eat">挨饿中...</span></p>

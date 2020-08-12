@@ -3062,19 +3062,6 @@ p + .user-mi {
   margin: 1rem 0 .5rem;
   color: #F44336;
 }
-/* 颜色 */
-.c-red {
-  color: #F44336;
-} 
-.c-green {
-  color: #8bca43;
-}
-.c-orange {
-  color: #FF9800;
-}
-.c-blue {
-  color: #40aaff;
-}
 /* 头像 */
 .head-portrait {
   padding: 15px 0;
@@ -3555,17 +3542,33 @@ p + .user-mi {
 }
 /* log 日志 */
 .log-list {
-  padding: 15px 0;
+  padding: 15px 0 15px 50px;
   width: 90%;
   margin: 0 auto;
   text-align: left;
 }
 .log-list li {
+  position: relative;
   padding: 10px;
   display: flex;
   align-items: center;
   background: #e4d1d1;
   border-radius: 3px;
+}
+.log-list li:before {
+  position: absolute;
+  content: "";
+  top: -15px;
+  left: -1.8rem;
+  bottom: 0;
+  width: 1px;
+  background: #be8f7e;
+}
+.log-list li:first-child:before {
+  top: 0;
+}
+.log-list li:last-child:before {
+  bottom: .5rem;
 }
 .log-list li + li {
   margin-top: 15px;
@@ -3578,6 +3581,20 @@ p + .user-mi {
 .log-list li p.log-time{
   font-size: .875rem;
   color: #607D8B;
+}
+.log-type {
+  position: absolute;
+  top: 0;
+  left: -3rem;
+  width: 2.4rem;
+  height: 2.4rem;
+  background: #8BC34A;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 /*用户列表*/
 .user-list {
@@ -3745,6 +3762,31 @@ p + .user-mi {
 .box-content {
   flex: 1;
   overflow: auto;
+}
+/* 颜色 */
+.c-red {
+  color: #F44336;
+} 
+.c-green {
+  color: #8bca43;
+}
+.c-orange {
+  color: #FF9800;
+}
+.c-blue {
+  color: #40aaff;
+}
+.bg-red {
+  background: #F44336;
+} 
+.bg-green {
+  background: #8bca43;
+}
+.bg-orange {
+  background: #FF9800;
+}
+.bg-blue {
+  background: #40aaff;
 }
 /*element ui 样式重置*/
 .el-message-box {

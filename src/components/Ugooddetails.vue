@@ -82,7 +82,7 @@ export default {
         var obj = this.currFood;
         obj.eatEndTime = eatEndTime;
         this.$store.dispatch('reqFeeding',obj);
-        this.$store.dispatch("addLog", {log_title: '投喂了'+this.currFood.name+'*1'});
+        this.$store.dispatch("addLog", {log_type: 6,log_title: '投喂了'+this.currFood.name+'*1'});
         this.$emit('countdown',startDate, eatEndTime);
         this.$emit('closeDialog');
       } else {
