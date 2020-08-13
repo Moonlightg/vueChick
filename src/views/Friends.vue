@@ -11,7 +11,7 @@
             @click="friendsHome(item)">
           <div class="user-info flex">
             <div class="user-img">
-              <img :src="getImgUrl(item.img)">
+              <img v-lazy="getImgUrl(item.img)">
             </div>
             <div class="user-txt">
               <p class="user-tit">{{item.username}}</p>

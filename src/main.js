@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import VueLazyload from 'vue-lazyload'; // 图片懒加载
 //import axios from './plugins/axios'
 //注册filter
 import filters from '../utils/filters.js'
@@ -8,9 +9,17 @@ import './styles/main.css'
 import './styles/base-index.less'
 import router from './router'
 import store from './store'
+import loadingIcon from './assets/icon/loading-icon.svg';
+import loadingError from './assets/icon/loading-error.svg';
 import { Icon, Button, Dialog, Select, Input, Loading, MessageBox, Message, Tabs, TabPane} from 'element-ui';
 
 Vue.config.productionTip = false
+
+Vue.use(VueLazyload, {
+  loading: loadingIcon,
+  error: loadingError
+});
+
 //Vue.prototype.$axios = axios;
 Vue.prototype.$ELEMENT = { size: 'small', zIndex: 3000 };
 Vue.use(Icon);

@@ -4,7 +4,7 @@
     <div class="user-box" @click="opendialog">
       <div class="user-logo">
         <div class="user-img">
-          <img :src="getImgUrl(userinfo.img)">
+          <img v-lazy="getImgUrl(userinfo.img)">
         </div>
       </div>
       <div class="user-info">
@@ -107,7 +107,7 @@
                   @click="showSkin(item)">
                   <div class="skin-img" 
                     :class="[{mask:item.skinState === 0},{active:item.skinState === 2}]">
-                    <img :src="getImgUrl(item.img)">
+                    <img v-lazy="getImgUrl(item.img)">
                     <span class="diff">{{item.diff}}</span>
                     <span class="use-badge">使用中</span>
                   </div>
@@ -124,7 +124,7 @@
                   @click="showSkin(item)">
                   <div class="skin-img"
                     :class="[{mask:item.skinState === 0},{active:item.skinState === 2}]">
-                    <img :src="getImgUrl(item.img)">
+                    <img v-lazy="getImgUrl(item.img)">
                     <span class="diff">{{item.diff}}</span>
                     <span class="use-badge">使用中</span>
                   </div>
@@ -140,7 +140,7 @@
                   @click="showSkin(item)">
                   <div class="skin-img"
                     :class="[{mask:item.skinState === 0},{active:item.skinState === 2}]">
-                    <img :src="getImgUrl(item.img)">
+                    <img v-lazy="getImgUrl(item.img)">
                     <span class="diff">{{item.diff}}</span>
                     <span class="use-badge">使用中</span>
                   </div>
@@ -168,7 +168,7 @@
                     @click="showGood(good)">
                     <div class="food-item">
                       <div class="food-img">
-                        <img :src="getImgUrl(good.img)">
+                        <img v-lazy="getImgUrl(good.img)">
                       </div>
                       <p class="food-name">{{good.name}}</p>
                       <span class="food-num" v-if="good.num !== 0">{{good.num}}</span>
@@ -195,7 +195,7 @@
                     @click="showShop(good)">
                     <div class="food-item flex">
                       <div class="food-img">
-                        <img :src="getImgUrl(good.img)">
+                        <img v-lazy="getImgUrl(good.img)">
                       </div>
                       <div class="food-txt flex-column flex-info">
                         <p class="food-name">{{good.name}}</p>
@@ -225,7 +225,7 @@
                     @click="showGood(good)">
                     <div class="food-item">
                       <div class="food-img">
-                        <img :src="getImgUrl(good.img)">
+                        <img v-lazy="getImgUrl(good.img)">
                       </div>
                       <p class="food-name">{{good.name}}</p>
                       <span class="food-num">{{good.num}}</span>
@@ -243,7 +243,7 @@
                     @click="showGood(good)" v-show="good.num != 0">
                     <div class="food-item">
                       <div class="food-img">
-                        <img :src="getImgUrl(good.img)">
+                        <img v-lazy="getImgUrl(good.img)">
                       </div>
                       <div class="food-txt flex-column flex-info">
                         <p class="food-name">{{good.name}}</p>

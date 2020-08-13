@@ -8,7 +8,7 @@
     <div class="card-box">
       <div class="card-user flex">
         <div class="user-img" @click="shouProfile">
-          <img :src="getImgUrl(userinfo.img)">
+          <img v-lazy="getImgUrl(userinfo.img)">
           <span class="btn-ms">更换</span>
         </div>
         <div class="user-txt flex-info flex-column">
@@ -59,7 +59,7 @@
             :class="{on:item.img == userinfo.img}"
             @click="setProfile(item.img)">
             <div class="user-img">
-              <img :src="getImgUrl(item.img)">
+              <img v-lazy="getImgUrl(item.img)">
             </div>
             <i class="success-i el-icon-success"></i>
           </div>
