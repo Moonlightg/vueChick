@@ -14,6 +14,7 @@
           <span v-if="item.log_type == 4" class="log-type"><i class="el-icon-shopping-cart-full"></i></span>
           <span v-if="item.log_type == 5" class="log-type bg-orange"><i class="el-icon-coin"></i></span>
           <span v-if="item.log_type == 6" class="log-type bg-blue"><i class="el-icon-tableware"></i></span>
+          <span v-if="item.log_type == 7" class="log-type bg-blue"><i class="el-icon-watch-1"></i></span>
           <p class="log-tit">{{item.log_title}}</p>
           <p class="log-time">{{item.log_date}}</p>
         </li>

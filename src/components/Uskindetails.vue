@@ -91,7 +91,7 @@ export default {
             price: price
           }
           _this.$store.dispatch('reqBuySkin',obj);
-          _this.$store.dispatch("addLog", {log_title: '购买了'+days+'天'+skinName});
+          _this.$store.dispatch("addLog", {log_type: 7, log_title: '购买了'+days+'天'+skinName});
         }
       }).catch(() => {
         console.log("取消购买");         

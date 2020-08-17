@@ -1,5 +1,5 @@
 <template>
-  <div style="opacity: .1" class="main login-box"
+  <div style="opacity: 1" class="main login-box"
     v-loading="loading"
     element-loading-text="登录中..."
     element-loading-spinner="el-icon-loading"

@@ -1,5 +1,5 @@
 <template>
-  <div style="opacity: .1" class="main register-box">
+  <div style="opacity: 1" class="main register-box">
     <div class="login-head">
       <Cbee></Cbee>
       <p>Penguin Manor</p>
