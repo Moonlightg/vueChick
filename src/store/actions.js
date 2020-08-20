@@ -28,7 +28,8 @@ import {
   postProfile,
   deductionFood,
   setName,
-  postLuckDraw
+  postLuckDraw,
+  getTopicType
 } from '../plugins/http/api'
 
 import {

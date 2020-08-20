@@ -83,3 +83,8 @@ export const setName = (params) => ajax.postData('/api/setName',params);
 
 // 抽奖
 export const postLuckDraw = (params) => ajax.postData('/api/postLuckDraw',params);
+
+// 获取题目分类列表
+export const getTopicType = (params) => ajax.getData('/api/getTopicType');
+
+
