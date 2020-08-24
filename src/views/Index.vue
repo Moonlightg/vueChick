@@ -519,6 +519,7 @@ export default {
         this.getGoods();
       } else if (val == 'study') {
         this.isStudy = true;
+        this.getUserStudy();
       } else {
         this.isBag = true;
         // 获取用户背包物品
@@ -559,6 +560,10 @@ export default {
     getUserFood() {
       // 获取用户背包物品
       this.$store.dispatch('reqGetUserFood');
+    },
+    getUserStudy() {
+      // 获取用户学习进度
+      this.$store.dispatch('reqGetUserStudy');
     },
     getImgUrl(val){
       return require("@/assets/images/"+val);

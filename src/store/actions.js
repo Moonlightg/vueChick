@@ -8,6 +8,7 @@ import {
   getUserGoods,
   getUserFoods,
   getUserSkins,
+  getUserStudy,
   infoUserSkins,
   postBdySkin,
   postUseSkin,
@@ -168,6 +169,13 @@ export default {
   async reqGetUserFood(context) {
     const result = await getUserFoods();
     context.commit(GET_USER_FOODS,{userFoodsList: result.data});
+  },
+  async reqGetUserStudy(context) {
+    const result = await getUserStudy();
+    if (result.code === 0) {
+      console.log(result.data);
+      context.commit(GET_USER_FOODS,{userFoodsList: result.data});
+    }
   },
   async reqUnlock(context, value) {
     // 请求解锁商品接口

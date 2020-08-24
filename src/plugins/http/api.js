@@ -22,6 +22,9 @@ export const getUserFoods = () => ajax.getData('/api/getUserFoods');
 // 获取小鸡皮肤数据
 export const getUserSkins = () => ajax.getData('/api/getUserSkins');
 
+// 获取当前用户学习进度
+export const getUserStudy = () => ajax.getData('/api.getUserStudy');
+
 // 初始化当前用户小鸡皮肤数据
 export const infoUserSkins = () => ajax.postData('/api/infoUserSkins');
 
