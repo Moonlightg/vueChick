@@ -35,6 +35,7 @@ npm run lint
 | api/getUserGoods|get|获取当前用户商品列表|
 | api/getUserFoods|get|获取用户背包食品列表|
 | api/getUserSkins|get|获取小鸡皮肤数据|
+| api/getUserStudy|get|获取当前用户学习进度|
 | api/infoUserSkins|post|初始化当前用户小鸡皮肤数据|
 | api/postBdySkin|post|购买小鸡皮肤|
 | api/postUseSkin|post|使用小鸡皮肤|
