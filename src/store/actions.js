@@ -29,8 +29,7 @@ import {
   postProfile,
   deductionFood,
   setName,
-  postLuckDraw,
-  getTopicType
+  postLuckDraw
 } from '../plugins/http/api'
 
 import {
@@ -172,7 +171,9 @@ export default {
   },
   async reqGetUserStudy(context) {
     const result = await getUserStudy();
-    if (result.code === 0) {
+    console.log("测试下获取用户学习情况")
+    console.log(result.data)
+    if (result.code === 2) {
       console.log(result.data);
       context.commit(GET_USER_FOODS,{userFoodsList: result.data});
     }

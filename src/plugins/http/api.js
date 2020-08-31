@@ -23,7 +23,7 @@ export const getUserFoods = () => ajax.getData('/api/getUserFoods');
 export const getUserSkins = () => ajax.getData('/api/getUserSkins');
 
 // 获取当前用户学习进度
-export const getUserStudy = () => ajax.getData('/api.getUserStudy');
+export const getUserStudy = () => ajax.getData('/api/getUserStudy');
 
 // 初始化当前用户小鸡皮肤数据
 export const infoUserSkins = () => ajax.postData('/api/infoUserSkins');
@@ -88,6 +88,6 @@ export const setName = (params) => ajax.postData('/api/setName',params);
 export const postLuckDraw = (params) => ajax.postData('/api/postLuckDraw',params);
 
 // 获取题目分类列表
-export const getTopicType = (params) => ajax.getData('/api/getTopicType');
+// export const getTopicType = (params) => ajax.getData('/api/getTopicType');
 
 
