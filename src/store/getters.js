@@ -19,6 +19,7 @@ export default {
   feedingFood :(state) => state.feedingFood,
   chick :(state) => state.chick,
   chickSkin :(state) => state.chickSkin,
+  chiskStudy :(state) => state.chickStudy,
   tasks :(state) => state.tasks,
   friends :(state) => state.friends
 }

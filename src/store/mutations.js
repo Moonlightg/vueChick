@@ -23,6 +23,7 @@ import {
   SET_CURR_SKIN,
   GET_USER_GOODS,
   GET_USER_FOODS,
+  GET_USER_STUDY,
   UPDATE_USER_GOODS,
   UPDATE_USER_FOODS,
   UPDATE_USER_SKINS,
@@ -187,6 +188,10 @@ export default {
   [GET_USER_SKINS](state, skin){
     state.chickSkin = skin.skinList;
     storage.set('skin', state.chickSkin);
+  },
+  [GET_USER_STUDY](state, study){
+    state.chickStudy = study.itemList;
+    storage.set('study', state.chickStudy);
   },
   [UPDATE_USER_GOODS](state,good) {
     state.goodsList.forEach(item => {

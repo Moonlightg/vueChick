@@ -264,7 +264,9 @@
           <i class="el-icon-error" @click="hidePopup"></i>
         </div>
         <div class="popup-content">
-          <p style="padding-top: 30px;">功能开发中...</p>
+          <ul>
+            <li v-for="item in chickStudy" :key="item.id">{{item.name}}</li>
+          </ul>
         </div>
       </div>
     </div>
@@ -385,6 +387,7 @@ export default {
       "feedingFood",
       "chick",
       "chickSkin",
+      "chickStudy",
       "tasks"
     ])
   },

@@ -57,6 +57,7 @@ import {
   GET_USER_GOODS,
   GET_USER_FOODS,
   GET_USER_SKINS,
+  GET_USER_STUDY,
   UPDATE_USER_GOODS,
   UPDATE_USER_FOODS,
   UPDATE_USER_SKINS,
@@ -173,9 +174,9 @@ export default {
     const result = await getUserStudy();
     console.log("测试下获取用户学习情况")
     console.log(result.data)
-    if (result.code === 2) {
+    if (result.code === 1) {
       console.log(result.data);
-      context.commit(GET_USER_FOODS,{userFoodsList: result.data});
+      context.commit(GET_USER_STUDY,result.data);
     }
   },
   async reqUnlock(context, value) {

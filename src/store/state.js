@@ -19,6 +19,7 @@ export default {
   feedingFood: {},// 当前喂食食物
   chick: {},      // 小鸡信息
   chickSkin: {},  // 小鸡皮肤
+  chickStudy: [], // 小鸡学历
   tasks: {},  // 每日任务列表
   friends: [] // 好友列表
 }
