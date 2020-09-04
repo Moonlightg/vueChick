@@ -264,7 +264,7 @@
           <i class="el-icon-error" @click="hidePopup"></i>
         </div>
         <div class="popup-content">
-          <ul>
+          <ul class="study-nav">
             <li v-for="item in chickStudy" :key="item.id">{{item.name}}</li>
           </ul>
         </div>
