@@ -265,7 +265,7 @@
         </div>
         <div class="popup-content">
           <ul class="study-nav">
-            <li v-for="item in chickStudy" :key="item.id">{{item.name}}</li>
+            <li v-for="item in chickStudy" :key="item.id">{{item.name}}<span>{{item.plan}}%</span></li>
           </ul>
         </div>
       </div>
