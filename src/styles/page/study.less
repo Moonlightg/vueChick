@@ -5,15 +5,29 @@
   overflow: auto;
 }
 .study-nav li {
+  position: relative;
   height: 45px;
   border-radius: 5px;
-  background-color: #4CAF50;
+  background-color: #797979;
   color: #fff;
-  border: 1px solid #43a246;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
+  overflow: hidden;
 }
 .study-nav li + li {
   margin-top: 5px;
+}
+.sn-plan {
+  position: relative;
+  padding-right: 1rem;
+}
+.sn-name {
+  position: relative;
+  padding-left: 1rem;
+}
+.sn-bg {
+  position: absolute;
+  height: 100%;
+  background-color: #4CAF50;
 }

@@ -265,7 +265,11 @@
         </div>
         <div class="popup-content">
           <ul class="study-nav">
-            <li v-for="item in chickStudy" :key="item.id">{{item.name}}<span>{{item.plan}}%</span></li>
+            <li v-for="item in chickStudy" :key="item.id" @click="goStudyList(item.name)">
+              <span class="sn-bg" :style="'width:'+ item.plan +'%;'"></span>
+              <span class="sn-name">{{item.name}}</span>
+              <span class="sn-plan">{{item.plan}}%</span>
+            </li>
           </ul>
         </div>
       </div>
@@ -795,6 +799,9 @@ export default {
       this.$router.push({
         path: '/penguin'
       });
+    },
+    goStudyList(studyName) {
+      console.log(studyName);
     }
   }
 }
