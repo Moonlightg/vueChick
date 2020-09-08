@@ -802,6 +802,13 @@ export default {
     },
     goStudyList(studyName) {
       console.log(studyName);
+      this.$router.push({
+        // path: '/studyList'
+        name: 'StudyList',
+        params: {
+          studyName: studyName
+        }
+      });
     }
   }
 }

@@ -51,6 +51,15 @@ const routes = [
     }
   },
   {
+    path: '/studyList',
+    name: 'StudyList',
+    component: () => import('../views/StudyList.vue'),
+    meta: {
+      index: 3,
+      requireAuth: true
+    }
+  },
+  {
     path: '/friends',
     name: 'Friends',
     component: () => import('../views/Friends.vue'),
