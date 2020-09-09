@@ -5,9 +5,18 @@
       <h1>课本列表</h1>
     </div>
     <div class="box-content">
-      <ul class="log-list">
+      <ul class="study-list">
         <li v-for="item in studyList" :key="item.id">
-          <p>{{item.name}}</p>
+          <div class="sl-head">
+            <span class="study-name">{{item.name}}</span>
+            <span class="study-plan">{{item.plan}}%</span>
+          </div>
+          <div class="sl-plan"></div>
+          <div class="sl-reward">
+            <div>完成学习奖励:</div>
+            <div><i class="el-icon-s-help"></i>{{item.rewardMoney}}</div>
+            <div><i class="el-icon-trophy-1"></i>{{item.rewardGem}}</div>
+          </div>
         </li>
       </ul>
     </div>
