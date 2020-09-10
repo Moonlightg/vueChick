@@ -31,3 +31,65 @@
   height: 100%;
   background-color: #4CAF50;
 }
+.study-list{
+  padding: 1rem;
+  li {
+    position: relative;
+    padding: 1rem;
+    border-radius: 5px;
+    background: #636363;
+    color: #fff;
+    overflow: hidden;
+    &>i {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      font-size: 25px;
+      color: #fff;
+      display: none;
+      transform: translate(-50%, -50%);
+      z-index: 9;
+    }
+    &+ li {
+      margin-top: .5rem;
+    }
+    &.unlock {
+      background: #636363;
+      &:before {
+        position: absolute;
+        content: "";
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,.7);
+        z-index: 9;
+      }
+      &>i{
+        display: block;
+      }
+    }
+  }
+}
+.sl-head {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  z-index: 2;
+}
+.sl-reward {
+  position: relative;
+  display: flex;
+  margin-top: .5rem;
+  z-index: 2;
+  &>div + div {
+    margin-left: .5rem
+  }
+}
+.sl-plan {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: #4CAF50;
+}

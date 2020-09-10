@@ -6,12 +6,13 @@
     </div>
     <div class="box-content">
       <ul class="study-list">
-        <li v-for="item in studyList" :key="item.id">
+        <li v-for="item in studyList" :key="item.id" :class="{unlock:item.unlock == 0}">
+          <i class="el-icon-lock"></i>
           <div class="sl-head">
             <span class="study-name">{{item.name}}</span>
             <span class="study-plan">{{item.plan}}%</span>
           </div>
-          <div class="sl-plan"></div>
+          <div class="sl-plan" :style="'width:'+ item.plan +'%;'"></div>
           <div class="sl-reward">
             <div>完成学习奖励:</div>
             <div><i class="el-icon-s-help"></i>{{item.rewardMoney}}</div>
@@ -47,8 +48,15 @@ export default {
       _this.studyName = _this.$route.params.studyName;
       console.log("studyName");
       console.log(_this.studyName);
-      // 从缓存获取课本列表数据
-      _this.initStudyList(_this.studyName);
+      if (_this.studyName != undefined) {
+        // 保存缓存 
+         storage.set('studyName', _this.studyName);
+        // 从缓存获取课本列表数据
+        _this.initStudyList(_this.studyName);
+      } else {
+        let getStudyName = storage.get('studyName');
+        _this.initStudyList(getStudyName);
+      }
     })
   },
   methods: {
