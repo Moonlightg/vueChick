@@ -22,6 +22,7 @@
 </template>
 
 <script>
+import storage from '../plugins/storage'
 import Cbee from '../components/scene/bg/Cbee.vue'           // 蜜蜂鲜花
 export default {
   name: 'Login',
@@ -36,6 +37,13 @@ export default {
   },
   components: {
     Cbee
+  },
+  created: function () {
+    if(storage.get('token')){
+      this.$router.push({
+        path: '/index'
+      });
+    }
   },
   methods: {
     loginOut() {

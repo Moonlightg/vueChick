@@ -264,7 +264,8 @@
           <i class="el-icon-error" @click="hidePopup"></i>
         </div>
         <div class="popup-content">
-          <ul class="study-nav">
+          <p>功能开发中...</p>
+          <ul class="study-nav" style="display: none;">
             <li v-for="item in chickStudy" :key="item.id" @click="goStudyList(item.name)">
               <span class="sn-bg" :style="'width:'+ item.plan +'%;'"></span>
               <span class="sn-name">{{item.name}}</span>
