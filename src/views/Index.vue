@@ -415,6 +415,19 @@ export default {
     Hattribe,
     Hatpainter
   },
+  created: function () {
+    if(storage.get('token') === 'null'){
+      this.$router.push({
+        path: '/login'
+      });
+    } else {
+      let obj = {};
+      obj.user = storage.get('userinfo');
+      obj.chick = storage.get('chick');
+      obj.token = storage.get('token');
+      this.$store.dispatch("setUserInfo",obj);
+    }
+  },
   mounted: function() {
     var _this = this;
     _this.$nextTick(function () {
@@ -429,7 +442,12 @@ export default {
     init() {
       // 判断是上午,下午还是晚上
       this.getMycount();
-      if (!this.isLogin) {
+      let isLogin = storage.get('isLogin');
+      if(storage.get('token') === 'null'){
+        this.$router.push({
+          path: '/login'
+        });
+      } else if (!isLogin)  {
         // 提示欢迎回来
         this.$message({
           iconClass: 'el-icon-message-solid',
@@ -482,16 +500,20 @@ export default {
         let isEat = this.chick.eatEndTime - loadDate;
         if (isEat > 0) {
           this.chick.eat = true;
+          this.goodsList.forEach(item => {
+            if(item.name == this.chick.eatFood) {
+              this.$store.dispatch('setFeedingFood',item);
+            }
+          });
           this.countdown(loadDate, this.chick.eatEndTime);
         } else {
           // 找到最后喂食的食物
-          let _this = this;
-          _this.goodsList.forEach(item => {
-            if(item.name == _this.chick.eatFood) {
-              _this.$store.dispatch('setFeedingFood',item);
+          this.goodsList.forEach(item => {
+            if(item.name == this.chick.eatFood) {
+              this.$store.dispatch('setFeedingFood',item);
               // 计算经验
-              _this.settleExp();
-              _this.textContent = "吃完了, 好饿!";
+              this.settleExp();
+              this.textContent = "吃完了, 好饿!";
             }
           });
           return;
