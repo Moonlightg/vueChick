@@ -1,6 +1,7 @@
 import { Message } from 'element-ui';
 Message.closeAll();
 import {
+  getUserInfo,
   getChick,
   postChick,
   postUser,
@@ -99,6 +100,26 @@ export default {
   },
   getStore(context, value) {
     context.commit(GET_STORE, value);
+  },
+  async getUserData(context) {
+    // 获取用户信息
+    const result = await getUserInfo();
+    console.log("************************************");
+    console.log(result);
+    console.log("************************************");
+    if (result.code === 1) {
+      context.commit(SET_USER,result.data);
+      // 获取企鹅信息
+      const result2 = await getChick();
+      console.log("+++++++++++++++++++++++++++++++++++++");
+      console.log(result2);
+      console.log("+++++++++++++++++++++++++++++++++++++");
+      if (result2.code === 1) {
+        context.commit(SET_CHICK,result2.data[0]);
+        // 获取任务
+        context.dispatch('setTasks');
+      }
+    }
   },
   async getLog(context) {
     const result = await getLog();

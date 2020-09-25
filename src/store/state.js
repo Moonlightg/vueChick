@@ -2,6 +2,7 @@
 export default {
   // 存储token
   // token: storage.get('token') ? storage.get('token') : '',
+  isInit: false,   // 初始化同步远程数据
   log:[],         // 动态日志
   token:'',       // token
   userinfo: {},   // 用户信息

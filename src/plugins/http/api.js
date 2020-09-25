@@ -1,6 +1,9 @@
 import ajax from './http'
 // 请求方法
 
+// 刷新页面获取首页需要加载的数据
+export const getUserInfo = () => ajax.getData('/api/getUserInfo');
+
 // 获取小鸡chick状态
 export const getChick = () => ajax.getData('/api/getChick');
 

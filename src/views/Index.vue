@@ -421,11 +421,8 @@ export default {
         path: '/login'
       });
     } else {
-      let obj = {};
-      obj.user = storage.get('userinfo');
-      obj.chick = storage.get('chick');
-      obj.token = storage.get('token');
-      this.$store.dispatch("setUserInfo",obj);
+      // 每次刷新都先通过token获取用户信息
+      this.$store.dispatch('getUserData');
     }
   },
   mounted: function() {
@@ -434,7 +431,7 @@ export default {
       // 初始化
       _this.init();
       // 初始化任务列表
-      _this.initTask();
+      // _this.initTask();
     })
   },
   methods: {
