@@ -500,9 +500,9 @@ export default {
           this.goodsList.forEach(item => {
             if(item.name == this.chick.eatFood) {
               this.$store.dispatch('setFeedingFood',item);
+              this.countdown(loadDate, this.chick.eatEndTime);
             }
           });
-          this.countdown(loadDate, this.chick.eatEndTime);
         } else {
           // 找到最后喂食的食物
           this.goodsList.forEach(item => {
