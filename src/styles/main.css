@@ -2258,6 +2258,10 @@ top: 10px;
   right: 15px;
   z-index: 21;
 }
+.nav-list.friends-nav {
+  top: initial;
+  bottom: 1rem;
+}
 .nav-list.nav-l {
   right: initial;
   top: 60px;

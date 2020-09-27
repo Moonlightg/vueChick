@@ -8,6 +8,10 @@
           <img :src="getImgUrl(currUser.img)">
         </div>
       </div>
+      <!-- 功能菜单 -->
+      <ul class="nav-list friends-nav">
+        <li @click="showPopup"><span class="nav-icon"><i class="el-icon-brush"></i></span><span class="nav-name">留言</span></li>
+      </ul>
       <!-- 白天背景 -->
       <scene-day v-if="hoursType == 0 || hoursType == 1"></scene-day>
       <!-- 晚上背景 -->
@@ -53,7 +57,19 @@
           </div>
         </div>
       </div>
+      <!-- 弹窗遮罩层 -->
+      <div class="popup-mask" v-show="isLeave" @click="hidePopup"></div>
     </div>
+
+    <!-- 留言弹窗 -->
+    <div class="leave-box" v-show="isLeave">
+      <div class="popup-head border-bottom-1px">
+        <span class="popup-title fl">留言</span>
+        <i class="el-icon-error" @click="hidePopup"></i>
+      </div>
+      <p>留言</p>
+    </div>
+    
   </div>
 </template>
 <script>
@@ -75,6 +91,7 @@ export default {
       textContent: 'Hello 嘿嘿嘿', // 进度条上方显示文字,
       isNight: false,
       hoursType: '', // 0上午,1下午,2晚上
+      isLeave: false
     }
   },
   computed: {
@@ -126,6 +143,12 @@ export default {
         name: name
       }
       this.$store.dispatch('setCurrUser',obj);
+    },
+    showPopup() {
+      this.isLeave = true;
+    },
+    hidePopup() {
+      this.isLeave = false;
     }
   }
 }
