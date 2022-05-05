@@ -1,7 +1,5 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-
-import store from '../store'
 import storage from '../plugins/storage'
 
 
@@ -10,8 +8,12 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    redirect: '/login',
-    component: () => import('../views/Login.vue')
+    redirect: '/index',
+    component: () => import('../views/Index.vue'),
+    meta: {
+      index: 2,
+      requireAuth: true
+    }
   },
   {
     path: '/login',
@@ -95,7 +97,6 @@ const routes = [
       requireAuth: true
     }
   }
-  
 ]
 
 const router = new VueRouter({
@@ -103,15 +104,14 @@ const router = new VueRouter({
   mode:'history'   //去除#号
 })
 
-// 设置路由守卫，在进页面之前，判断有token，才进入页面，否则返回登录页面
-if (storage.get("token")) {
-  store.dispatch('setToken', storage.get("token"));
-}
 router.beforeEach((to, from, next) => {
+  var token = storage.get("token");
+  var isLogin = storage.get("isLogin");
+
   // 判断要去的路由有没有requiresAuth
   // to.matched.some(r => r.meta.requireAuth) or to.meta.requiresAuth
   if (to.matched.some(r => r.meta.requireAuth)) {
-    if (store.state.token) {
+    if (token) {
       console.log('有token');
       next(); //有token,进行request请求，后台还会验证token
     } else {
@@ -119,7 +119,7 @@ router.beforeEach((to, from, next) => {
       next({
         path: "/login",
         // 将刚刚要去的路由path（却无权限）作为参数，方便登录成功后直接跳转到该路由，这要进一步在登陆页面判断
-        query: { redirect: to.fullPath }  
+        query: { redirect: to.fullPath }
       });
     }
   } else {
@@ -127,21 +127,22 @@ router.beforeEach((to, from, next) => {
   }
   //如果本地 存在 token 则 不允许直接跳转到 登录页面
   if(to.fullPath === "/" || to.fullPath === "/login"){
-    if(store.state.token != '' && store.state.isLogin){
+    if(token != null && token != '' && isLogin){
       console.log("已经登录过了,不能再次进去登录界面");
       next({
         path:from.fullPath
       });
-    }else {
+      return;
+    } else {
       next();
     }
   }
   //如果本地 存在 token 则 不允许直接跳转到 注册页面
   if(to.fullPath === "/register"){
-    if(store.state.token){
+    if(token){
       console.log('请先退出登录');
       next({
-        path: '/index'
+        path:from.fullPath
       })
     }else {
       next();

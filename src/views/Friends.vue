@@ -6,12 +6,13 @@
     </div>
     <div class="box-content">
       <ul class="user-list">
-        <li v-for="item in friends" 
+        <li v-for="item in friends"
             :key="item._id"
             @click="friendsHome(item)">
           <div class="user-info flex">
             <div class="user-img">
-              <img v-lazy="getImgUrl(item.img)">
+              <!-- :key有效防止页面刷新卡着不刷新 -->
+              <img v-lazy="getImgUrl(item.img)" :key="item.img">
             </div>
             <div class="user-txt">
               <p class="user-tit">{{item.username}}</p>
@@ -58,10 +59,11 @@ export default {
     ])
   },
   components: {
-    
+
   },
   mounted: function() {
     var _this = this;
+    console.log(this.friends);
     _this.$nextTick(function () {
       // 加载系统用户列表
       _this.initFriends();

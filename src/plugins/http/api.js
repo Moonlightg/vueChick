@@ -40,7 +40,7 @@ export const postUseSkin = (params) => ajax.postData('/api/postUseSkin',params);
 // 解锁商品
 export const postUnlock = (params) => ajax.postData('/api/unlock',params);
 
-// 首次购买商品 
+// 首次购买商品
 export const postFirstClosingGood = (params) => ajax.postData('/api/firstClosingGood',params);
 // 购买商品
 export const postClosingGood = (params) => ajax.postData('/api/closingGood',params);
@@ -89,6 +89,9 @@ export const setName = (params) => ajax.postData('/api/setName',params);
 
 // 抽奖
 export const postLuckDraw = (params) => ajax.postData('/api/postLuckDraw',params);
+
+// 给其他用户添加留言
+export const addBarrage = (params) => ajax.postData('/api/addBarrage',params);
 
 // 获取题目分类列表
 // export const getTopicType = (params) => ajax.getData('/api/getTopicType');

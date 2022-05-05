@@ -1,5 +1,5 @@
 <template>
-  <div class="container" :class="{ beingskin: skinBox}" style="opacity: 1">
+  <div class="container" :class="{ beingskin: maskBox}" style="opacity: 1">
     <!-- 个人信息简介 -->
     <div class="user-box" @click="opendialog">
       <div class="user-logo">
@@ -80,15 +80,15 @@
           </div>
         </div>
         <!-- 鸡蛋 -->
-        <Cegg 
-          :eggnum="chick.eggNum" 
-          :eggprogress="chick.eggProgress"  
+        <Cegg
+          :eggnum="chick.eggNum"
+          :eggprogress="chick.eggProgress"
           ref="paper"></Cegg>
       </div>
       <!-- 弹窗遮罩层 -->
-      <div class="popup-mask" v-show="skinBox" @click="hidePopup"></div>
+      <div class="popup-mask" v-show="maskBox" @click="hidePopup"></div>
     </div>
-    
+
     <!-- 功能弹窗面板 -->
     <div class="page-popup">
       <!-- 换装 -->
@@ -101,11 +101,11 @@
           <el-tabs v-model="shopTabs1">
             <el-tab-pane label="套装" name="skin-suits">
               <ul class="opt-list">
-                <li 
+                <li
                   v-for="item in chickSkin[0].list"
                   :key="item.skinName"
                   @click="showSkin(item)">
-                  <div class="skin-img" 
+                  <div class="skin-img"
                     :class="[{mask:item.skinState === 0},{active:item.skinState === 2}]">
                     <img v-lazy="getImgUrl(item.img)">
                     <span class="diff">{{item.diff}}</span>
@@ -118,7 +118,7 @@
             </el-tab-pane>
             <el-tab-pane label="帽子" name="skin-hats">
               <ul class="opt-list">
-                <li 
+                <li
                   v-for="item in chickSkin[1].list"
                   :key="item.skinName"
                   @click="showSkin(item)">
@@ -134,7 +134,7 @@
             </el-tab-pane>
             <el-tab-pane label="上衣" name="skin-clothes">
               <ul class="opt-list">
-                <li 
+                <li
                   v-for="item in chickSkin[2].list"
                   :key="item.skinName"
                   @click="showSkin(item)">
@@ -163,7 +163,7 @@
               <div class="food-box">
                 <ul class="food-list">
                   <li v-for="good in goodsList"
-                    :key="good.id" 
+                    :key="good.id"
                     :class="{ isMask: good.num == 0 || good.unlock == 0}"
                     @click="showGood(good)">
                     <div class="food-item">
@@ -172,13 +172,13 @@
                       </div>
                       <p class="food-name">{{good.name}}</p>
                       <span class="food-num" v-if="good.num !== 0">{{good.num}}</span>
-                      <div class="mask-bg shortage-tips" 
-                        v-if="good.num == 0 && good.unlock == 1" 
+                      <div class="mask-bg shortage-tips"
+                        v-if="good.num == 0 && good.unlock == 1"
                         @click.stop="showShop(good)">
                         <el-button type="success" size="mini">购买</el-button>
                       </div>
-                      <div class="mask-bg shortage-tips" 
-                        v-if="good.unlock == 0" 
+                      <div class="mask-bg shortage-tips"
+                        v-if="good.unlock == 0"
                         @click.stop="unlockGoods(good)">
                         <el-button type="warning" size="mini">解锁</el-button>
                       </div>
@@ -264,8 +264,8 @@
           <i class="el-icon-error" @click="hidePopup"></i>
         </div>
         <div class="popup-content">
-          <p>功能开发中...</p>
-          <ul class="study-nav" style="display: none;">
+          <p style="display: none;">功能开发中...</p>
+          <ul class="study-nav">
             <li v-for="item in chickStudy" :key="item.id" @click="goStudyList(item.name)">
               <span class="sn-bg" :style="'width:'+ item.plan +'%;'"></span>
               <span class="sn-name">{{item.name}}</span>
@@ -277,23 +277,23 @@
     </div>
 
     <!-- 个人中心 -->
-    <Upersonal 
-      :dialogStatus="dialogStatus" 
-      @opendialog="opendialog" 
-      @closeDialog="closeHandle" 
+    <Upersonal
+      :dialogStatus="dialogStatus"
+      @opendialog="opendialog"
+      @closeDialog="closeHandle"
       @signOut="loginOut" v-show="dialogStatus"></Upersonal>
 
     <!-- 商品详情 -->
 
     <!-- 购买 -->
-    <Upurchase 
-      :purchaseDialog="purchaseDialog" 
+    <Upurchase
+      :purchaseDialog="purchaseDialog"
       :currGood="currGood"
       @closeDialog="closeUpurchase" v-if="purchaseDialog"></Upurchase>
 
     <!-- 出售 -->
-    <Usell 
-      :sellDialog="sellDialog" 
+    <Usell
+      :sellDialog="sellDialog"
       :currFood="currFood"
       @closeDialog="closeUsell" v-if="sellDialog"></Usell>
 
@@ -357,7 +357,7 @@ export default {
       goodDialog: false, // 物品详情弹窗
       taskDialog: false, // 任务列表弹窗
       modalAchievement: false,
-      skinBox: false,
+      maskBox: false,
       isNight: false,
       skin: 'skin',
       shop: 'shop',
@@ -422,7 +422,7 @@ export default {
       });
     } else {
       // 每次刷新都先通过token获取用户信息
-      this.$store.dispatch('getUserData');
+      // this.$store.dispatch('getUserData');
     }
   },
   mounted: function() {
@@ -445,18 +445,18 @@ export default {
           path: '/login'
         });
       } else if (!isLogin)  {
-        // 提示欢迎回来
+        // 登陆后提示一次欢迎回来
         this.$message({
           iconClass: 'el-icon-message-solid',
           dangerouslyUseHTMLString: true,
           customClass: 'welcome-message',
-          message: '<b>'+ this.userinfo.username +'</b>'+this.hoursTip+'!'
+          message: '<b>'+ this.userinfo.username +'</b>'+this.hoursTip+'!欢迎回来！'
         });
         this.$store.dispatch('setLogin');
       }
       // 鸡的缓存在登录时已经保存过了
       let getChick = storage.get('chick');
-      this.$store.dispatch('setChick',getChick); 
+      this.$store.dispatch('setChick',getChick);
       // 获取皮肤数据
       this.getSkins();
       // 判断小鸡是否在进食
@@ -492,7 +492,11 @@ export default {
     // 判断是否正在进食
     chickIsEat() {
         // 页面加载获取当前时间
+      1651126079055
+      1651118202857
         let loadDate = new Date().getTime();
+        console.log("当前时间戳");
+        console.log(loadDate);
         // 判断上一次是否进食结束
         let isEat = this.chick.eatEndTime - loadDate;
         if (isEat > 0) {
@@ -537,7 +541,8 @@ export default {
     },
     // 打开功能菜单弹窗
     showPopup(val) {
-      this.skinBox = true;
+      this.maskBox = true;
+
       if (val == 'skin') {
         this.isSkin = true;
       } else if (val == 'shop') {
@@ -555,9 +560,9 @@ export default {
     },
     // 关闭功能菜单弹窗
     hidePopup() {
-      this.skinBox = false;
+      this.maskBox = false;
       var that = this;
-      setTimeout(function(){ 
+      setTimeout(function(){
         that.isSkin = false;
         that.isShop = false;
         that.isBag = false;
@@ -569,7 +574,7 @@ export default {
     opendialog() { this.dialogStatus = true},
     closeHandle() { this.dialogStatus = false},
     closeUpurchase() { this.purchaseDialog = false},
-    closeUsell() { 
+    closeUsell() {
       this.sellDialog = false,
       this.goodDialog = false;
     },
@@ -622,7 +627,7 @@ export default {
           _this.$store.dispatch("addLog", {log_type: 3,log_title: '解锁了'+good.name});
         }
       }).catch(() => {
-        console.log("取消解锁");         
+        console.log("取消解锁");
       });
     },
     // 查看皮肤详情
@@ -650,7 +655,7 @@ export default {
     // 设置倒计时
     setCountdown(data) {
       // data[0]投喂时的时间
-      // data[0]投喂时计算后的结束时间
+      // data[1]投喂时计算后的结束时间
       // 开始计算倒计时
       this.countdown (data[0], data[1]);
     },
@@ -740,13 +745,16 @@ export default {
             let format = '';
             if (day > 0) {
               format = `${day}天${hour}小时${min}分${sec}秒`;
-            } 
+            }
             if (day <= 0 && hour > 0 ) {
-              format = `${hour}小时${min}分${sec}秒`; 
+              format = `${hour}小时${min}分${sec}秒`;
             }
             if (day <= 0 && hour <= 0) {
               format =`${min}分${sec}秒`;
             }
+            if (day <= 0 && hour <= 0 && min <= 0) {
+              format =`${sec}秒`;
+			}
             self.textContent = format; // 显示倒计时
             //self.$store.dispatch('savegame');
           } else {

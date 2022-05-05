@@ -12,6 +12,8 @@ import store from './store'
 import loadingIcon from './assets/icon/loading-icon.svg';
 import loadingError from './assets/icon/loading-error.svg';
 import { Icon, Button, Dialog, Select, Input, Loading, MessageBox, Message, Tabs, TabPane} from 'element-ui';
+import { vueBaberrage } from 'vue-baberrage'
+Vue.use(vueBaberrage);
 
 Vue.config.productionTip = false
 
@@ -38,9 +40,9 @@ Vue.prototype.$confirm = MessageBox.confirm;
 Vue.prototype.$prompt = MessageBox.prompt;
 Vue.prototype.$message = Message;
 
-Object.keys(filters).forEach(key => {  
-  Vue.filter(key, filters[key])  
-}) 
+Object.keys(filters).forEach(key => {
+  Vue.filter(key, filters[key])
+})
 new Vue({
   router,
   store,

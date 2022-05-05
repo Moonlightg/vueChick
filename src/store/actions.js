@@ -30,7 +30,8 @@ import {
   postProfile,
   deductionFood,
   setName,
-  postLuckDraw
+  postLuckDraw,
+  addBarrage
 } from '../plugins/http/api'
 
 import {
@@ -311,7 +312,7 @@ export default {
       });
       context.dispatch('reqAddTaskCount',{type: 1,count: 1});
     }
-    
+
   },
   // 进食结束(请求更新数据库)
   async endEat(context, value) {
@@ -340,7 +341,7 @@ export default {
       if ( result2.code == 0 ) {
         context.commit(SET_CHICK,result2.data);
       }
-    } 
+    }
   },
   // 购买皮肤
   async reqBuySkin(context, value) {
@@ -430,6 +431,22 @@ export default {
       if (result2.code == 0) {
         context.commit(UPDATE_USER_FOODS,result2.data);
       }
+    }
+  },
+  // 添加弹幕留言
+  async reqAddBarrage(context, value) {
+    const result = await addBarrage(value);
+    if (result.code == 0) {
+      console.log('测试添加留言弹幕到后台保存');
+      console.log(result);
+      // context.commit(DEDUCT_MONEY,obj);
+      // // 更新vuex用户商品信息
+      // context.commit(UPDATE_USER_GOODS,result.data);
+      // Message({
+      //   message: '购买成功',
+      //   type: 'success'
+      // });
+      // context.dispatch('reqAddTaskCount',{type: 2,count: 1});
     }
   }
 }

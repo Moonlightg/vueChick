@@ -67,9 +67,20 @@
         <span class="popup-title fl">留言</span>
         <i class="el-icon-error" @click="hidePopup"></i>
       </div>
-      <p>留言</p>
+      <div class="leave-form">
+        <div class="msg-form">
+          <el-input v-model.trim="msg" placeholder="请输入弹幕内容" @keyup.enter="setData()"></el-input>
+          <el-button type="primary" @click="addToList">确定留言</el-button>
+		</div>
+      </div>
     </div>
-    
+
+    <vue-baberrage
+      :isShow= "barrageIsShow"
+      :barrageList = "barrageList"
+      :loop = "barrageLoop">
+    </vue-baberrage>
+
   </div>
 </template>
 <script>
@@ -82,6 +93,8 @@ import Clothesforg from '../components/chickskin/Clothesforg.vue'
 import Hatdefault from '../components/chickskin/Hatdefault.vue'
 import Hatforg from '../components/chickskin/Hatforg.vue'
 
+import { MESSAGE_TYPE } from 'vue-baberrage'
+
 import {mapGetters} from "vuex";
 export default {
   name: 'FriendsHome',
@@ -91,11 +104,21 @@ export default {
       textContent: 'Hello 嘿嘿嘿', // 进度条上方显示文字,
       isNight: false,
       hoursType: '', // 0上午,1下午,2晚上
-      isLeave: false
+      isLeave: false,
+      msg: null, //弹幕文字
+      top: null, //距离顶部高度
+      dzState: true, //控制图片替换
+      screenHeight: 600, //显示区域
+      currentId: 0,
+      barrageIsShow: true,
+      barrageLoop: false,
+      barrageList: [],
+      barrageUserImg: '',
     }
   },
   computed: {
     ...mapGetters([
+      "userinfo",
       "currUser",
       "currUserChick"
     ])
@@ -108,20 +131,67 @@ export default {
     Hatforg,
     Hatdefault
   },
-  mounted: function() {
+  created: function() {
     var _this = this;
     _this.$nextTick(function () {
       console.log(_this.$route.query.name);
       _this.getMycount();
+      _this.setUserImg();
       _this.setCurrUser(_this.$route.query.name);
     })
   },
+  mounted: function() {
+    var _this = this;
+    _this.$nextTick(function () {
+      _this.initBarrage();
+    })
+  },
   methods: {
+    /**
+     * 初始化留言数据
+     */
+    initBarrage(){
+      var _this = this;
+      _this.currUser.barrage.forEach(item => {
+        var obj = {
+          id: item.id,
+          avatar: item.avatar,
+          msg: item.msg,
+          time: parseInt(Math.floor(Math.random() * (15 - 5)) + 5),
+          type: MESSAGE_TYPE.NORMAL
+		};
+        _this.barrageList.push(obj);
+      });
+      console.log(_this.barrageList);
+	},
+    /**
+     * @addToList 发送弹幕事件
+     * @obj 每一条弹幕
+     */
+    addToList () {
+      var obj = {
+        uid: this.currUser._id,
+        id: this.currentId++,
+        avatar: this.barrageUserImg,
+        msg: this.msg,
+      };
+      var barrageItem = obj;
+      barrageItem.time = 5;
+      barrageItem.type = MESSAGE_TYPE.NORMAL;
+      this.barrageList.push(barrageItem);
+      // 后台添加弹幕数据
+      // 这里要传递给谁留言，所以要传递接收留言的用户_id
+      this.$store.dispatch('reqAddBarrage',obj);
+    },
+
     returnIndex() {
       this.$router.push({
         path: '/friends'
       });
     },
+    setUserImg() {
+      this.barrageUserImg = this.getImgUrl(this.userinfo.img);
+	},
     getImgUrl(val){
       return require("@/assets/images/"+val);
     },

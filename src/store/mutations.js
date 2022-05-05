@@ -50,7 +50,7 @@ export default {
   [DEDUCT_MONEY](state,value) {
     if (value.type == 1) {
       state.userinfo.money = state.userinfo.money - value.price;
-      
+
     } else {
       state.userinfo.gem = state.userinfo.gem - value.price;
     }
@@ -132,8 +132,8 @@ export default {
   [LOGIN_OUT](state) {
     storage.removeAll(); // 清除缓存
     state.token = '',
-    state.userinfo = {};
-    state.tasks = {};
+    // state.userinfo = {};
+    // state.tasks = {};
     state.isLogin = false;
   },
   [SET_CHICK](state,chick) {
@@ -218,7 +218,7 @@ export default {
         if(docs.skinName === state.currSkin.skinName) {
           state.currSkin = docs;
         }
-      })  
+      })
     })
     storage.set('skin', state.chickSkin);
     console.log(skin);
