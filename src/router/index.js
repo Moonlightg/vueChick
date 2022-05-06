@@ -7,15 +7,6 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/',
-    redirect: '/index',
-    component: () => import('../views/Index.vue'),
-    meta: {
-      index: 2,
-      requireAuth: true
-    }
-  },
-  {
     path: '/login',
     name: 'Login',
     component: () => import('../views/Login.vue'),
@@ -38,6 +29,15 @@ const routes = [
     name: 'Index',
     component: () => import('../views/Index.vue'),
     // 某些页面规定必须登录后才能查看 ，可以在router中配置meta，将需要登录的requireAuth设为true，
+    meta: {
+      index: 2,
+      requireAuth: true
+    }
+  },
+  {
+    path: '/',
+    redirect: '/index',
+    component: () => import('../views/Index.vue'),
     meta: {
       index: 2,
       requireAuth: true
@@ -105,23 +105,39 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  var token = storage.get("token");
-  var isLogin = storage.get("isLogin");
+  let token = storage.get("token");
+  let isLogin = storage.get("isLogin");
+  let entryUrl = null;
 
   // 判断要去的路由有没有requiresAuth
   // to.matched.some(r => r.meta.requireAuth) or to.meta.requiresAuth
   if (to.matched.some(r => r.meta.requireAuth)) {
-    if (token) {
-      console.log('有token');
-      next(); //有token,进行request请求，后台还会验证token
+    if (token == "" || token == undefined) {
+      console.log('没有token,请先登录22');
+      if (to.name !== "Login") {
+        entryUrl = to.fullPath;
+      }
+      next({ name: "Login" });
+    } else if (entryUrl) {
+      console.log('有token22');
+      let url = entryUrl;
+      entryUrl = null;
+      next(url);
     } else {
-      console.log('没有token,请先登录');
-      next({
-        path: "/login",
-        // 将刚刚要去的路由path（却无权限）作为参数，方便登录成功后直接跳转到该路由，这要进一步在登陆页面判断
-        query: { redirect: to.fullPath }
-      });
+      next();
     }
+
+    // if (token) {
+    //   console.log('有token');
+    //   next(); //有token,进行request请求，后台还会验证token
+    // } else {
+    //   console.log('没有token,请先登录');
+    //   next({
+    //     path: "/login",
+    //     // 将刚刚要去的路由path（却无权限）作为参数，方便登录成功后直接跳转到该路由，这要进一步在登陆页面判断
+    //     query: { redirect: to.fullPath }
+    //   });
+    // }
   } else {
     next(); //如果无需token,那么随它去吧
   }
