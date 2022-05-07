@@ -1,3 +1,6 @@
+# 演示地址
+[Demo](https://www.hah888.cn).
+
 # vue小鸡 前端工程
 [前往后端工程](https://github.com/Moonlightg/vueChickServer).
 
