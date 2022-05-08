@@ -2792,6 +2792,245 @@ top: 10px;
   top: .8rem;
   transform: rotate(11deg);
 }
+/* 神里帽子 */
+.hat-shenli {
+    position: absolute;
+    width: 130%;
+    height: 115%;
+    top: 5%;
+    left: -22%;
+    background: #f4f4f4;
+    border-radius: 50% 50% 40% 40% / 90% 90% 30% 30%;
+    box-shadow: 0px -1px #f4f4f4;
+    border: 1px solid #a1a1a1;
+}
+.bow {
+    position: absolute;
+    top: -20%;
+    left: 20%;
+    width: 60%;
+    height: 30%;
+    z-index: -1;
+    display: flex;
+    justify-content: space-between;
+}
+.bow-m {
+    width: 50%;
+    height: 100%;
+    background: #7e7365;
+    border: 1px solid #333;
+}
+.bow-m.l {
+    border-radius: 30% 80% 20% 20% / 50% 70% 20% 100%;
+}
+.bow-m.r {
+    border-radius: 80% 30% 20% 20% / 70% 50% 20% 100%;
+}
+.hs {
+    width: 16%;
+    height: 34%;
+    background: #f4f4f4;
+    border-radius: 40% 40% 80% 80% / 30% 30% 90% 90%;
+    position: absolute;
+    bottom: -20%;
+    z-index: -1;
+    box-shadow: 0px 1px #a1a1a1;
+}
+.hs-l {
+    left: -5%;
+    transform: rotate(40deg);
+}
+.hs-r {
+    right: -5%;
+    transform: rotate(-40deg);
+}
+.hs-list {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+.hs-list-item {
+    width: 20%;
+    height: 90%;
+    background: #f4f4f4;
+    position: absolute;
+    bottom: -3%;
+}
+.hs-list .hs-list-item:first-child{
+    height: 70%;
+    border-radius: 50% 50% 10% 10%;
+    transform: skew(-3deg, -10deg);
+    left: 10%;
+    box-shadow: -1px 1px #9a9898;
+}
+.hs-list .hs-list-item:nth-child(2){
+    border-radius: 50% 50% 10% 10%;
+    transform: skew(-3deg, -10deg);
+    left: 30%;
+    box-shadow: -1px 1px #9a9898;
+}
+.hs-list .hs-list-item:nth-child(3){
+    border-radius: 50% 50% 10% 10%;
+    transform: skew(-3deg, -10deg);
+    left: 50%;
+    box-shadow: -1px 1px #9a9898;
+}
+.hs-list .hs-list-item:nth-child(4){
+    border-radius: 50% 50% 10% 10%;
+    transform: skew(3deg, 10deg);
+    right: 30%;
+    box-shadow: 1px 1px #9a9898;
+    z-index: 1;
+}
+.hs-list .hs-list-item:nth-child(5){
+    height: 70%;
+    border-radius: 50% 50% 10% 10%;
+    transform: skew(3deg, 10deg);
+    right: 10%;
+    box-shadow: 1px 1px #9a9898;
+}
+.hs-fj {
+    position: absolute;
+    bottom: 5%;
+    width: 12%;
+    height: 27%;
+    border-radius: 50%;
+    background: #9c2d2d;
+    border: 1px solid #5f283b;
+    z-index: 2;
+}
+.hs-fj:after,
+.hs-fj:before {
+    position: absolute;
+    content: '';
+    width: 60%;
+    height: 100%;
+    border-radius: 50%;
+    background: #a05a5a;
+    border: 1px solid #5f283b;
+    transform: skew(-8deg, -10deg);
+    z-index: -1;
+}
+.hs-fj:after {
+    left: -40%;
+}
+.hs-fj:before {
+    right: -30%;
+    transform: rotate3d(1, 1, 0, 45deg);
+}
+.hs-fj.l {
+    left: -7%;
+}
+.hs-fj.r {
+    right: -7%;
+}
+/* 神里上衣 */
+.clothes-shenli {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 80% 60% 40% 40% / 90% 90% 60% 60%;
+    z-index: 3;
+    overflow: hidden;
+}
+.c-s-box {
+    position: absolute;
+    left: 10%;
+    bottom: 7%;
+    width: 80%;
+    height: 86%;
+    background: #fff;
+    border-radius: 70% 60% 40% 40% / 90% 90% 50% 50%;
+    overflow: hidden;
+    z-index: 2;
+}
+.c-s-up {
+    position: absolute;
+    top: 39%;
+    left: 0;
+    width: 100%;
+    height: 30%;
+    background: #48515d;
+    -webkit-border-radius: 0 0 5% 5%;
+    -moz-border-radius: 0 0 5% 5%;
+    border-radius: 0 0 5% 5%;
+}
+.c-s-up:before {
+    position: absolute;
+    top: -10%;
+    left: 20%;
+    content: '';
+    width: 60%;
+    height: 20%;
+    background: #fff;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    z-index: 2;
+}
+.c-s-up:after {
+    position: absolute;
+    left: 0;
+    bottom: 17%;
+    content: '';
+    width: 100%;
+    height: 30%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    box-shadow: 0 1px #bf5e5e;
+}
+.c-s-down {
+    position: absolute;
+    top: 65%;
+    left: 0;
+    height: 30%;
+    width: 100%;
+    background: #1d2d80;
+    z-index: 2;
+}
+.boxF,
+.boxS,
+.boxT,
+.overlay {
+    width: 20px;
+    height: 25px;
+    overflow: hidden;
+}
+.boxF,
+.boxS {
+    visibility: hidden;
+}
+.boxF {
+    position: absolute;
+    left: 50%;
+    z-index: 2;
+    margin-left: -10px;
+    top: 18%;
+    transform: rotate(120deg);
+    -ms-transform: rotate(120deg);
+    -moz-transform: rotate(120deg);
+    -webkit-transform: rotate(120deg);
+}
+.boxS {
+    transform: rotate(-60deg);
+    -ms-transform: rotate(-60deg);
+    -moz-transform: rotate(-60deg);
+    -webkit-transform: rotate(-60deg);
+}
+.boxT {
+    transform: rotate(-60deg);
+    background: no-repeat 50% center;
+    background-size: 125% auto;
+    -ms-transform: rotate(-60deg);
+    -moz-transform: rotate(-60deg);
+    -webkit-transform: rotate(-60deg);
+    visibility: visible;
+    background: #9a8767;
+}
+
 /* 小画家帽子 */
 .hat-painter {
   position: absolute;
@@ -3738,6 +3977,7 @@ p + .user-mi {
   border: 2px solid #bd8d7c;
   color: #9e614b;
   font-weight: bold;
+  z-index: 22;
 }
 .return-link i {
   font-weight: bold;

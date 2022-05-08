@@ -337,9 +337,11 @@ import Nodata from '../components/Nodata.vue'               // 暂无数据
 import Clothesdefault from '../components/chickskin/Clothesdefault.vue'
 import Clothesforg from '../components/chickskin/Clothesforg.vue'
 import Clothestribe from '../components/chickskin/Clothestribe.vue'
+import Clothesshenli from '../components/chickskin/Clothesshenli.vue'
 import Hatdefault from '../components/chickskin/Hatdefault.vue'
 import Hatforg from '../components/chickskin/Hatforg.vue'
 import Hattribe from '../components/chickskin/Hattribe.vue'
+import Hatshenli from '../components/chickskin/Hatshenli.vue'
 import Hatpainter from '../components/chickskin/Hatpainter.vue'
 
 
@@ -410,9 +412,11 @@ export default {
     Clothesforg,
     Clothesdefault,
     Clothestribe,
+    Clothesshenli,
     Hatforg,
     Hatdefault,
     Hattribe,
+    Hatshenli,
     Hatpainter
   },
   created: function () {
@@ -431,7 +435,7 @@ export default {
       // 初始化
       _this.init();
       // 初始化任务列表
-      // _this.initTask();
+      _this.initTask();
     })
   },
   methods: {
@@ -492,8 +496,6 @@ export default {
     // 判断是否正在进食
     chickIsEat() {
         // 页面加载获取当前时间
-      1651126079055
-      1651118202857
         let loadDate = new Date().getTime();
         console.log("当前时间戳");
         console.log(loadDate);
