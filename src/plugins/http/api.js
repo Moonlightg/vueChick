@@ -93,6 +93,9 @@ export const postLuckDraw = (params) => ajax.postData('/api/postLuckDraw',params
 // 给其他用户添加留言
 export const addBarrage = (params) => ajax.postData('/api/addBarrage',params);
 
+// 获取原神卡池信息
+export const getGacha = (params) => ajax.getAllData('/hk4e/gacha_info/cn_gf01/gacha/list.json',params);
+
 // 获取题目分类列表
 // export const getTopicType = (params) => ajax.getData('/api/getTopicType');
 

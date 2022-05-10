@@ -33,7 +33,8 @@ import {
   UPDATE_TASKS,
   GET_FRIENDS,
   SET_STORE,
-  GET_STORE
+  GET_STORE,
+  SET_YS_GACHA
 } from './mutation-types'
 
 export default {
@@ -246,5 +247,8 @@ export default {
   // 读取缓存中的state
   [GET_STORE](state,value) {
     storage.get(value);
+  },
+  [SET_YS_GACHA](state,value) {
+    state.gachaList = value;
   }
 }

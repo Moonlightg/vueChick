@@ -7,7 +7,7 @@ export default {
   token:'',       // token
   userinfo: {},   // 用户信息
   isLogin: false, // 登录状态
-  goodsList: [],  // 商店食物列表  
+  goodsList: [],  // 商店食物列表
   goodsList2: [], // 商店道具列表
   userGoodsList: [], // 当前用户商品列表
   userFoodsList: [], // 当前用户背包食物列表
@@ -22,5 +22,6 @@ export default {
   chickSkin: {},  // 小鸡皮肤
   chickStudy: [], // 小鸡学历
   tasks: {},  // 每日任务列表
-  friends: [] // 好友列表
+  friends: [], // 好友列表
+  gachaList: [] // 原神实时卡池列表信息
 }

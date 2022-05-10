@@ -32,6 +32,7 @@
       <li @click="showPopup(bag)"><span class="nav-icon"><i class="el-icon-suitcase"></i></span><span class="nav-name">背包</span></li>
       <li @click="showTasks()" :class={on:tasks.isUpdate}><span class="nav-icon"><i class="el-icon-medal"></i></span><span class="nav-name">任务</span></li>
       <li @click="showPopup(study)" class="n-green"><span class="nav-icon"><i class="el-icon-collection"></i></span><span class="nav-name">学习</span></li>
+	  <li @click="goGacha()" class="n-green"><span class="nav-icon"><i class="el-icon-collection"></i></span><span class="nav-name">抽卡</span></li>
     </ul>
     <div class="content" :class="{'bg-night':isNight}" >
       <!-- 白天背景 -->
@@ -825,6 +826,11 @@ export default {
         path: '/friends'
       });
     },
+    goGacha() {
+      this.$router.push({
+        path: '/gacha'
+      });
+	},
     goPenguin() {
       this.$router.push({
         path: '/penguin'

@@ -12,6 +12,13 @@ module.exports = {
         pathRewrite: {
           "^/api": ""
         }
+      },
+      "/api2": {
+        target: "https://webstatic.mihoyo.com",
+        changeOrigin: true, // 是否允许跨越, 开发环境中使用
+        pathRewrite: {
+          "^/api2": ""
+        }
       }
     }
   },

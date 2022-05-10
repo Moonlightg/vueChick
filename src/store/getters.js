@@ -21,5 +21,6 @@ export default {
   chickSkin :(state) => state.chickSkin,
   chickStudy :(state) => state.chickStudy,
   tasks :(state) => state.tasks,
-  friends :(state) => state.friends
+  friends :(state) => state.friends,
+  gachaList :(state) => state.gachaList
 }

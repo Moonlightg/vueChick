@@ -1,6 +1,6 @@
 import axios from 'axios';
 const baseURL = "http://127.0.0.1:3000";  // 定义根域名
-
+const baseURL2 = "https://webstatic.mihoyo.com";  // 原神api
 
 // 封装 post 请求
 export function post(action, params){
@@ -30,11 +30,27 @@ export function get(action, params){
   });
 }
 
+// 封装 get 请求(公开)
+export function Allget(action, params){
+  return new Promise((resolve, reject) => {
+    axios.get(baseURL2 + action, params)
+      .then(response => {
+        resolve(response.data)
+      })
+      .catch(error => {
+        reject(error)
+      })
+  });
+}
+
 export default {
   postData(action, params){
     return post(action, params)
   },
   getData(action, params){
     return get(action, params)
+  },
+  getAllData(action, params){
+    return Allget(action, params)
   }
 }

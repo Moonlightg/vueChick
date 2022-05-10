@@ -71,6 +71,15 @@ const routes = [
     }
   },
   {
+    path: '/gacha',
+    name: 'Gacha',
+    component: () => import('../views/Gacha.vue'),
+    meta: {
+      index: 3,
+      requireAuth: true
+    }
+  },
+  {
     path: '/penguin',
     name: 'Penguin',
     component: () => import('../views/Penguin.vue'),

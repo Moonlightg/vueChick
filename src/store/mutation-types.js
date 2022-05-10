@@ -33,3 +33,4 @@ export const UPDATE_TASKS = 'update_tasks';               // 更新任务
 export const GET_FRIENDS = 'get_friends';                 // 获取好友列表
 export const SET_STORE = 'set_store';                     // 缓存store
 export const GET_STORE = 'get_store';                     // 读取store
+export const SET_YS_GACHA = 'set_ys_gacha';               // 获取原神实时卡池信息并设置数据

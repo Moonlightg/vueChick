@@ -31,7 +31,8 @@ import {
   deductionFood,
   setName,
   postLuckDraw,
-  addBarrage
+  addBarrage,
+  getGacha
 } from '../plugins/http/api'
 
 import {
@@ -68,7 +69,8 @@ import {
   UPDATE_TASKS,
   GET_FRIENDS,
   SET_STORE,
-  GET_STORE
+  GET_STORE,
+  SET_YS_GACHA
 } from './mutation-types'
 
 export default {
@@ -448,5 +450,14 @@ export default {
       // });
       // context.dispatch('reqAddTaskCount',{type: 2,count: 1});
     }
-  }
+  },
+  // 获取原神卡池信息
+  async getYsGacha(context, value) {
+    const result = await getGacha(value);
+    console.log('获取原神卡池信息：');
+    console.log(result);
+    if (result.retcode == 0) {
+      context.commit(SET_YS_GACHA,result.data.list);
+    }
+  },
 }
