@@ -34,6 +34,7 @@ import {
   addBarrage,
   getGacha
 } from '../plugins/http/api'
+import ajax from '../plugins/http/http'
 
 import {
   SET_LOGIN,
@@ -70,7 +71,9 @@ import {
   GET_FRIENDS,
   SET_STORE,
   GET_STORE,
-  SET_YS_GACHA
+  SET_YS_GACHA,
+  SET_YS_GACHA_LIST,
+  CLEAR_YS_GACHA_LIST
 } from './mutation-types'
 
 export default {
@@ -457,7 +460,20 @@ export default {
     console.log('获取原神卡池信息：');
     console.log(result);
     if (result.retcode == 0) {
-      context.commit(SET_YS_GACHA,result.data.list);
+      const data = result.data.list;
+      context.commit(SET_YS_GACHA,data);
+      context.commit(CLEAR_YS_GACHA_LIST);
+      data.forEach(item => {
+        context.dispatch('getYsGachaDetail',{gacha_id: item.gacha_id,name: 'ysGacha'});
+      })
     }
+  },
+  // 获取原神卡池详情信息
+  async getYsGachaDetail(context, value) {
+    console.log(value);
+    const result = await ajax.getAllData('/hk4e/gacha_info/cn_gf01/' + value.gacha_id + '/zh-cn.json',value);
+    console.log('获取原神卡池详情信息：');
+    console.log(result);
+    context.commit(SET_YS_GACHA_LIST,result);
   },
 }

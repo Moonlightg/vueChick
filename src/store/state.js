@@ -23,5 +23,6 @@ export default {
   chickStudy: [], // 小鸡学历
   tasks: {},  // 每日任务列表
   friends: [], // 好友列表
-  gachaList: [] // 原神实时卡池列表信息
+  gachaList: [], // 原神实时卡池列表信息
+  gachaDetailList: [] // 原神实时卡池详情列表
 }

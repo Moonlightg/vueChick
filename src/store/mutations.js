@@ -34,7 +34,9 @@ import {
   GET_FRIENDS,
   SET_STORE,
   GET_STORE,
-  SET_YS_GACHA
+  SET_YS_GACHA,
+  SET_YS_GACHA_LIST,
+  CLEAR_YS_GACHA_LIST
 } from './mutation-types'
 
 export default {
@@ -250,5 +252,11 @@ export default {
   },
   [SET_YS_GACHA](state,value) {
     state.gachaList = value;
+  },
+  [SET_YS_GACHA_LIST](state,value) {
+    state.gachaDetailList.push(value)
+  },
+  [CLEAR_YS_GACHA_LIST](state) {
+    state.gachaDetailList = []
   }
 }
