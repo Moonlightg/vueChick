@@ -36,6 +36,7 @@ import {
   GET_STORE,
   SET_YS_GACHA,
   SET_YS_GACHA_LIST,
+  PUST_YS_GACHA_LIST,
   CLEAR_YS_GACHA_LIST
 } from './mutation-types'
 
@@ -252,9 +253,20 @@ export default {
   },
   [SET_YS_GACHA](state,value) {
     state.gachaList = value;
+    storage.set('gachaListData', state.gachaList);
   },
   [SET_YS_GACHA_LIST](state,value) {
-    state.gachaDetailList.push(value)
+    state.gachaDetailList = value;
+    storage.set('gachaDetailListData', state.gachaDetailList);
+  },
+  [PUST_YS_GACHA_LIST](state,value) {
+    const poolData = state.gachaList.filter((i) => i.gacha_type === value.gacha_type);
+    value.begin_time = poolData[0].begin_time;
+    value.end_time = poolData[0].end_time;
+    state.gachaDetailList.push(value);
+    storage.set('gachaDetailListData', state.gachaDetailList);
+    console.log('获取原神卡池详情信息：');
+    console.log(state.gachaDetailList);
   },
   [CLEAR_YS_GACHA_LIST](state) {
     state.gachaDetailList = []

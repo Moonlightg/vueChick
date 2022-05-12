@@ -11,18 +11,18 @@
 		<div class="box-content">
 			<div class="gacha-tab">
 				<div class="gacha-tab-item"
-					 v-for="(item,index) in gachaList"
-					 :class="{on:currentGacha == index}"
-					 :key="item.gacha_id"
-					@click="setTabIndex(index)">
+					 v-for="item in OfficialGachaType"
+					 :class="{on:currentGacha == item.gacha_type}"
+					 :key="item.gacha_type"
+					@click="setTabIndex(item.gacha_type)">
 					<p>{{item.gacha_name}}</p>
 				</div>
 			</div>
 			<div class="gacha-tab-content">
 				<div class="gacha-tab-content-item"
-					 v-for="(item,index2) in gachaDetailList"
-					 :class="{on:currentGacha == index2}"
-					 :key="index2">
+					 v-for="item in gachaDetailList"
+					 :class="{on:currentGacha == item.gacha_type}"
+					 :key="item.gacha_type">
 					<div v-html="setHtml(item.title)"></div>
 					<div class="ga-label" v-html="item.date_range"></div>
 					<div class="up-box" v-if="item.r5_up_items !== null">
@@ -31,7 +31,7 @@
 							<div class="up-name">{{item3.item_name}}</div>
 						</div>
 					</div>
-					<div class="end-time" v-if="gachaList[index2].gacha_name !== '常驻'">结束时间：{{gachaList[index2].end_time}}</div>
+					<div class="end-time" v-if="item.gacha_type !== 200">结束时间：{{item.end_time}}</div>
 				</div>
 			</div>
 		</div>
@@ -120,13 +120,27 @@
 </style>
 <script>
   import {mapGetters} from "vuex";
-
+  import {getGacha} from '../plugins/http/api';
+  import ajax from '../plugins/http/http';
+  import storage from '../plugins/storage'
   export default {
     name: 'Gacha',
     data() {
       return {
-        currentGacha: 0,
+        currentGacha: 200,
 		currentGachaPool: {}, // 当前选择卡池信息
+        OfficialGachaType: [  // 卡池类型信息
+		  {
+            gacha_type: 200,
+            gacha_name: '常驻'
+		  },{
+            gacha_type: 301,
+            gacha_name: '角色'
+          }, {
+            gacha_type: 302,
+            gacha_name: '武器'
+          }
+        ],
         AppCounter: {         // *** 抽卡计数
           total: null,		  // 总数
           ensureSSR: null,    // 是否大保底 0 | 1
@@ -156,9 +170,21 @@
           sr: [],
           r: []
         },
+        SpecialRoll: {
+          lastCount: null,
+          baseChance: null,
+          upChance: null,
+          softEnsure: null,
+          turningPoint: null,
+          hardEnsure: false
+        },
         _counter: {},
 		_gachaPool: {},  //
-		// _result: this.AppWishResult,
+		_result: {
+          ssr: [],
+          sr: [],
+          r: []
+		}
       }
     },
     computed: {
@@ -169,15 +195,37 @@
       ])
     },
     components: {},
+    created: function () {
+      // 获取卡池缓存，不用每次都请求（测试用）
+	  this.getStoreData();
+      // 获取原神官网卡池信息
+      // this.getOfficialGacha();
+	},
     mounted: function () {
       var _this = this;
       _this.$nextTick(function () {
-        // 获取原神官网卡池信息
-        _this.getOfficialGacha();
-        _this.setOfficialGachaPool('200'); // 初始化当前卡池信息
+        // _this.setOfficialGachaPool(200); // 初始化当前卡池信息
       })
     },
     methods: {
+      getStoreData() {
+		var gachaList = storage.get('gachaListData');
+		var gachaDetailList = storage.get('gachaDetailListData');
+        console.log('缓存里面的卡池列表与卡池列表详情信息：');
+        console.log(gachaList);
+        console.log(gachaDetailList);
+		if (gachaList === null && gachaDetailList === null) {
+          console.log('没有卡池信息缓存');
+          this.getOfficialGacha();
+		} else {
+          // this.$store.dispatch('setYsGacha', gachaList);
+          // this.$store.dispatch('setYsGachaList', gachaDetailList);
+          console.log('有卡池缓存');
+          console.log(this.gachaList);
+          console.log(this.gachaDetailList);
+          this.setOfficialGachaPool(200);
+		}
+	  },
       setHtml(o) {
         var html = '';
         for (var i = 0; i < o.length; i++) {
@@ -188,8 +236,9 @@
         }
         return html;
       },
-      setTabIndex(index) {
-        this.currentGacha = index;
+      setTabIndex(type) {
+        this.setOfficialGachaPool(type);
+        this.currentGacha = type;
 	  },
       /**
        * @method setGachaPool 配置卡池信息
@@ -197,17 +246,19 @@
        */
       setGachaPool(gachaPool) {
         this._gachaPool = gachaPool;
-        console.log("配置卡池信息");
+        console.log("配置指定卡池信息");
         console.log(this._gachaPool);
 	  },
       setOfficialGachaPool(type) {
+        console.log(type);
+		console.log('this.gachaList');
+		console.log(this.gachaList);
         const poolData = this.gachaList.filter((i) => i.gacha_type === type);
-        console.log(poolData);
 		const pool = this.gachaDetailList.filter((i) => i.gacha_type === type);
-        pool.begin_time = poolData[0].begin_time;
-        pool.end_time = poolData[0].end_time;
-        if (pool) {
-          this.setGachaPool(this.poolStructureConverter(pool))
+        // pool.begin_time = poolData[0].begin_time;
+        // pool.end_time = poolData[0].end_time;
+        if (pool[0]) {
+          this.setGachaPool(this.poolStructureConverter(pool[0]))
         } else {
           console.log('No such pool');
         }
@@ -227,6 +278,8 @@
         });
 	  },
       poolStructureConverter (data) {
+        console.log("查看数据");
+        console.log(data);
         var gachaType = {
           '200': 'permanent',
           '100': 'novice',
@@ -248,26 +301,27 @@
           sr: [],
           r: []
         };
-        pool.name = data.title.replace(/<\/?.+?>/g, '');
+        // pool.name = data.title.replace(/<\/?.+?>/g, '');
+        pool.name = data.title;
         pool.type = gachaType[data.gacha_type];
         pool.begin = data.begin_time;
         pool.end = data.end_time;
         // 5*
-        data.r5_prob_list.forEach(function (item) {
+        data.r5_prob_list.forEach(item => {
           var name = item.item_name;
           var type = item.item_type;
           var gachaItem = { name: name, type: itemType[type], rarity: 5 };
           item.is_up === 1 ? pool.upSSR.push(gachaItem) : pool.ssr.push(gachaItem);
-        });
+		});
         // 4*
-        data.r4_prob_list.forEach(function (item) {
+        data.r4_prob_list.forEach(item => {
           var name = item.item_name;
           var type = item.item_type;
           var gachaItem = { name: name, type: itemType[type], rarity: 4 };
           item.is_up === 1 ? pool.upSR.push(gachaItem) : pool.sr.push(gachaItem);
         });
         // 3*
-        data.r3_prob_list.forEach(function (item) {
+        data.r3_prob_list.forEach(item => {
           var name = item.item_name;
           var type = item.item_type;
           var gachaItem = { name: name, type: itemType[type], rarity: 3 };
@@ -306,6 +360,28 @@
         }
         return this;
       },
+      /**
+       *
+       * @param type
+       * @returns
+       */
+      getResult(type) {
+        var _a;
+        return type ? ((_a = this._result) === null || _a === void 0 ? void 0 : _a[type]) || [] : this._result;
+      },
+      setResult(type, value) {
+        console.log('type:??????????????');
+        console.log(type);
+        console.log(value);
+        if (typeof type === 'string' && typeof value !== 'undefined') {
+          console.log(type);
+          this._result[type] = value;
+          console.log(this._result[type]);
+        } else {
+          this._result = type;
+        }
+        return this;
+      },
       increaseCounter(name, increase) {
 		if (increase === void 0) { increase = 1; }
 		var value = this.getCounter(name);
@@ -314,15 +390,155 @@
 		} else if (value.constructor.name.toLowerCase() === 'array') {
           this.setCounter(name, [...(value), increase])
 		}
+        console.log('increaseCounter:==========='+name+'==========');
 		console.log(this);
 		return this;
+	  },
+      increaseResult(type, item) {
+        var oldResult = this.getResult(type);
+        var sameItem = oldResult.filter(function (i) { return i.name === item.name; });
+        if (sameItem.length < 1) {
+          item.count = 1;
+          this.setResult(type, [...oldResult, item]);
+        }
+        else {
+          sameItem[0].count && sameItem[0].count++;
+        }
+        console.log('===========:increaseResult:===========');
+        console.log(this);
+        return this;
+      },
+      randomNum() {
+		return Math.random();
+	  },
+      randomPick(list) {
+		return list[Math.floor(Math.random() * list.length)];
+	  },
+      /**
+       * @function specialRoll
+       * @param {number} count
+       * @return {0|1|2} 分别代表失败、抽中、抽中 UP
+       */
+      _generateRoll(_a) {
+        var lastCount = _a.lastCount,
+			baseChance = _a.baseChance,
+			upChance = _a.upChance,
+			softEnsure = _a.softEnsure,
+			turningPoint = _a.turningPoint,
+			hardEnsure = _a.hardEnsure;
+        var chance = 0;
+        var more = (1 - baseChance) / (softEnsure - turningPoint);
+        if (lastCount <= turningPoint) {
+          chance = baseChance;
+        }
+        else {
+          chance = baseChance + more * (lastCount - turningPoint);
+        }
+        if (chance >= this.randomNum()) {
+          if (this.randomNum() >= upChance || hardEnsure) {
+            return 2;
+          }
+          return 1;
+        }
+        return 0;
+      },
+	  rollSSR(ensure) {
+		this.increaseCounter('lastSSR');
+		this.increaseCounter('lastUpSSR');
+		var count = this.getCounter('lastSSR');
+		var upCount = this.getCounter('lastUpSSR');
+		var result = this._generateRoll({
+		  lastCount: count,
+		  baseChance: 0.006,
+		  upChance: 0.5,
+		  softEnsure: 90,
+		  turningPoint: 72,
+		  hardEnsure: ensure
+		});
+		if (result === 1) {
+		  this.setCounter('ensureSSR', 1);
+		}
+		if (result === 2) {
+		  this.setCounter('ensureSSR', 0);
+		  this.increaseCounter('upSSR', upCount);
+		  this.setCounter('lastUpSSR', 0);
+		}
+		if (result > 0) {
+		  this.increaseCounter('ssr', count);
+		  this.setCounter('lastSSR', 0);
+		}
+		return result;
+	  },
+	  rollSR() {
+		this.increaseCounter('lastSR');
+		this.increaseCounter('lastUpSR');
+		var result = this._generateRoll({
+		  lastCount: this.getCounter('lastSR'),
+		  baseChance: 0.051,
+		  upChance: 0.5,
+		  softEnsure: 10,
+		  hardEnsure: false,
+		  turningPoint: 7
+		});
+		if (result === 2) {
+		  this.increaseCounter('upSR', this.getCounter('lastUpSR'));
+		  this.setCounter('lastUpSR', 0);
+		}
+		if (result > 0) {
+		  this.increaseCounter('sr', this.getCounter('lastSR'));
+		  this.setCounter('lastSR', 0);
+		}
+		return result;
 	  },
       /**
        * @method singleWish 进行单次抽取并获取结果
        * @return {AppGachaItem} 抽取结果
        */
       singleWish() {
-        this.increaseCounter('total');
+        var _this = this;
+        _this.increaseCounter('total');
+        var getSSR = function (isUP) {
+          if (_this._gachaPool.upSSR.length < 1) {
+            _this._gachaPool.upSSR = _this._gachaPool.ssr;
+          }
+          var character = _this.randomPick(isUP ? _this._gachaPool.upSSR : _this._gachaPool.ssr);
+          character.rarity = 5;
+          _this.increaseResult('ssr', character);
+          console.log('getSSR:=======================抽卡结果返回=====================================');
+          console.log(character);
+          return character;
+        };
+        var getSR = function (isUP) {
+          if (_this._gachaPool.upSR.length < 1) {
+            _this._gachaPool.upSR = _this._gachaPool.sr;
+          }
+          var character = _this.randomPick(isUP ? _this._gachaPool.upSR : _this._gachaPool.sr);
+          character.rarity = 4;
+          _this.increaseResult('sr', character);
+          console.log('getSR:========================抽卡结果返回====================================');
+          console.log(character);
+          return character;
+        };
+        var getR = function () {
+          var character = _this.randomPick(_this._gachaPool.r);
+          character.rarity = 3;
+          _this.increaseResult('r', character);
+          console.log('getR:==========================抽卡结果返回==================================');
+          console.log(character);
+          return character;
+        };
+        var isSSR = _this.rollSSR(Boolean(_this.getCounter('ensureSSR')));
+        if (isSSR > 0) {
+          return getSSR(isSSR === 2);
+        } else {
+          var isSR = _this.rollSR();
+          if (isSR > 0) {
+            return getSR(isSR === 2);
+          }
+          else {
+            return getR();
+          }
+        }
 	  }
     }
   }

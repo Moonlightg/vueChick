@@ -73,6 +73,7 @@ import {
   GET_STORE,
   SET_YS_GACHA,
   SET_YS_GACHA_LIST,
+  PUST_YS_GACHA_LIST,
   CLEAR_YS_GACHA_LIST
 } from './mutation-types'
 
@@ -231,6 +232,14 @@ export default {
   // 设置当前选中食物
   setCurrFood(context, value) {
     context.commit(SET_CURR_FOOD, value);
+  },
+  // 设置卡池类型列表
+  setYsGacha(context, value) {
+    context.commit(SET_YS_GACHA, value);
+  },
+  // 设置卡池详情列表
+  setYsGachaList(context, value) {
+    context.commit(SET_YS_GACHA_LIST, value);
   },
   // 购买商品
   async reqClosingGood(context, value) {
@@ -470,10 +479,7 @@ export default {
   },
   // 获取原神卡池详情信息
   async getYsGachaDetail(context, value) {
-    console.log(value);
     const result = await ajax.getAllData('/hk4e/gacha_info/cn_gf01/' + value.gacha_id + '/zh-cn.json',value);
-    console.log('获取原神卡池详情信息：');
-    console.log(result);
-    context.commit(SET_YS_GACHA_LIST,result);
-  },
+    context.commit(PUST_YS_GACHA_LIST,result);
+  }
 }
