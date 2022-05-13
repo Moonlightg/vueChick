@@ -36,8 +36,8 @@
 			</div>
 		</div>
 		<div class="box-footer">
-			<el-button type="warning" size="mini" @click="singleWish()">抽一次</el-button>
-			<el-button type="warning" size="mini">抽十次</el-button>
+			<el-button type="warning" size="mini" @click="multiWish(1)">抽一次</el-button>
+			<el-button type="warning" size="mini" @click="multiWish(10)">抽十次</el-button>
 		</div>
 	</div>
 </template>
@@ -47,7 +47,7 @@
 		right: 20px;
 	}
 	.box-footer {
-
+		padding: 20px 0;
 	}
 	.gacha-tab {
 		display: flex;
@@ -179,12 +179,12 @@
           hardEnsure: false
         },
         _counter: {},
-		_gachaPool: {},  //
-		_result: {
+		_gachaPool: {},
+        result: {
           ssr: [],
           sr: [],
           r: []
-		}
+        }
       }
     },
     computed: {
@@ -204,6 +204,8 @@
     mounted: function () {
       var _this = this;
       _this.$nextTick(function () {
+        console.log(_this._counter);
+        console.log(_this._gachaPool);
         // _this.setOfficialGachaPool(200); // 初始化当前卡池信息
       })
     },
@@ -223,6 +225,7 @@
           console.log('有卡池缓存');
           console.log(this.gachaList);
           console.log(this.gachaDetailList);
+          // 设置初始卡池
           this.setOfficialGachaPool(200);
 		}
 	  },
@@ -250,9 +253,7 @@
         console.log(this._gachaPool);
 	  },
       setOfficialGachaPool(type) {
-        console.log(type);
-		console.log('this.gachaList');
-		console.log(this.gachaList);
+        console.log('当前要设定的卡池类型：'+type);
         const poolData = this.gachaList.filter((i) => i.gacha_type === type);
 		const pool = this.gachaDetailList.filter((i) => i.gacha_type === type);
         // pool.begin_time = poolData[0].begin_time;
@@ -277,8 +278,9 @@
           path: '/index'
         });
 	  },
+	  // 卡池数据转换器
       poolStructureConverter (data) {
-        console.log("查看数据");
+        console.log("获得卡池数据");
         console.log(data);
         var gachaType = {
           '200': 'permanent',
@@ -365,20 +367,23 @@
        * @param type
        * @returns
        */
+      // 获取抽卡结果
       getResult(type) {
         var _a;
-        return type ? ((_a = this._result) === null || _a === void 0 ? void 0 : _a[type]) || [] : this._result;
+        return type ? ((_a = this.result) === null || _a === void 0 ? void 0 : _a[type]) || [] : this.result;
       },
+	  // 设置抽卡结果
       setResult(type, value) {
-        console.log('type:??????????????');
-        console.log(type);
-        console.log(value);
+        // console.log('抽到的卡类型：'+type);
+        // console.log('抽到的卡信息：');
+        // console.log(value);
         if (typeof type === 'string' && typeof value !== 'undefined') {
-          console.log(type);
-          this._result[type] = value;
-          console.log(this._result[type]);
+          this.$set(this.result,type,value);
+          // console.log('抽卡后整体数据：');
+          // console.log(this.result);
+          // this.result == 抽卡后整体数据
         } else {
-          this._result = type;
+          this.result = type;
         }
         return this;
       },
@@ -390,12 +395,14 @@
 		} else if (value.constructor.name.toLowerCase() === 'array') {
           this.setCounter(name, [...(value), increase])
 		}
-        console.log('increaseCounter:==========='+name+'==========');
-		console.log(this);
 		return this;
 	  },
       increaseResult(type, item) {
+        // item为当前抽中的卡
         var oldResult = this.getResult(type);
+        // console.log('获取'+type+'类型的抽卡前的数据');
+        // 获取'+type+'类型的抽卡前的数据
+        // console.log(oldResult);
         var sameItem = oldResult.filter(function (i) { return i.name === item.name; });
         if (sameItem.length < 1) {
           item.count = 1;
@@ -404,8 +411,6 @@
         else {
           sameItem[0].count && sameItem[0].count++;
         }
-        console.log('===========:increaseResult:===========');
-        console.log(this);
         return this;
       },
       randomNum() {
@@ -496,6 +501,7 @@
        */
       singleWish() {
         var _this = this;
+        // 添加抽卡计数====开始
         _this.increaseCounter('total');
         var getSSR = function (isUP) {
           if (_this._gachaPool.upSSR.length < 1) {
@@ -504,8 +510,7 @@
           var character = _this.randomPick(isUP ? _this._gachaPool.upSSR : _this._gachaPool.ssr);
           character.rarity = 5;
           _this.increaseResult('ssr', character);
-          console.log('getSSR:=======================抽卡结果返回=====================================');
-          console.log(character);
+          console.log('getSSR:===================5星==抽到了，⭐️⭐️⭐️⭐️⭐ '+ character.name + '️=====================================');
           return character;
         };
         var getSR = function (isUP) {
@@ -515,16 +520,14 @@
           var character = _this.randomPick(isUP ? _this._gachaPool.upSR : _this._gachaPool.sr);
           character.rarity = 4;
           _this.increaseResult('sr', character);
-          console.log('getSR:========================抽卡结果返回====================================');
-          console.log(character);
+          console.log('getSR:====================4星==抽到了，⭐️⭐️⭐️⭐ '+ character.name + '️====================================');
           return character;
         };
         var getR = function () {
           var character = _this.randomPick(_this._gachaPool.r);
           character.rarity = 3;
           _this.increaseResult('r', character);
-          console.log('getR:==========================抽卡结果返回==================================');
-          console.log(character);
+          console.log('getR:==========================抽到了，⭐️⭐️⭐️ '+ character.name + '==================================');
           return character;
         };
         var isSSR = _this.rollSSR(Boolean(_this.getCounter('ensureSSR')));
@@ -539,7 +542,22 @@
             return getR();
           }
         }
-	  }
+	  },
+      /**
+       * @method multiWish 进行多次抽取并获取结果集合
+       * @param count 抽取的次数
+       * @return {AppGachaItem[]} 结果集合
+       */
+      multiWish(count) {
+        const result = [];
+        for (let i = 0; i < count; i++) {
+          result.push(this.singleWish())
+        }
+        // console.log('十连抽结果：');
+        console.log(result);
+        // 保存抽卡记录 抽卡完成后要匹配图片库中的图片
+        return result
+      }
     }
   }
 
