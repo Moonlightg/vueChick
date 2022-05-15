@@ -39,7 +39,21 @@
 			<el-button type="warning" size="mini" @click="multiWish(1)">抽一次</el-button>
 			<el-button type="warning" size="mini" @click="multiWish(10)">抽十次</el-button>
 		</div>
+		<!-- 抽卡结果界面 -->
+		<div class="gacha-wrap" v-if="isWish">
+			<div class="gacha-mask" @click="hideWish()"></div>
+			<div class="gacha-list">
+				<div class="gacha-item fadeInRight animated" v-for="(item,index) in wishList" :key="index">
+					<div class="gacha-item-img">
+						<img :src="item.imgUrl" alt="">
+					</div>
+					<div class="gacha-item-name">{{item.name}}</div>
+				</div>
+				<i class="el-icon-circle-close gacha-close" @click="hideWish()"></i>
+			</div>
+		</div>
 	</div>
+
 </template>
 <style type="text/css">
 	.box-head .user-money {
@@ -117,16 +131,99 @@
 		margin-top: 15px;
 		color: #e6714c;
 	}
+	/* 抽卡结果显示 */
+	.gacha-wrap {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		z-index: 99;
+	}
+	.gacha-mask {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		z-index: 1;
+		background: rgba(0,0,0,.8);
+	}
+	.gacha-close {
+		position: absolute;
+		bottom: -50px;
+		left: 50%;
+		z-index: 2;
+		color: #fff;
+		font-size: 32px;
+		transform: translateX(-50%);
+	}
+	.gacha-list {
+		position: absolute;
+		width: 96%;
+		height: auto;
+		left: 50%;
+		top: 50%;
+		transform: translate(-50%,-50%);
+		display: flex;
+		flex-wrap: wrap;
+		z-index: 2;
+	}
+	.gacha-item {
+		height: 35%;
+		width: 20%;
+		padding: 2px;
+	}
+	.gacha-item-img {
+		border-radius: 8px;
+		overflow: hidden;
+	}
+	.gacha-item-img img {
+		display: block;
+		width: 100%;
+	}
+	.gacha-item-name {
+
+	}
+	.gacha-list .gacha-item:nth-child(2) {
+		animation-delay: .2s;
+	}
+	.gacha-list .gacha-item:nth-child(3) {
+		animation-delay: .4s;
+	}
+	.gacha-list .gacha-item:nth-child(4) {
+		animation-delay: .6s;
+	}
+	.gacha-list .gacha-item:nth-child(5) {
+		animation-delay: .8s;
+	}
+	.gacha-list .gacha-item:nth-child(6) {
+		animation-delay: 1s;
+	}
+	.gacha-list .gacha-item:nth-child(7) {
+		animation-delay: 1.2s;
+	}
+	.gacha-list .gacha-item:nth-child(8) {
+		animation-delay: 1.4s;
+	}
+	.gacha-list .gacha-item:nth-child(9) {
+		animation-delay: 1.6s;
+	}
+	.gacha-list .gacha-item:nth-child(10) {
+		animation-delay: 1.8s;
+	}
 </style>
 <script>
   import {mapGetters} from "vuex";
   import {getGacha} from '../plugins/http/api';
   import ajax from '../plugins/http/http';
-  import storage from '../plugins/storage'
+  import storage from '../plugins/storage';
+  import {ysImgs} from '../../utils/ys.js';
   export default {
     name: 'Gacha',
     data() {
       return {
+        isWish: false,
         currentGacha: 200,
 		currentGachaPool: {}, // 当前选择卡池信息
         OfficialGachaType: [  // 卡池类型信息
@@ -184,7 +281,9 @@
           ssr: [],
           sr: [],
           r: []
-        }
+        },
+		ysImgs: ysImgs(),// 原神图片资源
+        wishList:[]      // 抽卡完成后的数据
       }
     },
     computed: {
@@ -225,6 +324,7 @@
           console.log('有卡池缓存');
           console.log(this.gachaList);
           console.log(this.gachaDetailList);
+          console.log(this.ysImgs);
           // 设置初始卡池
           this.setOfficialGachaPool(200);
 		}
@@ -550,14 +650,41 @@
        */
       multiWish(count) {
         const result = [];
+        this.wishList = [];
         for (let i = 0; i < count; i++) {
           result.push(this.singleWish())
         }
         // console.log('十连抽结果：');
-        console.log(result);
         // 保存抽卡记录 抽卡完成后要匹配图片库中的图片
-        return result
-      }
+		this.saveWish(result);
+      },
+	  saveWish(list) {
+        var _this = this;
+		list.forEach(item =>{
+		  if(item.type === 'weapon'){
+		    _this.ysImgs[1].list.forEach(item2 => {
+		      if(item2.name === item.name) {
+		        item.imgUrl = item2.imgUrl;
+				_this.wishList.push(item);
+			  }
+			})
+		  } else {
+            _this.ysImgs[0].list.forEach(item2 => {
+              if(item2.name === item.name) {
+                item.imgUrl = item2.imgUrl;
+                _this.wishList.push(item);
+              }
+            })
+		  }
+		});
+		if (list.length === _this.wishList.length) {
+		  _this.isWish = true;
+          console.log( _this.wishList);
+		}
+	  },
+      hideWish() {
+        this.isWish = false;
+	  }
     }
   }
 
