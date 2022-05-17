@@ -37,7 +37,8 @@ import {
   SET_YS_GACHA,
   SET_YS_GACHA_LIST,
   PUST_YS_GACHA_LIST,
-  CLEAR_YS_GACHA_LIST
+  CLEAR_YS_GACHA_LIST,
+  SET_USER_GACHA
 } from './mutation-types'
 
 export default {
@@ -270,5 +271,10 @@ export default {
   },
   [CLEAR_YS_GACHA_LIST](state) {
     state.gachaDetailList = []
+  },
+  [SET_USER_GACHA](state,value) {
+    console.log("更新该用户抽卡统计数据：");
+    console.log(value);
+    state.gachaCounter = value.counter
   }
 }

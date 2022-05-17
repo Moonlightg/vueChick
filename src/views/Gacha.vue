@@ -43,9 +43,13 @@
 		<div class="gacha-wrap" v-if="isWish">
 			<div class="gacha-mask" @click="hideWish()"></div>
 			<div class="gacha-list">
-				<div class="gacha-item fadeInRight animated" v-for="(item,index) in wishList" :key="index">
+				<div class="gacha-item fadeInRight animated"
+					 v-for="(item,index) in wishList"
+					 :class="[item.rarity === 3 ? 'rarity-3' : '' , item.rarity === 4 ? 'rarity-4' : '' , item.rarity === 5 ? 'rarity-5' : '']"
+					 :key="index">
 					<div class="gacha-item-img">
-						<img :src="item.imgUrl" alt="">
+						<img v-if="item.type === 'character'" :src="getImgUrl1(item.imgUrl)" alt="">
+						<img v-if="item.type === 'weapon'" :src="getImgUrl2(item.imgUrl)" alt="">
 					</div>
 					<div class="gacha-item-name">{{item.name}}</div>
 				</div>
@@ -63,155 +67,6 @@
 	.box-footer {
 		padding: 20px 0;
 	}
-	.gacha-tab {
-		display: flex;
-		justify-content: space-around;
-		padding: 20px 30px 0;
-	}
-
-	.gacha-tab-item {
-		margin: 10px 0;
-		padding: 10px;
-		background: #ececec;
-		border: 1px solid #c9c9c9;
-		border-radius: 5px;
-		width: 80px;
-	}
-
-	.gacha-tab-item.on {
-		background: #00b0ff;
-		color: #fff;
-		border-color: #0ca7eb;
-	}
-
-	.gacha-list-item p {
-		text-align: left;
-	}
-
-	.gacha-tab-content-item {
-		position: relative;
-		display: none;
-		background: #fffcf8;
-		padding: 30px 20px;
-		border-radius: 5px;
-	}
-
-	.gacha-tab-content-item.on {
-		display: flex;
-		flex-direction: column;
-		align-items: start;
-	}
-	.gacha-tab-content {
-		padding: 0 20px;
-	}
-	.ga-label {
-		position: absolute;
-		top: 10px;
-		right: 10px;
-		background: #3f51b5;
-		color: #fff;
-		padding: 5px 10px;
-		border-radius: 15px;
-	}
-	.up-box {
-		display: flex;
-		flex-direction: column;
-		width: 100%;
-	}
-	.up-item {
-		display: flex;
-		align-items: center;
-		flex: 1;
-		padding-top: 15px;
-	}
-	.up-img {
-		margin-right: 15px;
-	}
-	.end-time {
-		margin-top: 15px;
-		color: #e6714c;
-	}
-	/* 抽卡结果显示 */
-	.gacha-wrap {
-		position: fixed;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		z-index: 99;
-	}
-	.gacha-mask {
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		z-index: 1;
-		background: rgba(0,0,0,.8);
-	}
-	.gacha-close {
-		position: absolute;
-		bottom: -50px;
-		left: 50%;
-		z-index: 2;
-		color: #fff;
-		font-size: 32px;
-		transform: translateX(-50%);
-	}
-	.gacha-list {
-		position: absolute;
-		width: 96%;
-		height: auto;
-		left: 50%;
-		top: 50%;
-		transform: translate(-50%,-50%);
-		display: flex;
-		flex-wrap: wrap;
-		z-index: 2;
-	}
-	.gacha-item {
-		height: 35%;
-		width: 20%;
-		padding: 2px;
-	}
-	.gacha-item-img {
-		border-radius: 8px;
-		overflow: hidden;
-	}
-	.gacha-item-img img {
-		display: block;
-		width: 100%;
-	}
-	.gacha-item-name {
-
-	}
-	.gacha-list .gacha-item:nth-child(2) {
-		animation-delay: .2s;
-	}
-	.gacha-list .gacha-item:nth-child(3) {
-		animation-delay: .4s;
-	}
-	.gacha-list .gacha-item:nth-child(4) {
-		animation-delay: .6s;
-	}
-	.gacha-list .gacha-item:nth-child(5) {
-		animation-delay: .8s;
-	}
-	.gacha-list .gacha-item:nth-child(6) {
-		animation-delay: 1s;
-	}
-	.gacha-list .gacha-item:nth-child(7) {
-		animation-delay: 1.2s;
-	}
-	.gacha-list .gacha-item:nth-child(8) {
-		animation-delay: 1.4s;
-	}
-	.gacha-list .gacha-item:nth-child(9) {
-		animation-delay: 1.6s;
-	}
-	.gacha-list .gacha-item:nth-child(10) {
-		animation-delay: 1.8s;
-	}
 </style>
 <script>
   import {mapGetters} from "vuex";
@@ -223,6 +78,7 @@
     name: 'Gacha',
     data() {
       return {
+        isDisabled: false,
         isWish: false,
         currentGacha: 200,
 		currentGachaPool: {}, // 当前选择卡池信息
@@ -275,9 +131,9 @@
           turningPoint: null,
           hardEnsure: false
         },
-        _counter: {},
+        _counter: {},  // 用户抽卡计数统计
 		_gachaPool: {},
-        result: {
+        result: { // 抽卡卡片数据
           ssr: [],
           sr: [],
           r: []
@@ -290,25 +146,31 @@
       ...mapGetters([
         "userinfo",
         "gachaList",
-        "gachaDetailList"
+        "gachaDetailList",
+		"gachaCounter"
       ])
     },
     components: {},
     created: function () {
       // 获取卡池缓存，不用每次都请求（测试用）
-	  this.getStoreData();
+	     this.getStoreData();
       // 获取原神官网卡池信息
       // this.getOfficialGacha();
+	  // 获取该用户的抽卡统计数据
+	  this.getUserGacha();
 	},
     mounted: function () {
       var _this = this;
       _this.$nextTick(function () {
-        console.log(_this._counter);
-        console.log(_this._gachaPool);
+        // console.log(_this._counter);
+        // console.log(_this._gachaPool);
         // _this.setOfficialGachaPool(200); // 初始化当前卡池信息
       })
     },
     methods: {
+      getUserGacha() {
+        this.$store.dispatch('getUserGacha');
+	  },
       getStoreData() {
 		var gachaList = storage.get('gachaListData');
 		var gachaDetailList = storage.get('gachaDetailListData');
@@ -318,6 +180,7 @@
 		if (gachaList === null && gachaDetailList === null) {
           console.log('没有卡池信息缓存');
           this.getOfficialGacha();
+          this.setOfficialGachaPool(200);
 		} else {
           // this.$store.dispatch('setYsGacha', gachaList);
           // this.$store.dispatch('setYsGachaList', gachaDetailList);
@@ -358,6 +221,7 @@
 		const pool = this.gachaDetailList.filter((i) => i.gacha_type === type);
         // pool.begin_time = poolData[0].begin_time;
         // pool.end_time = poolData[0].end_time;
+		console.log(pool);
         if (pool[0]) {
           this.setGachaPool(this.poolStructureConverter(pool[0]))
         } else {
@@ -448,7 +312,8 @@
        */
       getCounter(name) {
         var _a;
-        return name ? ((_a = this._counter) === null || _a === void 0 ? void 0 : _a[name]) || 0 : this._counter;
+        var counter = name ? ((_a = this._counter) === null || _a === void 0 ? void 0 : _a[name]) || 0 : this._counter
+        return counter;
       },
       setCounter(name, value) {
         this._counter = this._counter || {}
@@ -479,8 +344,6 @@
         // console.log(value);
         if (typeof type === 'string' && typeof value !== 'undefined') {
           this.$set(this.result,type,value);
-          // console.log('抽卡后整体数据：');
-          // console.log(this.result);
           // this.result == 抽卡后整体数据
         } else {
           this.result = type;
@@ -495,6 +358,8 @@
 		} else if (value.constructor.name.toLowerCase() === 'array') {
           this.setCounter(name, [...(value), increase])
 		}
+        console.log("初始化抽卡数：");
+        console.log(this._counter);
 		return this;
 	  },
       increaseResult(type, item) {
@@ -511,6 +376,8 @@
         else {
           sameItem[0].count && sameItem[0].count++;
         }
+        console.log('抽卡后整体数据：');
+        console.log(this.result);
         return this;
       },
       randomNum() {
@@ -649,13 +516,20 @@
        * @return {AppGachaItem[]} 结果集合
        */
       multiWish(count) {
+        this._counter = this.gachaCounter;
+        console.log("==========================================:_counter");
+        console.log(this._counter);
+        console.log("==========================================:getUserGacha");
+        console.log(this.gachaCounter);
         const result = [];
         this.wishList = [];
         for (let i = 0; i < count; i++) {
           result.push(this.singleWish())
         }
-        // console.log('十连抽结果：');
         // 保存抽卡记录 抽卡完成后要匹配图片库中的图片
+        this.saveCounter();
+        // 保存抽卡卡片信息数组
+        // this.saveResult();
 		this.saveWish(result);
       },
 	  saveWish(list) {
@@ -684,6 +558,27 @@
 	  },
       hideWish() {
         this.isWish = false;
+	  },
+      getImgUrl1(val){
+        return require("@/assets/images/ys/character/"+val+'.png');
+      },
+      getImgUrl2(val){
+        return require("@/assets/images/ys/weapon/"+val+'.png');
+      },
+	  // 保存抽卡数到后台
+	  saveCounter() {
+        var obj = {};
+	    obj.counter = this._counter;
+	    obj.result = this.result;
+        // var obj = this._counter;
+        console.log('查看抽卡保存传递数据');
+        console.log(obj);
+        this.$store.dispatch('saveUserGacha', obj);
+	  },
+      // 保存抽卡卡片数组到后台
+      saveResult() {
+        var obj = this.result;
+        this.$store.dispatch('saveUserGacha', obj);
 	  }
     }
   }

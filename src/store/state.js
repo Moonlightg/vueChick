@@ -24,5 +24,6 @@ export default {
   tasks: {},  // 每日任务列表
   friends: [], // 好友列表
   gachaList: [], // 原神实时卡池列表信息
-  gachaDetailList: [] // 原神实时卡池详情列表
+  gachaDetailList: [], // 原神实时卡池详情列表
+  gachaCounter:{} // 用户抽卡统计数据
 }

@@ -36,5 +36,7 @@ export const GET_STORE = 'get_store';                     // 读取store
 export const SET_YS_GACHA = 'set_ys_gacha';               // 获取原神实时卡池信息并设置数据
 export const PUST_YS_GACHA_LIST = 'set_ys_gacha_list';    // 添加卡池详情信息到卡池详情列表
 export const SET_YS_GACHA_LIST = 'set_ys_gacha_list';     // 设置卡池详情列表
-export const CLEAR_YS_GACHA_LIST = 'clear_ys_gacha_list';   // 清空卡池详情列表
+export const CLEAR_YS_GACHA_LIST = 'clear_ys_gacha_list'; // 清空卡池详情列表
+export const SET_USER_GACHA = 'swt_user_gacha';           // 保存抽卡统计数据
+
 

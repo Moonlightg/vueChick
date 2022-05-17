@@ -32,7 +32,9 @@ import {
   setName,
   postLuckDraw,
   addBarrage,
-  getGacha
+  getGacha,
+  getUserGacha,
+  setUserGacha,
 } from '../plugins/http/api'
 import ajax from '../plugins/http/http'
 
@@ -74,7 +76,8 @@ import {
   SET_YS_GACHA,
   SET_YS_GACHA_LIST,
   PUST_YS_GACHA_LIST,
-  CLEAR_YS_GACHA_LIST
+  CLEAR_YS_GACHA_LIST,
+  SET_USER_GACHA
 } from './mutation-types'
 
 export default {
@@ -415,6 +418,8 @@ export default {
   async saveName(context, value) {
     const result = await setName(value);
     if (result.code == 0) {
+      console.log('xiugaimingcheng:====');
+      console.log(result.data);
       context.commit(SET_USER,result.data);
       Message({
         message: '用户名修改成功',
@@ -481,5 +486,23 @@ export default {
   async getYsGachaDetail(context, value) {
     const result = await ajax.getAllData('/hk4e/gacha_info/cn_gf01/' + value.gacha_id + '/zh-cn.json',value);
     context.commit(PUST_YS_GACHA_LIST,result);
-  }
+  },
+  // 读取抽卡统计数据
+  async getUserGacha(context) {
+    const result = await getUserGacha();
+    console.log('初始化页面获取用户抽卡数据后返回：');
+    console.log(result)
+    if (result.code == 0) {
+      context.commit(SET_USER_GACHA,result.data);
+    }
+  },
+  // 抽卡保存统计数据
+  async saveUserGacha(context, value) {
+    const result = await setUserGacha(value);
+    console.log('抽卡保存数据后返回：');
+    console.log(result)
+    if (result.code == 0) {
+      context.commit(SET_USER_GACHA,result.data);
+    }
+  },
 }

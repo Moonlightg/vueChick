@@ -10,23 +10,25 @@ var baseURL = 'http://127.0.0.1:3000';
 axios.interceptors.request.use(
   config => {
     if (storage.get("token")) {
-      if(config.method==='get' && config.name==='ysGacha') {
-        config.params={};
-        baseURL = 'https://webstatic.mihoyo.com';
-      } else if (config.method==='get' && config.name !=='ysGacha') {
+      const uid = storage.get('userinfo');
+      const userId = uid._id;
+      const appId = storage.get('token');
+      //判断请求的类型：如果是post请求就把默认参数拼到data里面；如果是get请求就拼到params里面
+      if(config.method==='post'){
         // 判断是否存在token，如果存在的话，则每个http header都加上token
         config.headers.Authorization = storage.get("token");
-        const uid = storage.get('userinfo');
-        const userId = uid._id;
-        const appId = storage.get('token');
-        //判断请求的类型：如果是post请求就把默认参数拼到data里面；如果是get请求就拼到params里面
-        if(config.method==='post'){
-          config.data=qs.stringify({
-            userId:userId,
-            appId:appId,
-            ...config.data
-          })
-        }else if(config.method==='get'){
+        config.data=qs.stringify({
+          userId:userId,
+          appId:appId,
+          ...config.data
+        })
+      }else if(config.method==='get'){
+        if(config.name==='ysGacha') {
+          config.params={};
+          baseURL = 'https://webstatic.mihoyo.com';
+        } else {
+          // 判断是否存在token，如果存在的话，则每个http header都加上token
+          config.headers.Authorization = storage.get("token");
           config.params={
             userId:userId,
             appId:appId,
@@ -34,6 +36,13 @@ axios.interceptors.request.use(
           }
         }
       }
+
+      // if(config.method==='get' && config.name==='ysGacha') {
+      //   config.params={};
+      //   baseURL = 'https://webstatic.mihoyo.com';
+      // } else if (config.method==='get' && config.name !=='ysGacha') {
+      //
+      // }
     }
     return config;
   },

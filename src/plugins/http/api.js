@@ -96,6 +96,13 @@ export const addBarrage = (params) => ajax.postData('/api/addBarrage',params);
 // 获取原神卡池信息
 export const getGacha = (params) => ajax.getAllData('/hk4e/gacha_info/cn_gf01/gacha/list.json',params);
 
+// 获取抽卡统计数据
+export const getUserGacha = () => ajax.getData('/api/getUserGacha');
+
+// 保存抽卡统计数据
+export const setUserGacha = (params) => ajax.postData('/api/setUserGacha',params);
+
+
 // 获取题目分类列表
 // export const getTopicType = (params) => ajax.getData('/api/getTopicType');
 

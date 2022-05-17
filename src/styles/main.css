@@ -4082,6 +4082,159 @@ p + .user-mi {
     z-index: 20;
 }
 
+.gacha-tab {
+    display: flex;
+    justify-content: space-around;
+    padding: 20px 30px 0;
+}
+
+.gacha-tab-item {
+    margin: 10px 0;
+    padding: 10px;
+    background: #ececec;
+    border: 1px solid #c9c9c9;
+    border-radius: 5px;
+    width: 80px;
+}
+
+.gacha-tab-item.on {
+    background: #00b0ff;
+    color: #fff;
+    border-color: #0ca7eb;
+}
+
+.gacha-list-item p {
+    text-align: left;
+}
+
+.gacha-tab-content-item {
+    position: relative;
+    display: none;
+    background: #fffcf8;
+    padding: 30px 20px;
+    border-radius: 5px;
+}
+
+.gacha-tab-content-item.on {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+.gacha-tab-content {
+    padding: 0 20px;
+}
+.ga-label {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #3f51b5;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 15px;
+}
+.up-box {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+.up-item {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    padding-top: 15px;
+}
+.up-img {
+    margin-right: 15px;
+}
+.end-time {
+    margin-top: 15px;
+    color: #e6714c;
+}
+/* 抽卡结果显示 */
+.gacha-wrap {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 99;
+}
+.gacha-mask {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    background: rgba(0,0,0,.8);
+}
+.gacha-close {
+    position: absolute;
+    bottom: -50px;
+    left: 50%;
+    z-index: 2;
+    color: #fff;
+    font-size: 32px;
+    transform: translateX(-50%);
+}
+.gacha-list {
+    position: absolute;
+    width: 96%;
+    height: auto;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    z-index: 2;
+}
+.gacha-item {
+    height: 35%;
+    width: 20%;
+    padding: 2px;
+    margin: 15px 0;
+}
+.gacha-item-img {
+    border-radius: 8px;
+    overflow: hidden;
+}
+.gacha-item-img img {
+    display: block;
+    width: 100%;
+}
+.gacha-item-name {
+    color: #fff;
+    font-size: 12px;
+    margin-top: 6px;
+}
+.gacha-list .gacha-item:nth-child(2) {
+    animation-delay: .2s;
+}
+.gacha-list .gacha-item:nth-child(3) {
+    animation-delay: .4s;
+}
+.gacha-list .gacha-item:nth-child(4) {
+    animation-delay: .6s;
+}
+.gacha-list .gacha-item:nth-child(5) {
+    animation-delay: .8s;
+}
+.gacha-list .gacha-item:nth-child(6) {
+    animation-delay: 1s;
+}
+.gacha-list .gacha-item:nth-child(7) {
+    animation-delay: 1.2s;
+}
+.gacha-list .gacha-item:nth-child(8) {
+    animation-delay: 1.4s;
+}
+.gacha-list .gacha-item:nth-child(9) {
+    animation-delay: 1.6s;
+}
+.gacha-list .gacha-item:nth-child(10) {
+    animation-delay: 1.8s;
+}
 .animated {
     animation-duration: .4s;
     animation-fill-mode: both;
@@ -4101,3 +4254,25 @@ p + .user-mi {
 .fadeInRight {
     animation-name: fadeInRight;
 }
+.rarity-3,
+.rarity-4,
+.rarity-5{
+    position: relative;
+}
+.rarity-3:before,
+.rarity-4:before,
+.rarity-5:before{
+    position: absolute;
+    content: '';
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 20px;
+}
+.rarity-3:before {background: url(../assets/images/ys/sanxing.png) no-repeat center;background-size: 60%;}
+.rarity-4:before {background: url(../assets/images/ys/sixing.png) no-repeat center;background-size: 60%;}
+.rarity-5:before {background: url(../assets/images/ys/wuxing.png) no-repeat center;background-size: 60%;}
+
+.rarity-3 {}
+.rarity-4 .gacha-item-img { background: linear-gradient(#66588a, #b88cc9); }
+.rarity-5 .gacha-item-img { background: linear-gradient(#785a51, #ddab57); }
