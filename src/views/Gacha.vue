@@ -171,7 +171,8 @@
         "userinfo",
         "gachaList",
         "gachaDetailList",
-		"gachaCounter"
+		"gachaCounter",
+		"gachaResult",
       ])
     },
     components: {},
@@ -549,6 +550,7 @@
           return;
         }
         this._counter = this.gachaCounter;
+        this.result = this.gachaResult;
         const result = [];
         this.wishList = [];
         for (let i = 0; i < count; i++) {
