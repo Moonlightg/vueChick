@@ -1,4 +1,5 @@
 import axios from 'axios';
+import qs from 'qs';
 const baseURL = "http://127.0.0.1:3000";  // 定义根域名
 const baseURL2 = "https://webstatic.mihoyo.com";  // 原神api
 

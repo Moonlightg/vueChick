@@ -1,11 +1,11 @@
 <template>
-	<div class="main flex-column skin_b2">
-		<div class="box-head">
+	<div class="main flex-column skin_b4">
+		<div class="box-head flex-j-s">
 			<div class="return-link" @click="returnIndex()"><i class="el-icon-arrow-left"></i>返回</div>
-			<h1>抽卡</h1>
-			<div class="user-money">
-				<div class="user-mi c-blue"><i class="el-icon-trophy-1"></i></div>
-				<p class="c-blue">{{userinfo.gem}}</p>
+			<h1>祈愿</h1>
+			<div class="u-m-bar">
+				<div class="user-mi"><img :src="getImgUrl('gem.png')" alt=""></div>
+				<p>{{userinfo.gem}}</p>
 			</div>
 		</div>
 		<div class="box-content">
@@ -25,19 +25,43 @@
 					 :key="item.gacha_type">
 					<div v-html="setHtml(item.title)"></div>
 					<div class="ga-label" v-html="item.date_range"></div>
+					<!--up卡池信息-->
 					<div class="up-box" v-if="item.r5_up_items !== null">
-						<div class="up-item" v-for="(item3,index3) in item.r5_up_items" :key="index3">
-							<div class="up-img"><img :src="item3.item_img" alt=""></div>
-							<div class="up-name">{{item3.item_name}}</div>
+						<!--up 五星-->
+						<div class="up-r5">
+							<div class="up-item" v-for="(item3,index3) in item.r5_up_items" :key="index3">
+								<div class="up-img"><img :src="item3.item_img" alt=""></div>
+								<div class="up-name">{{item3.item_name}}</div>
+							</div>
+						</div>
+						<!--up 四星-->
+						<div class="up-r4">
+							<div class="up-item" v-for="item4 in item.r4_up_items" :key="item4.item_name">
+								<div class="up-img"><img :src="item4.item_img" alt=""></div>
+								<div class="up-name">{{item4.item_name}}</div>
+							</div>
 						</div>
 					</div>
 					<div class="end-time" v-if="item.gacha_type !== 200">结束时间：{{item.end_time}}</div>
 				</div>
+				<div class="kb-btn" @click="go('gachaPack')">我的卡包</div>
 			</div>
 		</div>
-		<div class="box-footer">
-			<el-button type="warning" size="mini" @click="multiWish(1)">抽一次</el-button>
-			<el-button type="warning" size="mini" @click="multiWish(10)">抽十次</el-button>
+		<div class="box-footer gacha-btns">
+			<div class="gacha-btn" @click="multiWish(1)">
+				<p>祈愿一次</p>
+				<div class="gacha-b-t">
+					<div class="user-mi"><img :src="getImgUrl('gem.png')" alt=""></div>
+					<p>160</p>
+				</div>
+			</div>
+			<div class="gacha-btn" @click="multiWish(10)">
+				<p>祈愿十次</p>
+				<div class="gacha-b-t">
+					<div class="user-mi"><img :src="getImgUrl('gem.png')" alt=""></div>
+					<p>1600</p>
+				</div>
+			</div>
 		</div>
 		<!-- 抽卡结果界面 -->
 		<div class="gacha-wrap" v-if="isWish">
@@ -80,18 +104,18 @@
       return {
         isDisabled: false,
         isWish: false,
-        currentGacha: 200,
+        currentGacha: 301,
 		currentGachaPool: {}, // 当前选择卡池信息
         OfficialGachaType: [  // 卡池类型信息
 		  {
-            gacha_type: 200,
-            gacha_name: '常驻'
-		  },{
             gacha_type: 301,
             gacha_name: '角色'
           }, {
             gacha_type: 302,
             gacha_name: '武器'
+          },{
+            gacha_type: 200,
+            gacha_name: '常驻'
           }
         ],
         AppCounter: {         // *** 抽卡计数
@@ -180,7 +204,7 @@
 		if (gachaList === null && gachaDetailList === null) {
           console.log('没有卡池信息缓存');
           this.getOfficialGacha();
-          this.setOfficialGachaPool(200);
+          this.setOfficialGachaPool(301);
 		} else {
           // this.$store.dispatch('setYsGacha', gachaList);
           // this.$store.dispatch('setYsGachaList', gachaDetailList);
@@ -189,7 +213,7 @@
           console.log(this.gachaDetailList);
           console.log(this.ysImgs);
           // 设置初始卡池
-          this.setOfficialGachaPool(200);
+          this.setOfficialGachaPool(301);
 		}
 	  },
       setHtml(o) {
@@ -516,18 +540,22 @@
        * @return {AppGachaItem[]} 结果集合
        */
       multiWish(count) {
+        let price = count * 160;
+        if (price > this.userinfo.gem ) {
+          this.$message({
+            message: '原石不足，联系鸡哥（QQ:1079832313），给你送6480',
+            type: 'error'
+          });
+          return;
+        }
         this._counter = this.gachaCounter;
-        console.log("==========================================:_counter");
-        console.log(this._counter);
-        console.log("==========================================:getUserGacha");
-        console.log(this.gachaCounter);
         const result = [];
         this.wishList = [];
         for (let i = 0; i < count; i++) {
           result.push(this.singleWish())
         }
         // 保存抽卡记录 抽卡完成后要匹配图片库中的图片
-        this.saveCounter();
+        this.saveCounter(count);
         // 保存抽卡卡片信息数组
         // this.saveResult();
 		this.saveWish(result);
@@ -559,6 +587,9 @@
       hideWish() {
         this.isWish = false;
 	  },
+      getImgUrl(val){
+        return require("@/assets/images/"+val);
+      },
       getImgUrl1(val){
         return require("@/assets/images/ys/character/"+val+'.png');
       },
@@ -566,8 +597,9 @@
         return require("@/assets/images/ys/weapon/"+val+'.png');
       },
 	  // 保存抽卡数到后台
-	  saveCounter() {
+	  saveCounter(count) {
         var obj = {};
+        obj.countNum = count;
 	    obj.counter = this._counter;
 	    obj.result = this.result;
         // var obj = this._counter;
@@ -579,6 +611,11 @@
       saveResult() {
         var obj = this.result;
         this.$store.dispatch('saveUserGacha', obj);
+	  },
+      go(url) {
+        this.$router.push({
+          path: '/'+url
+        });
 	  }
     }
   }

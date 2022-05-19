@@ -55,7 +55,6 @@ export default {
   [DEDUCT_MONEY](state,value) {
     if (value.type == 1) {
       state.userinfo.money = state.userinfo.money - value.price;
-
     } else {
       state.userinfo.gem = state.userinfo.gem - value.price;
     }
@@ -275,6 +274,7 @@ export default {
   [SET_USER_GACHA](state,value) {
     console.log("更新该用户抽卡统计数据：");
     console.log(value);
-    state.gachaCounter = value.counter
+    state.gachaCounter = value.counter;
+    state.gachaResult = value.result
   }
 }

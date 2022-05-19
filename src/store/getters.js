@@ -24,5 +24,6 @@ export default {
   friends :(state) => state.friends,
   gachaList :(state) => state.gachaList,
   gachaDetailList :(state) => state.gachaDetailList,
-  gachaCounter :(state) => state.gachaCounter
+  gachaCounter :(state) => state.gachaCounter,
+  gachaResult :(state) => state.gachaResult
 }

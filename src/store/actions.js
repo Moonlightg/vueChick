@@ -503,6 +503,7 @@ export default {
     console.log(result)
     if (result.code == 0) {
       context.commit(SET_USER_GACHA,result.data);
+      context.dispatch('deductMoney',{type:2,price:value.countNum * 160});
     }
   },
 }

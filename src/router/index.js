@@ -80,6 +80,15 @@ const routes = [
     }
   },
   {
+    path: '/gachaPack',
+    name: 'GachaPack',
+    component: () => import('../views/GachaPack.vue'),
+    meta: {
+      index: 3,
+      requireAuth: true
+    }
+  },
+  {
     path: '/penguin',
     name: 'Penguin',
     component: () => import('../views/Penguin.vue'),

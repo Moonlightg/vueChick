@@ -9,12 +9,12 @@
       </div>
       <div class="user-info">
         <div class="user-name">{{userinfo.username}}</div>
-        <div class="user-money">
-          <div class="user-mi"><i class="el-icon-s-help"></i></div>
-          <p>{{userinfo.money}}</p>
-          <div class="user-mi c-blue"><i class="el-icon-trophy-1"></i></div>
-          <p class="c-blue">{{userinfo.gem}}</p>
-        </div>
+	    <div class="u-m-bar">
+			<div class="user-mi"><i class="el-icon-s-help"></i></div>
+			<p>{{userinfo.money}}</p>
+		  <div class="user-mi"><img :src="getImgUrl('gem.png')" alt=""></div>
+		  <p>{{userinfo.gem}}</p>
+	    </div>
       </div>
     </div>
 
@@ -32,7 +32,7 @@
       <li @click="showPopup(bag)"><span class="nav-icon"><i class="el-icon-suitcase"></i></span><span class="nav-name">背包</span></li>
       <li @click="showTasks()" :class={on:tasks.isUpdate}><span class="nav-icon"><i class="el-icon-medal"></i></span><span class="nav-name">任务</span></li>
       <li @click="showPopup(study)" class="n-green"><span class="nav-icon"><i class="el-icon-collection"></i></span><span class="nav-name">学习</span></li>
-	  <li @click="goGacha()" class="n-green"><span class="nav-icon"><i class="el-icon-collection"></i></span><span class="nav-name">抽卡</span></li>
+	  <li @click="goGacha()" class="n-green"><span class="nav-icon"><i class="el-icon-postcard"></i></span><span class="nav-name">抽卡</span></li>
     </ul>
     <div class="content" :class="{'bg-night':isNight}" >
       <!-- 白天背景 -->
