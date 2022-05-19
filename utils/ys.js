@@ -83,7 +83,7 @@ function ysImgs() {
     },{
       id: 20,
       name: '莫娜',
-      imgUrl: 'mina'
+      imgUrl: 'mona'
     },{
       id: 21,
       name: '可莉',
